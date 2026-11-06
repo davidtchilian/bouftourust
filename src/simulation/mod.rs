@@ -6,6 +6,8 @@ mod movement;
 use movement::*;
 mod combat;
 use combat::*;
+mod sword;
+use sword::*;
 mod enemies;
 use enemies::*;
 mod waves;
@@ -275,6 +277,7 @@ fn step(world: &mut World) {
         }
         if s.phase == Phase::Combat {
             glyphs(world, &mut s, &mut p, &d);
+            update_sword_waves(world, &mut s, &mut p, &d, &m, dt);
             update_shots(world, &mut s, &mut p, &d, &m, dt);
             if s.phase == Phase::Combat {
                 enemies(world, &mut s, &d, dt);

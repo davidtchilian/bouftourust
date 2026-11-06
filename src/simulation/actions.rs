@@ -2,7 +2,13 @@ use super::*;
 
 pub(super) fn remove_transients(world: &mut World) {
     let ids: Vec<Entity> = world
-        .query_filtered::<Entity, Or<(With<Enemy>, With<Shot>, With<Effect>, With<Floating>)>>()
+        .query_filtered::<Entity, Or<(
+            With<Enemy>,
+            With<Shot>,
+            With<SwordWave>,
+            With<Effect>,
+            With<Floating>,
+        )>>()
         .iter(world)
         .collect();
     for id in ids {

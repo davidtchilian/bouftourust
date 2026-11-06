@@ -161,7 +161,7 @@ pub(super) fn damage_player(world: &mut World, s: &mut Session, d: &GameData, am
         s.combat_power = 0.;
         s.truce_until = 0.;
         let shots: Vec<_> = world
-            .query_filtered::<Entity, With<Shot>>()
+            .query_filtered::<Entity, Or<(With<Shot>, With<SwordWave>)>>()
             .iter(world)
             .collect();
         for e in shots {
@@ -266,7 +266,15 @@ pub(super) fn cast(
         effect(world, m, &spell.effect, start, 0., true);
         return;
     }
-    if matches!(id.as_str(), "explosive" | "flaming" | "magic" | "sword") {
+    if id == "sword" {
+        world.spawn(SwordWave::new(
+            start,
+            start + delta.normalize() * range.min(delta.length()),
+            class_damage(world, s, p, d, spell.coefficient),
+        ));
+        return;
+    }
+    if matches!(id.as_str(), "explosive" | "flaming" | "magic") {
         let travel = if spell.kind == "line" {
             range
         } else {
@@ -277,30 +285,22 @@ pub(super) fn cast(
             position: start,
             start,
             target: start + delta.normalize() * travel,
-            amount: if id == "sword" {
-                class_damage(world, s, p, d, spell.coefficient)
-            } else {
-                damage(
-                    class.base_damage,
-                    spell.coefficient,
-                    p.stats(d).power,
-                    if s.time < s.buff_until {
-                        d.balance.buff_multiplier
-                    } else {
-                        1.
-                    },
-                )
-            },
+            amount: damage(
+                class.base_damage,
+                spell.coefficient,
+                p.stats(d).power,
+                if s.time < s.buff_until {
+                    d.balance.buff_multiplier
+                } else {
+                    1.
+                },
+            ),
             speed: spell.speed,
             radius: spell.radius,
             hit: default(),
             age: 0.,
             hostile: false,
-            asset: if id == "sword" {
-                spell.effect.clone()
-            } else {
-                format!("spell.{id}.projectile")
-            },
+            asset: format!("spell.{id}.projectile"),
         });
         return;
     }
@@ -536,7 +536,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn iop_sword_travels_then_hits_only_the_impact_area() {
+    fn iop_sword_wave_stays_static_and_hits_only_on_arrival() {
         let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("assets");
         let d = GameData::load(&root).unwrap();
         let m = Manifest::load(&root).unwrap();
@@ -588,22 +588,43 @@ mod tests {
         let outside = spawn(target + side * 80.);
         let en_route = spawn(start + direction * 60.);
         cast(&mut world, &mut s, &mut p, &d, &m, 0, target);
-        let shot = world.query::<&Shot>().single(&world).unwrap().clone();
-        assert!(shot.target.distance(start) > 85.);
-        assert!(shot.target.distance(start) <= 200.);
-        update_shots(&mut world, &mut s, &mut p, &d, &m, 0.1);
+        let wave = world.query::<&SwordWave>().single(&world).unwrap().clone();
+        assert_eq!(world.query::<&Shot>().iter(&world).count(), 0);
+        assert!(wave.target.distance(start) > 85.);
+        assert!(wave.target.distance(start) <= 200.);
+        update_sword_waves(&mut world, &mut s, &mut p, &d, &m, 0.1);
         for id in [center, nearby, outside, en_route] {
             assert_eq!(world.get::<Actor>(id).unwrap().hp, 1000.);
         }
+        let first_effects: Vec<_> = world
+            .query::<(Entity, &Effect)>()
+            .iter(&world)
+            .map(|(id, effect)| (id, effect.position))
+            .collect();
+        assert!(first_effects.len() >= 3);
+        assert_eq!(first_effects[0].1, start);
+        let player = s.player;
+        world.get_mut::<Actor>(player).unwrap().position += side * 20.;
         for _ in 0..10 {
-            update_shots(&mut world, &mut s, &mut p, &d, &m, 0.1);
+            update_sword_waves(&mut world, &mut s, &mut p, &d, &m, 0.1);
         }
         for id in [center, nearby] {
-            assert_eq!(world.get::<Actor>(id).unwrap().hp, 1000. - shot.amount);
+            assert_eq!(world.get::<Actor>(id).unwrap().hp, 1000. - wave.amount);
         }
         for id in [outside, en_route] {
             assert_eq!(world.get::<Actor>(id).unwrap().hp, 1000.);
         }
-        assert_eq!(world.query::<&Shot>().iter(&world).count(), 0);
+        assert_eq!(world.query::<&SwordWave>().iter(&world).count(), 0);
+        for (id, position) in first_effects {
+            assert_eq!(world.get::<Effect>(id).unwrap().position, position);
+        }
+        let effects: Vec<_> = world.query::<&Effect>().iter(&world).collect();
+        assert!(effects.len() >= 10);
+        assert!(
+            effects
+                .iter()
+                .any(|effect| effect.position.distance(target) < 0.01)
+        );
+        assert!(effects.iter().all(|effect| !effect.follow));
     }
 }
