@@ -1,0 +1,3500 @@
+{
+  "balance": {
+    "maxLevel": 100,
+    "startingHp": 180,
+    "hpPerLevel": 12,
+    "powerPerLevel": 4,
+    "baseDamage": 16,
+    "playerSpeed": 95,
+    "waveDelay": 1.8,
+    "castLock": 0.12,
+    "castAnimation": 0.4,
+    "enemyAttackAnimation": 0.4,
+    "enemyHitAnimation": 0.16,
+    "enemyDeathAnimation": 1.6,
+    "buffMultiplier": 1.6,
+    "buffDuration": 8,
+    "maxCooldownReduction": 30,
+    "maxMovementSpeedBonus": 60,
+    "lootChance": 0.05,
+    "bossLootChance": 0.4
+  },
+  "spells": {
+    "explosive": {
+      "key": "a",
+      "name": "Flèche explosive",
+      "coefficient": 2.3,
+      "cooldown": 3.2,
+      "range": 260,
+      "speed": 310,
+      "radius": 63,
+      "kind": "area",
+      "effect": "spell.explosive.impact"
+    },
+    "flaming": {
+      "key": "z",
+      "name": "Flèche enflammée",
+      "coefficient": 1.7,
+      "cooldown": 1.7,
+      "range": 245,
+      "speed": 370,
+      "radius": 20,
+      "kind": "line",
+      "effect": "spell.flaming.impact"
+    },
+    "magic": {
+      "key": "e",
+      "name": "Flèche magique",
+      "coefficient": 1.2,
+      "cooldown": 0.48,
+      "range": 280,
+      "speed": 410,
+      "radius": 12,
+      "kind": "single",
+      "effect": "spell.magic.impact"
+    },
+    "power": {
+      "key": "r",
+      "name": "Tir puissant",
+      "coefficient": 0,
+      "cooldown": 16,
+      "range": 0,
+      "speed": 0,
+      "radius": 0,
+      "kind": "buff",
+      "effect": "spell.power.cast"
+    },
+    "dissolution": {
+      "key": "a",
+      "name": "Dissolution",
+      "coefficient": 1.8,
+      "cooldown": 3,
+      "range": 0,
+      "speed": 0,
+      "radius": 65,
+      "kind": "drain",
+      "effect": ""
+    },
+    "chastisement": {
+      "key": "z",
+      "name": "Châtiment",
+      "coefficient": 0,
+      "cooldown": 15,
+      "range": 0,
+      "speed": 0,
+      "radius": 0,
+      "kind": "chastisement",
+      "effect": "spell.chastisement.cast"
+    },
+    "transposition": {
+      "key": "e",
+      "name": "Transposition",
+      "coefficient": 0,
+      "cooldown": 8,
+      "range": null,
+      "speed": 0,
+      "radius": 0,
+      "kind": "swap",
+      "effect": "spell.transposition.cast"
+    },
+    "punishment": {
+      "key": "r",
+      "name": "Punition",
+      "coefficient": 5,
+      "cooldown": 10,
+      "range": 50,
+      "speed": 0,
+      "radius": 0,
+      "kind": "punishment",
+      "effect": ""
+    },
+    "sword": {
+      "key": "a",
+      "name": "Épée de Iop",
+      "coefficient": 2.8,
+      "cooldown": 2,
+      "range": 85,
+      "speed": 0,
+      "radius": 0,
+      "kind": "cone",
+      "effect": "spell.sword.cast"
+    },
+    "jump": {
+      "key": "z",
+      "name": "Bond",
+      "coefficient": 0,
+      "cooldown": 5,
+      "range": 150,
+      "speed": 0,
+      "radius": 0,
+      "kind": "teleport",
+      "effect": "spell.jump.cast"
+    },
+    "intimidation": {
+      "key": "e",
+      "name": "Intimidation",
+      "coefficient": 0.8,
+      "cooldown": 5,
+      "range": 0,
+      "speed": 0,
+      "radius": 65,
+      "kind": "push",
+      "effect": "spell.intimidation.cast"
+    },
+    "wrath": {
+      "key": "r",
+      "name": "Colère de Iop",
+      "coefficient": 9,
+      "cooldown": 25,
+      "range": 60,
+      "speed": 0,
+      "radius": 0,
+      "kind": "wrath",
+      "effect": "spell.wrath.cast"
+    },
+    "glyph": {
+      "key": "a",
+      "name": "Glyphe enflammé",
+      "coefficient": 0.7,
+      "cooldown": 10,
+      "range": 200,
+      "speed": 0,
+      "radius": 65,
+      "kind": "glyph",
+      "effect": "spell.glyph.zone"
+    },
+    "cloudy": {
+      "key": "z",
+      "name": "Attaque nuageuse",
+      "coefficient": 2,
+      "cooldown": 1.5,
+      "range": null,
+      "speed": 0,
+      "radius": 0,
+      "kind": "direct",
+      "effect": "spell.cloudy.cast"
+    },
+    "teleport": {
+      "key": "e",
+      "name": "Téléportation",
+      "coefficient": 0,
+      "cooldown": 6,
+      "range": 110,
+      "speed": 0,
+      "radius": 0,
+      "kind": "teleport",
+      "effect": ""
+    },
+    "truce": {
+      "key": "r",
+      "name": "Trêve",
+      "coefficient": 0,
+      "cooldown": 18,
+      "range": 0,
+      "speed": 0,
+      "radius": 0,
+      "kind": "truce",
+      "effect": "spell.truce.cast"
+    }
+  },
+  "classBalance": {
+    "drainRatio": 0.5,
+    "chastisementDuration": 5,
+    "chastisementPowerPerDamage": 0.25,
+    "lowHpMaximumBonus": 0.5,
+    "lowHpThreshold": 0.1,
+    "pushDistance": 80,
+    "wrathGrowth": 1.5,
+    "truceDuration": 2,
+    "glyphInterval": 1,
+    "coneCosine": 0.5,
+    "targetRadius": 45
+  },
+  "classes": {
+    "cra": {
+      "id": "cra",
+      "name": "Crâ",
+      "sprite": "cra",
+      "baseDamage": 16,
+      "speed": 95,
+      "abilities": [
+        "explosive",
+        "flaming",
+        "magic",
+        "power"
+      ]
+    },
+    "sacrier": {
+      "id": "sacrier",
+      "name": "Sacrieur",
+      "sprite": "sacrier",
+      "baseDamage": 16,
+      "speed": 95,
+      "abilities": [
+        "dissolution",
+        "chastisement",
+        "transposition",
+        "punishment"
+      ]
+    },
+    "iop": {
+      "id": "iop",
+      "name": "Iop",
+      "sprite": "iop",
+      "baseDamage": 16,
+      "speed": 95,
+      "abilities": [
+        "sword",
+        "jump",
+        "intimidation",
+        "wrath"
+      ]
+    },
+    "feca": {
+      "id": "feca",
+      "name": "Féca",
+      "sprite": "feca",
+      "baseDamage": 16,
+      "speed": 95,
+      "abilities": [
+        "glyph",
+        "cloudy",
+        "teleport",
+        "truce"
+      ]
+    }
+  },
+  "dungeons": {
+    "incarnam": {
+      "id": "incarnam",
+      "name": "Donjon d’Incarnam",
+      "map": "incarnam",
+      "rewardSet": "adventurer",
+      "tier": 1,
+      "recommendedGear": "Premiers équipements",
+      "description": "Palier 1 · Panoplie de l’Aventurier. Des vagues de plus en plus résistantes.",
+      "scaling": {
+        "hpPerWave": 0.1,
+        "damagePerWave": 0.06
+      },
+      "loot": {
+        "normalChance": 0.05,
+        "bossChance": 0.4
+      },
+      "normalWaves": [
+        [
+          "youngWhite",
+          "youngWhite",
+          "youngWhite",
+          "youngBlack",
+          "youngBlack",
+          "youngBlack"
+        ],
+        [
+          "youngWhite",
+          "youngWhite",
+          "youngWhite",
+          "youngBlack",
+          "youngBlack",
+          "youngBlack",
+          "smallBouftou",
+          "smallBouftou"
+        ],
+        [
+          "chafer",
+          "chafer",
+          "smallBouftou",
+          "smallBouftou",
+          "smallBouftou",
+          "smallBouftou",
+          "youngWhite",
+          "youngWhite",
+          "youngBlack",
+          "youngBlack"
+        ]
+      ],
+      "bossWave": [
+        "milimilou",
+        "smallBouftou",
+        "smallBouftou",
+        "youngWhite",
+        "youngWhite",
+        "youngBlack"
+      ]
+    },
+    "ensable": {
+      "id": "ensable",
+      "name": "Donjon Ensablé",
+      "map": "ensable",
+      "rewardSet": "mousse",
+      "tier": 2,
+      "recommendedGear": "Panoplie de l’Aventurier conseillée",
+      "description": "Palier 2 · Panoplie en Mousse : Vie, Puissance et recharge plus rapide.",
+      "scaling": {
+        "hpPerWave": 0.14,
+        "damagePerWave": 0.1
+      },
+      "loot": {
+        "normalChance": 0.035,
+        "bossChance": 0.35
+      },
+      "normalWaves": [
+        [
+          "crabe",
+          "crabe",
+          "crabe",
+          "crabe",
+          "crabe",
+          "etoileMer",
+          "etoileMer",
+          "etoileMer"
+        ],
+        [
+          "pichonBlanc",
+          "pichonBlanc",
+          "pichonBlanc",
+          "pichonBleu",
+          "pichonBleu",
+          "pichonBleu",
+          "pichonVert",
+          "pichonVert",
+          "pichonOrange",
+          "pichonOrange"
+        ],
+        [
+          "crabe",
+          "crabe",
+          "etoileMer",
+          "etoileMer",
+          "pichonKloune",
+          "pichonKloune",
+          "pichonBlanc",
+          "pichonBlanc",
+          "pichonBleu",
+          "pichonBleu",
+          "pichonVert",
+          "pichonOrange"
+        ]
+      ],
+      "bossWave": [
+        "sponge",
+        "raulMops",
+        "pichonKloune",
+        "pichonKloune",
+        "pichonBlanc",
+        "pichonBleu",
+        "pichonVert",
+        "pichonOrange"
+      ]
+    },
+    "bouftou": {
+      "id": "bouftou",
+      "name": "Donjon des Bouftous",
+      "map": "bouftou",
+      "rewardSet": "bouftou",
+      "tier": 3,
+      "recommendedGear": "Panoplie en Mousse conseillée",
+      "description": "Palier 3 · Panoplie du Bouftou : de solides bonus de Vie et de Puissance.",
+      "scaling": {
+        "hpPerWave": 0.16,
+        "damagePerWave": 0.12
+      },
+      "loot": {
+        "normalChance": 0.025,
+        "bossChance": 0.3
+      },
+      "normalWaves": [
+        [
+          "bouftou",
+          "bouftou",
+          "bouftou",
+          "bouftou",
+          "white",
+          "white",
+          "white",
+          "black",
+          "black",
+          "black"
+        ],
+        [
+          "bouftou",
+          "bouftou",
+          "bouftou",
+          "bouftou",
+          "bouftou",
+          "bouftou",
+          "white",
+          "white",
+          "white",
+          "black",
+          "black",
+          "black"
+        ],
+        [
+          "chief",
+          "chief",
+          "chief",
+          "bouftou",
+          "bouftou",
+          "bouftou",
+          "bouftou",
+          "bouftou",
+          "white",
+          "white",
+          "white",
+          "black",
+          "black",
+          "black"
+        ]
+      ],
+      "bossWave": [
+        "royal",
+        "chief",
+        "chief",
+        "chief",
+        "bouftou",
+        "bouftou",
+        "bouftou",
+        "bouftou",
+        "white",
+        "black"
+      ]
+    },
+    "tofu": {
+      "id": "tofu",
+      "name": "Donjon des Tofus",
+      "map": "tofu",
+      "rewardSet": "tofu",
+      "tier": 4,
+      "recommendedGear": "Panoplie du Bouftou conseillée",
+      "description": "Panoplie du Tofu : mobilité et récupération.",
+      "scaling": {
+        "hpPerWave": 0.12,
+        "damagePerWave": 0.08
+      },
+      "loot": {
+        "normalChance": 0.035,
+        "bossChance": 0.4
+      },
+      "normalWaves": [
+        [
+          "tofu",
+          "tofu",
+          "tofu",
+          "tofu",
+          "tofu",
+          "tofu",
+          "tofu",
+          "tofu"
+        ],
+        [
+          "tofu",
+          "tofu",
+          "tofu",
+          "tofu",
+          "tofu",
+          "tofu",
+          "blackTofu",
+          "blackTofu",
+          "blackTofu",
+          "blackTofu"
+        ],
+        [
+          "tofu",
+          "tofu",
+          "tofu",
+          "tofu",
+          "tofu",
+          "tofu",
+          "blackTofu",
+          "blackTofu",
+          "blackTofu",
+          "blackTofu",
+          "blackTofu",
+          "blackTofu"
+        ]
+      ],
+      "bossWave": [
+        "batofu",
+        "blackTofu",
+        "blackTofu",
+        "blackTofu",
+        "blackTofu",
+        "tofu",
+        "tofu",
+        "tofu"
+      ]
+    },
+    "scara": {
+      "id": "scara",
+      "name": "Donjon des Scarafeuilles",
+      "map": "scara",
+      "rewardSet": "blackScara",
+      "tier": 5,
+      "recommendedGear": "Panoplie du Bouftou ou du Tofu conseillée",
+      "description": "Panoplie du Scarafeuille Noir : Vie et Puissance.",
+      "scaling": {
+        "hpPerWave": 0.12,
+        "damagePerWave": 0.08
+      },
+      "loot": {
+        "normalChance": 0.03,
+        "bossChance": 0.4
+      },
+      "normalWaves": [
+        [
+          "blueScara",
+          "blueScara",
+          "redScara",
+          "redScara",
+          "greenScara",
+          "greenScara",
+          "whiteScara",
+          "whiteScara"
+        ],
+        [
+          "blueScara",
+          "blueScara",
+          "redScara",
+          "redScara",
+          "greenScara",
+          "greenScara",
+          "whiteScara",
+          "whiteScara",
+          "blackScara",
+          "blackScara"
+        ],
+        [
+          "blackScara",
+          "blackScara",
+          "blackScara",
+          "blackScara",
+          "blueScara",
+          "blueScara",
+          "redScara",
+          "redScara",
+          "greenScara",
+          "greenScara",
+          "whiteScara",
+          "whiteScara"
+        ]
+      ],
+      "bossWave": [
+        "goldScara",
+        "blackScara",
+        "blackScara",
+        "blackScara",
+        "blueScara",
+        "redScara",
+        "greenScara",
+        "whiteScara"
+      ]
+    },
+    "chefBwork": {
+      "id": "chefBwork",
+      "name": "Donjon des Bworks",
+      "map": "chefBwork",
+      "rewardSet": "chefBwork",
+      "tier": 6,
+      "recommendedGear": "Panoplie du Scarafeuille Noir conseillée",
+      "description": "Panoplie du Chef Bwork : beaucoup de Vie, Puissance et mobilité équilibrée.",
+      "scaling": {
+        "hpPerWave": 0.12,
+        "damagePerWave": 0.08
+      },
+      "loot": {
+        "normalChance": 0.03,
+        "bossChance": 0.4
+      },
+      "normalWaves": [
+        [
+          "bwork",
+          "bwork",
+          "bwork",
+          "bwork",
+          "bwork",
+          "bworkArcher",
+          "bworkArcher",
+          "bworkArcher"
+        ],
+        [
+          "bwork",
+          "bwork",
+          "bwork",
+          "bwork",
+          "bworkArcher",
+          "bworkArcher",
+          "bworkArcher",
+          "bworkMage",
+          "bworkMage",
+          "bworkMage"
+        ],
+        [
+          "bworkestre",
+          "bworkestre",
+          "bwork",
+          "bwork",
+          "bwork",
+          "bwork",
+          "bworkArcher",
+          "bworkArcher",
+          "bworkArcher",
+          "bworkMage",
+          "bworkMage",
+          "bworkMage"
+        ]
+      ],
+      "bossWave": [
+        "bworkette",
+        "bworkestre",
+        "bwork",
+        "bwork",
+        "bworkArcher",
+        "bworkArcher",
+        "bworkMage",
+        "bworkMage"
+      ]
+    },
+    "blopMulti": {
+      "id": "blopMulti",
+      "name": "Donjon du Blop Multicolore Royal",
+      "map": "blopMulti",
+      "rewardSet": "blopMulti",
+      "tier": 7,
+      "recommendedGear": "Panoplie du Chef Bwork conseillée",
+      "description": "Panoplie Blop Multicolore Royale : forte Puissance et récupération.",
+      "scaling": {
+        "hpPerWave": 0.12,
+        "damagePerWave": 0.08
+      },
+      "loot": {
+        "normalChance": 0.025,
+        "bossChance": 0.4
+      },
+      "normalWaves": [
+        [
+          "biblopCoco",
+          "biblopCoco",
+          "biblopIndigo",
+          "biblopIndigo",
+          "biblopGriotte",
+          "biblopGriotte",
+          "biblopReinette",
+          "biblopReinette"
+        ],
+        [
+          "blopCoco",
+          "blopCoco",
+          "blopIndigo",
+          "blopIndigo",
+          "blopGriotte",
+          "blopGriotte",
+          "blopReinette",
+          "blopReinette",
+          "blopignon",
+          "blopignon"
+        ],
+        [
+          "blopCoco",
+          "blopCoco",
+          "blopIndigo",
+          "blopIndigo",
+          "blopGriotte",
+          "blopGriotte",
+          "blopReinette",
+          "blopReinette",
+          "gloutoblop",
+          "gloutoblop",
+          "tronkoblop",
+          "tronkoblop"
+        ]
+      ],
+      "bossWave": [
+        "royalBlopMulti",
+        "royalCoco",
+        "royalIndigo",
+        "royalGriotte",
+        "royalReinette",
+        "blopignon"
+      ]
+    }
+  },
+  "dungeonModes": {
+    "normal": {
+      "label": "Normal",
+      "monsterCount": 1,
+      "hp": 1,
+      "completeSet": false
+    },
+    "extreme": {
+      "label": "Extrême",
+      "monsterCount": 5,
+      "hp": 1.5,
+      "completeSet": true
+    }
+  },
+  "monsters": {
+    "bwork": {
+      "name": "Bwork",
+      "sprite": "1003",
+      "hp": 380,
+      "speed": 52,
+      "detect": 720,
+      "range": 24,
+      "damage": 44,
+      "interval": 1.8,
+      "xp": 32,
+      "kamas": 12,
+      "boss": false,
+      "loot": [
+        {
+          "item": "6799",
+          "weight": 1
+        },
+        {
+          "item": "6804",
+          "weight": 1
+        },
+        {
+          "item": "6805",
+          "weight": 1
+        },
+        {
+          "item": "6807",
+          "weight": 1
+        },
+        {
+          "item": "6811",
+          "weight": 1
+        },
+        {
+          "item": "6812",
+          "weight": 1
+        },
+        {
+          "item": "6813",
+          "weight": 1
+        }
+      ]
+    },
+    "bworkArcher": {
+      "name": "Bwork Archer",
+      "sprite": "1004",
+      "hp": 380,
+      "speed": 52,
+      "detect": 720,
+      "range": 24,
+      "damage": 44,
+      "interval": 1.8,
+      "xp": 32,
+      "kamas": 12,
+      "boss": false,
+      "loot": [
+        {
+          "item": "6799",
+          "weight": 1
+        },
+        {
+          "item": "6804",
+          "weight": 1
+        },
+        {
+          "item": "6805",
+          "weight": 1
+        },
+        {
+          "item": "6807",
+          "weight": 1
+        },
+        {
+          "item": "6811",
+          "weight": 1
+        },
+        {
+          "item": "6812",
+          "weight": 1
+        },
+        {
+          "item": "6813",
+          "weight": 1
+        }
+      ]
+    },
+    "bworkMage": {
+      "name": "Bwork Mage",
+      "sprite": "1012",
+      "hp": 380,
+      "speed": 52,
+      "detect": 720,
+      "range": 24,
+      "damage": 44,
+      "interval": 1.8,
+      "xp": 32,
+      "kamas": 12,
+      "boss": false,
+      "loot": [
+        {
+          "item": "6799",
+          "weight": 1
+        },
+        {
+          "item": "6804",
+          "weight": 1
+        },
+        {
+          "item": "6805",
+          "weight": 1
+        },
+        {
+          "item": "6807",
+          "weight": 1
+        },
+        {
+          "item": "6811",
+          "weight": 1
+        },
+        {
+          "item": "6812",
+          "weight": 1
+        },
+        {
+          "item": "6813",
+          "weight": 1
+        }
+      ]
+    },
+    "bworkette": {
+      "name": "Bworkette",
+      "sprite": "1241",
+      "hp": 3400,
+      "speed": 52,
+      "detect": 720,
+      "range": 30,
+      "damage": 76,
+      "interval": 1.8,
+      "xp": 320,
+      "kamas": 140,
+      "boss": true,
+      "loot": [
+        {
+          "item": "6799",
+          "weight": 1
+        },
+        {
+          "item": "6804",
+          "weight": 1
+        },
+        {
+          "item": "6805",
+          "weight": 1
+        },
+        {
+          "item": "6807",
+          "weight": 1
+        },
+        {
+          "item": "6811",
+          "weight": 1
+        },
+        {
+          "item": "6812",
+          "weight": 1
+        },
+        {
+          "item": "6813",
+          "weight": 1
+        }
+      ]
+    },
+    "bworkestre": {
+      "name": "Chef Bworkestre",
+      "sprite": "1003",
+      "hp": 720,
+      "speed": 52,
+      "detect": 720,
+      "range": 24,
+      "damage": 52,
+      "interval": 1.8,
+      "xp": 50,
+      "kamas": 18,
+      "boss": false,
+      "loot": [
+        {
+          "item": "6799",
+          "weight": 1
+        },
+        {
+          "item": "6804",
+          "weight": 1
+        },
+        {
+          "item": "6805",
+          "weight": 1
+        },
+        {
+          "item": "6807",
+          "weight": 1
+        },
+        {
+          "item": "6811",
+          "weight": 1
+        },
+        {
+          "item": "6812",
+          "weight": 1
+        },
+        {
+          "item": "6813",
+          "weight": 1
+        }
+      ]
+    },
+    "blopCoco": {
+      "name": "Blop Coco",
+      "sprite": "1174",
+      "hp": 460,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 44,
+      "interval": 1.8,
+      "xp": 32,
+      "kamas": 12,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "blopIndigo": {
+      "name": "Blop Indigo",
+      "sprite": "1171",
+      "hp": 460,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 44,
+      "interval": 1.8,
+      "xp": 32,
+      "kamas": 12,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "blopGriotte": {
+      "name": "Blop Griotte",
+      "sprite": "1172",
+      "hp": 460,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 44,
+      "interval": 1.8,
+      "xp": 32,
+      "kamas": 12,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "blopReinette": {
+      "name": "Blop Reinette",
+      "sprite": "1173",
+      "hp": 460,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 44,
+      "interval": 1.8,
+      "xp": 32,
+      "kamas": 12,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "biblopIndigo": {
+      "name": "Biblop Indigo",
+      "sprite": "1175",
+      "hp": 240,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 32,
+      "interval": 1.8,
+      "xp": 32,
+      "kamas": 12,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "biblopCoco": {
+      "name": "Biblop Coco",
+      "sprite": "1178",
+      "hp": 240,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 32,
+      "interval": 1.8,
+      "xp": 32,
+      "kamas": 12,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "biblopGriotte": {
+      "name": "Biblop Griotte",
+      "sprite": "1176",
+      "hp": 240,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 32,
+      "interval": 1.8,
+      "xp": 32,
+      "kamas": 12,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "biblopReinette": {
+      "name": "Biblop Reinette",
+      "sprite": "1177",
+      "hp": 240,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 32,
+      "interval": 1.8,
+      "xp": 32,
+      "kamas": 12,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "gloutoblop": {
+      "name": "Gloutoblop",
+      "sprite": "1652",
+      "hp": 720,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 52,
+      "interval": 1.8,
+      "xp": 50,
+      "kamas": 18,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "blopignon": {
+      "name": "Blopignon",
+      "sprite": "1645",
+      "hp": 460,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 44,
+      "interval": 1.8,
+      "xp": 32,
+      "kamas": 12,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "tronkoblop": {
+      "name": "Tronkoblop",
+      "sprite": "1653",
+      "hp": 720,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 52,
+      "interval": 1.8,
+      "xp": 50,
+      "kamas": 18,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "royalCoco": {
+      "name": "Blop Coco Royal",
+      "sprite": "1654",
+      "hp": 720,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 52,
+      "interval": 1.8,
+      "xp": 50,
+      "kamas": 18,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "royalGriotte": {
+      "name": "Blop Griotte Royal",
+      "sprite": "1657",
+      "hp": 720,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 52,
+      "interval": 1.8,
+      "xp": 50,
+      "kamas": 18,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "royalIndigo": {
+      "name": "Blop Indigo Royal",
+      "sprite": "1656",
+      "hp": 720,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 52,
+      "interval": 1.8,
+      "xp": 50,
+      "kamas": 18,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "royalReinette": {
+      "name": "Blop Reinette Royal",
+      "sprite": "1655",
+      "hp": 720,
+      "speed": 44,
+      "detect": 720,
+      "range": 24,
+      "damage": 52,
+      "interval": 1.8,
+      "xp": 50,
+      "kamas": 18,
+      "boss": false,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "royalBlopMulti": {
+      "name": "Blop Multicolore Royal",
+      "sprite": "1647",
+      "hp": 4200,
+      "speed": 44,
+      "detect": 720,
+      "range": 30,
+      "damage": 88,
+      "interval": 1.8,
+      "xp": 320,
+      "kamas": 140,
+      "boss": true,
+      "loot": [
+        {
+          "item": "9148",
+          "weight": 1
+        },
+        {
+          "item": "9157",
+          "weight": 1
+        },
+        {
+          "item": "9166",
+          "weight": 1
+        },
+        {
+          "item": "9175",
+          "weight": 1
+        }
+      ]
+    },
+    "tofu": {
+      "name": "Tofu",
+      "sprite": "1558",
+      "hp": 160,
+      "speed": 78,
+      "detect": 720,
+      "range": 24,
+      "damage": 24,
+      "interval": 1.7,
+      "xp": 24,
+      "kamas": 8,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8108",
+          "weight": 1
+        },
+        {
+          "item": "8109",
+          "weight": 1
+        },
+        {
+          "item": "8110",
+          "weight": 1
+        },
+        {
+          "item": "8111",
+          "weight": 1
+        },
+        {
+          "item": "8112",
+          "weight": 1
+        },
+        {
+          "item": "8113",
+          "weight": 1
+        },
+        {
+          "item": "8114",
+          "weight": 1
+        }
+      ]
+    },
+    "blackTofu": {
+      "name": "Tofu Noir",
+      "sprite": "1462",
+      "hp": 250,
+      "speed": 85,
+      "detect": 720,
+      "range": 24,
+      "damage": 30,
+      "interval": 1.7,
+      "xp": 24,
+      "kamas": 8,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8108",
+          "weight": 1
+        },
+        {
+          "item": "8109",
+          "weight": 1
+        },
+        {
+          "item": "8110",
+          "weight": 1
+        },
+        {
+          "item": "8111",
+          "weight": 1
+        },
+        {
+          "item": "8112",
+          "weight": 1
+        },
+        {
+          "item": "8113",
+          "weight": 1
+        },
+        {
+          "item": "8114",
+          "weight": 1
+        }
+      ]
+    },
+    "batofu": {
+      "name": "Batofu",
+      "sprite": "1380",
+      "hp": 1800,
+      "speed": 76,
+      "detect": 720,
+      "range": 30,
+      "damage": 50,
+      "interval": 1.7,
+      "xp": 180,
+      "kamas": 90,
+      "boss": true,
+      "loot": [
+        {
+          "item": "8108",
+          "weight": 1
+        },
+        {
+          "item": "8109",
+          "weight": 1
+        },
+        {
+          "item": "8110",
+          "weight": 1
+        },
+        {
+          "item": "8111",
+          "weight": 1
+        },
+        {
+          "item": "8112",
+          "weight": 1
+        },
+        {
+          "item": "8113",
+          "weight": 1
+        },
+        {
+          "item": "8114",
+          "weight": 1
+        }
+      ]
+    },
+    "blueScara": {
+      "name": "Scarafeuille Bleu",
+      "sprite": "1135",
+      "hp": 300,
+      "speed": 48,
+      "detect": 720,
+      "range": 24,
+      "damage": 32,
+      "interval": 1.7,
+      "xp": 24,
+      "kamas": 8,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8132",
+          "weight": 1
+        },
+        {
+          "item": "8133",
+          "weight": 1
+        },
+        {
+          "item": "8134",
+          "weight": 1
+        },
+        {
+          "item": "8136",
+          "weight": 1
+        }
+      ]
+    },
+    "redScara": {
+      "name": "Scarafeuille Rouge",
+      "sprite": "1136",
+      "hp": 300,
+      "speed": 48,
+      "detect": 720,
+      "range": 24,
+      "damage": 32,
+      "interval": 1.7,
+      "xp": 24,
+      "kamas": 8,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8132",
+          "weight": 1
+        },
+        {
+          "item": "8133",
+          "weight": 1
+        },
+        {
+          "item": "8134",
+          "weight": 1
+        },
+        {
+          "item": "8136",
+          "weight": 1
+        }
+      ]
+    },
+    "greenScara": {
+      "name": "Scarafeuille Vert",
+      "sprite": "1137",
+      "hp": 300,
+      "speed": 48,
+      "detect": 720,
+      "range": 24,
+      "damage": 32,
+      "interval": 1.7,
+      "xp": 24,
+      "kamas": 8,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8132",
+          "weight": 1
+        },
+        {
+          "item": "8133",
+          "weight": 1
+        },
+        {
+          "item": "8134",
+          "weight": 1
+        },
+        {
+          "item": "8136",
+          "weight": 1
+        }
+      ]
+    },
+    "whiteScara": {
+      "name": "Scarafeuille Blanc",
+      "sprite": "1138",
+      "hp": 300,
+      "speed": 48,
+      "detect": 720,
+      "range": 24,
+      "damage": 32,
+      "interval": 1.7,
+      "xp": 24,
+      "kamas": 8,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8132",
+          "weight": 1
+        },
+        {
+          "item": "8133",
+          "weight": 1
+        },
+        {
+          "item": "8134",
+          "weight": 1
+        },
+        {
+          "item": "8136",
+          "weight": 1
+        }
+      ]
+    },
+    "blackScara": {
+      "name": "Scarafeuille Noir",
+      "sprite": "1453",
+      "hp": 450,
+      "speed": 52,
+      "detect": 720,
+      "range": 24,
+      "damage": 40,
+      "interval": 1.7,
+      "xp": 24,
+      "kamas": 8,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8132",
+          "weight": 1
+        },
+        {
+          "item": "8133",
+          "weight": 1
+        },
+        {
+          "item": "8134",
+          "weight": 1
+        },
+        {
+          "item": "8136",
+          "weight": 1
+        }
+      ]
+    },
+    "goldScara": {
+      "name": "Scarabosse Doré",
+      "sprite": "1455",
+      "hp": 2400,
+      "speed": 45,
+      "detect": 720,
+      "range": 30,
+      "damage": 62,
+      "interval": 1.7,
+      "xp": 180,
+      "kamas": 90,
+      "boss": true,
+      "loot": [
+        {
+          "item": "8132",
+          "weight": 1
+        },
+        {
+          "item": "8133",
+          "weight": 1
+        },
+        {
+          "item": "8134",
+          "weight": 1
+        },
+        {
+          "item": "8136",
+          "weight": 1
+        }
+      ]
+    },
+    "white": {
+      "name": "Boufton Blanc",
+      "sprite": "1570",
+      "hp": 95,
+      "speed": 54,
+      "detect": 700,
+      "range": 21,
+      "damage": 16,
+      "interval": 1.6,
+      "xp": 7,
+      "kamas": 3,
+      "loot": [
+        {
+          "item": "2425",
+          "weight": 4
+        },
+        {
+          "item": "2419",
+          "weight": 4
+        },
+        {
+          "item": "2422",
+          "weight": 3
+        },
+        {
+          "item": "2428",
+          "weight": 3
+        },
+        {
+          "item": "2411",
+          "weight": 2
+        },
+        {
+          "item": "2414",
+          "weight": 2
+        },
+        {
+          "item": "2416",
+          "weight": 2
+        }
+      ]
+    },
+    "black": {
+      "name": "Boufton Noir",
+      "sprite": "1571",
+      "hp": 105,
+      "speed": 56,
+      "detect": 700,
+      "range": 21,
+      "damage": 18,
+      "interval": 1.7,
+      "xp": 8,
+      "kamas": 3,
+      "loot": [
+        {
+          "item": "2425",
+          "weight": 4
+        },
+        {
+          "item": "2419",
+          "weight": 4
+        },
+        {
+          "item": "2422",
+          "weight": 3
+        },
+        {
+          "item": "2428",
+          "weight": 3
+        },
+        {
+          "item": "2411",
+          "weight": 2
+        },
+        {
+          "item": "2414",
+          "weight": 2
+        },
+        {
+          "item": "2416",
+          "weight": 2
+        }
+      ]
+    },
+    "bouftou": {
+      "name": "Bouftou",
+      "sprite": "1566",
+      "hp": 150,
+      "speed": 51,
+      "detect": 700,
+      "range": 24,
+      "damage": 22,
+      "interval": 1.6,
+      "xp": 11,
+      "kamas": 5,
+      "loot": [
+        {
+          "item": "2425",
+          "weight": 4
+        },
+        {
+          "item": "2419",
+          "weight": 4
+        },
+        {
+          "item": "2422",
+          "weight": 3
+        },
+        {
+          "item": "2428",
+          "weight": 3
+        },
+        {
+          "item": "2411",
+          "weight": 2
+        },
+        {
+          "item": "2414",
+          "weight": 2
+        },
+        {
+          "item": "2416",
+          "weight": 2
+        }
+      ]
+    },
+    "chief": {
+      "name": "Chef de Guerre Bouftou",
+      "sprite": "1573",
+      "hp": 280,
+      "speed": 64,
+      "detect": 700,
+      "range": 27,
+      "damage": 32,
+      "interval": 1.6,
+      "xp": 20,
+      "kamas": 10,
+      "loot": [
+        {
+          "item": "2425",
+          "weight": 4
+        },
+        {
+          "item": "2419",
+          "weight": 4
+        },
+        {
+          "item": "2422",
+          "weight": 3
+        },
+        {
+          "item": "2428",
+          "weight": 3
+        },
+        {
+          "item": "2411",
+          "weight": 2
+        },
+        {
+          "item": "2414",
+          "weight": 2
+        },
+        {
+          "item": "2416",
+          "weight": 2
+        }
+      ]
+    },
+    "royal": {
+      "name": "Bouftou Royal",
+      "sprite": "1574",
+      "hp": 1400,
+      "speed": 49,
+      "detect": 700,
+      "range": 32,
+      "damage": 52,
+      "interval": 1.8,
+      "xp": 110,
+      "kamas": 70,
+      "boss": true,
+      "loot": [
+        {
+          "item": "2425",
+          "weight": 4
+        },
+        {
+          "item": "2419",
+          "weight": 4
+        },
+        {
+          "item": "2422",
+          "weight": 3
+        },
+        {
+          "item": "2428",
+          "weight": 3
+        },
+        {
+          "item": "2411",
+          "weight": 2
+        },
+        {
+          "item": "2414",
+          "weight": 2
+        },
+        {
+          "item": "2416",
+          "weight": 2
+        }
+      ],
+      "bonusLoot": {
+        "chance": 0.1,
+        "table": [
+          {
+            "item": "2438",
+            "weight": 1
+          },
+          {
+            "item": "2445",
+            "weight": 1
+          },
+          {
+            "item": "2440",
+            "weight": 1
+          },
+          {
+            "item": "2441",
+            "weight": 1
+          },
+          {
+            "item": "2442",
+            "weight": 1
+          },
+          {
+            "item": "2443",
+            "weight": 1
+          },
+          {
+            "item": "2444",
+            "weight": 1
+          }
+        ]
+      },
+      "speedBurst": {
+        "interval": 5,
+        "duration": 1,
+        "multiplier": 2
+      }
+    },
+    "milimilou": {
+      "name": "Milimilou",
+      "sprite": "1581",
+      "hp": 480,
+      "speed": 64,
+      "detect": 700,
+      "range": 28,
+      "damage": 22,
+      "interval": 1.7,
+      "xp": 90,
+      "kamas": 55,
+      "boss": true,
+      "loot": [
+        {
+          "item": "2473",
+          "weight": 1
+        },
+        {
+          "item": "2474",
+          "weight": 1
+        },
+        {
+          "item": "2475",
+          "weight": 1
+        },
+        {
+          "item": "2476",
+          "weight": 1
+        },
+        {
+          "item": "2477",
+          "weight": 1
+        },
+        {
+          "item": "2478",
+          "weight": 1
+        }
+      ]
+    },
+    "chafer": {
+      "name": "Chafer Prépubère",
+      "sprite": "1014",
+      "hp": 90,
+      "speed": 48,
+      "detect": 700,
+      "range": 24,
+      "damage": 15,
+      "interval": 1.7,
+      "xp": 12,
+      "kamas": 5,
+      "loot": [
+        {
+          "item": "2473",
+          "weight": 1
+        },
+        {
+          "item": "2474",
+          "weight": 1
+        },
+        {
+          "item": "2475",
+          "weight": 1
+        },
+        {
+          "item": "2476",
+          "weight": 1
+        },
+        {
+          "item": "2477",
+          "weight": 1
+        },
+        {
+          "item": "2478",
+          "weight": 1
+        }
+      ]
+    },
+    "youngWhite": {
+      "name": "Jeune Boufton Blanc",
+      "sprite": "1570",
+      "hp": 42,
+      "speed": 51,
+      "detect": 700,
+      "range": 20,
+      "damage": 7,
+      "interval": 1.8,
+      "xp": 6,
+      "kamas": 2,
+      "loot": [
+        {
+          "item": "2473",
+          "weight": 1
+        },
+        {
+          "item": "2474",
+          "weight": 1
+        },
+        {
+          "item": "2475",
+          "weight": 1
+        },
+        {
+          "item": "2476",
+          "weight": 1
+        },
+        {
+          "item": "2477",
+          "weight": 1
+        },
+        {
+          "item": "2478",
+          "weight": 1
+        }
+      ]
+    },
+    "youngBlack": {
+      "name": "Jeune Boufton Noir",
+      "sprite": "1571",
+      "hp": 48,
+      "speed": 53,
+      "detect": 700,
+      "range": 20,
+      "damage": 9,
+      "interval": 1.8,
+      "xp": 7,
+      "kamas": 2,
+      "loot": [
+        {
+          "item": "2473",
+          "weight": 1
+        },
+        {
+          "item": "2474",
+          "weight": 1
+        },
+        {
+          "item": "2475",
+          "weight": 1
+        },
+        {
+          "item": "2476",
+          "weight": 1
+        },
+        {
+          "item": "2477",
+          "weight": 1
+        },
+        {
+          "item": "2478",
+          "weight": 1
+        }
+      ]
+    },
+    "smallBouftou": {
+      "name": "Petit Bouftou",
+      "sprite": "1566",
+      "hp": 70,
+      "speed": 49,
+      "detect": 700,
+      "range": 23,
+      "damage": 12,
+      "interval": 1.8,
+      "xp": 9,
+      "kamas": 4,
+      "loot": [
+        {
+          "item": "2473",
+          "weight": 1
+        },
+        {
+          "item": "2474",
+          "weight": 1
+        },
+        {
+          "item": "2475",
+          "weight": 1
+        },
+        {
+          "item": "2476",
+          "weight": 1
+        },
+        {
+          "item": "2477",
+          "weight": 1
+        },
+        {
+          "item": "2478",
+          "weight": 1
+        }
+      ]
+    },
+    "crabe": {
+      "name": "Crabe",
+      "sprite": "1009",
+      "hp": 75,
+      "speed": 44,
+      "detect": 620,
+      "range": 18,
+      "damage": 11,
+      "interval": 1.7,
+      "xp": 6,
+      "kamas": 2,
+      "loot": [
+        {
+          "item": "8253",
+          "weight": 4
+        },
+        {
+          "item": "8254",
+          "weight": 4
+        },
+        {
+          "item": "8256",
+          "weight": 3
+        },
+        {
+          "item": "8257",
+          "weight": 3
+        },
+        {
+          "item": "8258",
+          "weight": 2
+        },
+        {
+          "item": "8259",
+          "weight": 2
+        },
+        {
+          "item": "8255",
+          "weight": 2
+        }
+      ]
+    },
+    "etoileMer": {
+      "name": "Étoile de la Mer d’Asse",
+      "sprite": "1474",
+      "hp": 88,
+      "speed": 41,
+      "detect": 640,
+      "range": 22,
+      "damage": 13,
+      "interval": 1.9,
+      "xp": 8,
+      "kamas": 3,
+      "loot": [
+        {
+          "item": "8253",
+          "weight": 4
+        },
+        {
+          "item": "8254",
+          "weight": 4
+        },
+        {
+          "item": "8256",
+          "weight": 3
+        },
+        {
+          "item": "8257",
+          "weight": 3
+        },
+        {
+          "item": "8258",
+          "weight": 2
+        },
+        {
+          "item": "8259",
+          "weight": 2
+        },
+        {
+          "item": "8255",
+          "weight": 2
+        }
+      ]
+    },
+    "pichonBlanc": {
+      "name": "Pichon Blanc",
+      "sprite": "1485",
+      "hp": 104,
+      "speed": 51,
+      "detect": 680,
+      "range": 26,
+      "damage": 16,
+      "interval": 1.8,
+      "xp": 10,
+      "kamas": 4,
+      "loot": [
+        {
+          "item": "8253",
+          "weight": 4
+        },
+        {
+          "item": "8254",
+          "weight": 4
+        },
+        {
+          "item": "8256",
+          "weight": 3
+        },
+        {
+          "item": "8257",
+          "weight": 3
+        },
+        {
+          "item": "8258",
+          "weight": 2
+        },
+        {
+          "item": "8259",
+          "weight": 2
+        },
+        {
+          "item": "8255",
+          "weight": 2
+        }
+      ]
+    },
+    "pichonBleu": {
+      "name": "Pichon Bleu",
+      "sprite": "1487",
+      "hp": 104,
+      "speed": 51,
+      "detect": 680,
+      "range": 26,
+      "damage": 16,
+      "interval": 1.8,
+      "xp": 10,
+      "kamas": 4,
+      "loot": [
+        {
+          "item": "8253",
+          "weight": 4
+        },
+        {
+          "item": "8254",
+          "weight": 4
+        },
+        {
+          "item": "8256",
+          "weight": 3
+        },
+        {
+          "item": "8257",
+          "weight": 3
+        },
+        {
+          "item": "8258",
+          "weight": 2
+        },
+        {
+          "item": "8259",
+          "weight": 2
+        },
+        {
+          "item": "8255",
+          "weight": 2
+        }
+      ]
+    },
+    "pichonVert": {
+      "name": "Pichon Vert",
+      "sprite": "1484",
+      "hp": 104,
+      "speed": 51,
+      "detect": 680,
+      "range": 24,
+      "damage": 17,
+      "interval": 1.8,
+      "xp": 10,
+      "kamas": 4,
+      "loot": [
+        {
+          "item": "8253",
+          "weight": 4
+        },
+        {
+          "item": "8254",
+          "weight": 4
+        },
+        {
+          "item": "8256",
+          "weight": 3
+        },
+        {
+          "item": "8257",
+          "weight": 3
+        },
+        {
+          "item": "8258",
+          "weight": 2
+        },
+        {
+          "item": "8259",
+          "weight": 2
+        },
+        {
+          "item": "8255",
+          "weight": 2
+        }
+      ]
+    },
+    "pichonOrange": {
+      "name": "Pichon Orange",
+      "sprite": "1488",
+      "hp": 104,
+      "speed": 51,
+      "detect": 680,
+      "range": 28,
+      "damage": 16,
+      "interval": 1.8,
+      "xp": 10,
+      "kamas": 4,
+      "loot": [
+        {
+          "item": "8253",
+          "weight": 4
+        },
+        {
+          "item": "8254",
+          "weight": 4
+        },
+        {
+          "item": "8256",
+          "weight": 3
+        },
+        {
+          "item": "8257",
+          "weight": 3
+        },
+        {
+          "item": "8258",
+          "weight": 2
+        },
+        {
+          "item": "8259",
+          "weight": 2
+        },
+        {
+          "item": "8255",
+          "weight": 2
+        }
+      ]
+    },
+    "pichonKloune": {
+      "name": "Pichon Kloune",
+      "sprite": "1483",
+      "hp": 210,
+      "speed": 53,
+      "detect": 700,
+      "range": 25,
+      "damage": 23,
+      "interval": 1.7,
+      "xp": 20,
+      "kamas": 9,
+      "loot": [
+        {
+          "item": "8253",
+          "weight": 4
+        },
+        {
+          "item": "8254",
+          "weight": 4
+        },
+        {
+          "item": "8256",
+          "weight": 3
+        },
+        {
+          "item": "8257",
+          "weight": 3
+        },
+        {
+          "item": "8258",
+          "weight": 2
+        },
+        {
+          "item": "8259",
+          "weight": 2
+        },
+        {
+          "item": "8255",
+          "weight": 2
+        }
+      ]
+    },
+    "raulMops": {
+      "name": "Raul Mops",
+      "sprite": "1481",
+      "hp": 460,
+      "speed": 55,
+      "detect": 720,
+      "range": 29,
+      "damage": 30,
+      "interval": 1.8,
+      "xp": 60,
+      "kamas": 28,
+      "loot": [
+        {
+          "item": "8253",
+          "weight": 4
+        },
+        {
+          "item": "8254",
+          "weight": 4
+        },
+        {
+          "item": "8256",
+          "weight": 3
+        },
+        {
+          "item": "8257",
+          "weight": 3
+        },
+        {
+          "item": "8258",
+          "weight": 2
+        },
+        {
+          "item": "8259",
+          "weight": 2
+        },
+        {
+          "item": "8255",
+          "weight": 2
+        }
+      ],
+      "rangedAttack": {
+        "range": 220,
+        "speed": 260,
+        "radius": 10,
+        "windup": 0.4125,
+        "animationDuration": 0.9,
+        "asset": "spell.raulMops.spear",
+        "animation": "mob.1481.throw"
+      }
+    },
+    "sponge": {
+      "name": "Mob l’Éponge",
+      "sprite": "1546",
+      "hp": 850,
+      "speed": 48,
+      "detect": 720,
+      "range": 30,
+      "damage": 36,
+      "interval": 1.8,
+      "xp": 130,
+      "kamas": 75,
+      "boss": true,
+      "loot": [
+        {
+          "item": "8253",
+          "weight": 4
+        },
+        {
+          "item": "8254",
+          "weight": 4
+        },
+        {
+          "item": "8256",
+          "weight": 3
+        },
+        {
+          "item": "8257",
+          "weight": 3
+        },
+        {
+          "item": "8258",
+          "weight": 2
+        },
+        {
+          "item": "8259",
+          "weight": 2
+        },
+        {
+          "item": "8255",
+          "weight": 2
+        }
+      ]
+    }
+  },
+  "items": {
+    "2411": {
+      "id": "2411",
+      "name": "Coiffe du Bouftou",
+      "category": "hat",
+      "stats": {
+        "hp": 44,
+        "power": 24
+      },
+      "set": "bouftou",
+      "icon": "item.2411"
+    },
+    "2414": {
+      "id": "2414",
+      "name": "Cape Bouffante",
+      "category": "cape",
+      "stats": {
+        "hp": 62,
+        "power": 18
+      },
+      "set": "bouftou",
+      "icon": "item.2414"
+    },
+    "2416": {
+      "id": "2416",
+      "name": "Marteau du Bouftou",
+      "category": "weapon",
+      "stats": {
+        "hp": 24,
+        "power": 36
+      },
+      "set": "bouftou",
+      "icon": "item.2416"
+    },
+    "2419": {
+      "id": "2419",
+      "name": "Anneau de Bouze le Clerc",
+      "category": "ring",
+      "stats": {
+        "hp": 30,
+        "power": 14
+      },
+      "set": "bouftou",
+      "icon": "item.2419"
+    },
+    "2422": {
+      "id": "2422",
+      "name": "Boufbottes",
+      "category": "boots",
+      "stats": {
+        "hp": 42,
+        "power": 16
+      },
+      "set": "bouftou",
+      "icon": "item.2422"
+    },
+    "2425": {
+      "id": "2425",
+      "name": "Amulette du Bouftou",
+      "category": "amulet",
+      "stats": {
+        "hp": 22,
+        "power": 26
+      },
+      "set": "bouftou",
+      "icon": "item.2425"
+    },
+    "2428": {
+      "id": "2428",
+      "name": "Ceinture du Bouftou",
+      "category": "belt",
+      "stats": {
+        "hp": 56,
+        "power": 16
+      },
+      "set": "bouftou",
+      "icon": "item.2428"
+    },
+    "2438": {
+      "id": "2438",
+      "name": "Boufcoiffe Royale",
+      "category": "hat",
+      "stats": {
+        "hp": 66,
+        "power": 36
+      },
+      "set": "royalBouftou",
+      "icon": "item.2438"
+    },
+    "2440": {
+      "id": "2440",
+      "name": "Epée Royale du Bouftou",
+      "category": "weapon",
+      "stats": {
+        "hp": 36,
+        "power": 54
+      },
+      "set": "royalBouftou",
+      "icon": "item.2440"
+    },
+    "2441": {
+      "id": "2441",
+      "name": "Anneau Royal du Bouftou",
+      "category": "ring",
+      "stats": {
+        "hp": 45,
+        "power": 21
+      },
+      "set": "royalBouftou",
+      "icon": "item.2441"
+    },
+    "2442": {
+      "id": "2442",
+      "name": "Boufbottes Royales",
+      "category": "boots",
+      "stats": {
+        "hp": 63,
+        "power": 24
+      },
+      "set": "royalBouftou",
+      "icon": "item.2442"
+    },
+    "2443": {
+      "id": "2443",
+      "name": "Amulette Royale du Bouftou",
+      "category": "amulet",
+      "stats": {
+        "hp": 33,
+        "power": 39
+      },
+      "set": "royalBouftou",
+      "icon": "item.2443"
+    },
+    "2444": {
+      "id": "2444",
+      "name": "Ceinture Royale du Bouftou",
+      "category": "belt",
+      "stats": {
+        "hp": 84,
+        "power": 24
+      },
+      "set": "royalBouftou",
+      "icon": "item.2444"
+    },
+    "2445": {
+      "id": "2445",
+      "name": "Cape Bouffante Royale",
+      "category": "cape",
+      "stats": {
+        "hp": 93,
+        "power": 27
+      },
+      "set": "royalBouftou",
+      "icon": "item.2445"
+    },
+    "2473": {
+      "id": "2473",
+      "name": "Cape de l’Aventurier",
+      "category": "cape",
+      "stats": {
+        "hp": 18,
+        "power": 4
+      },
+      "set": "adventurer",
+      "icon": "item.2473"
+    },
+    "2474": {
+      "id": "2474",
+      "name": "Chapeau de l’Aventurier",
+      "category": "hat",
+      "stats": {
+        "hp": 14,
+        "power": 6
+      },
+      "set": "adventurer",
+      "icon": "item.2474"
+    },
+    "2475": {
+      "id": "2475",
+      "name": "Anneau de l’Aventurier",
+      "category": "ring",
+      "stats": {
+        "hp": 10,
+        "power": 4
+      },
+      "set": "adventurer",
+      "icon": "item.2475"
+    },
+    "2476": {
+      "id": "2476",
+      "name": "Bottes de l’Aventurier",
+      "category": "boots",
+      "stats": {
+        "hp": 16,
+        "power": 3
+      },
+      "set": "adventurer",
+      "icon": "item.2476"
+    },
+    "2477": {
+      "id": "2477",
+      "name": "Ceinture de l’aventurier",
+      "category": "belt",
+      "stats": {
+        "hp": 18,
+        "power": 3
+      },
+      "set": "adventurer",
+      "icon": "item.2477"
+    },
+    "2478": {
+      "id": "2478",
+      "name": "Amulette de l’Aventurier",
+      "category": "amulet",
+      "stats": {
+        "hp": 8,
+        "power": 6
+      },
+      "set": "adventurer",
+      "icon": "item.2478"
+    },
+    "6799": {
+      "id": "6799",
+      "name": "Lame du Chef Bwork",
+      "category": "weapon",
+      "stats": {
+        "hp": 95,
+        "power": 40,
+        "movementSpeed": 2,
+        "cooldownReduction": 2
+      },
+      "set": "chefBwork",
+      "icon": "item.6799"
+    },
+    "6804": {
+      "id": "6804",
+      "name": "Amulette du Chef Bwork",
+      "category": "amulet",
+      "stats": {
+        "hp": 95,
+        "power": 40,
+        "movementSpeed": 2,
+        "cooldownReduction": 2
+      },
+      "set": "chefBwork",
+      "icon": "item.6804"
+    },
+    "6805": {
+      "id": "6805",
+      "name": "Bracelet du Chef Bwork",
+      "category": "ring",
+      "stats": {
+        "hp": 95,
+        "power": 40,
+        "movementSpeed": 2,
+        "cooldownReduction": 2
+      },
+      "set": "chefBwork",
+      "icon": "item.6805"
+    },
+    "6807": {
+      "id": "6807",
+      "name": "Bottes du Chef Bwork",
+      "category": "boots",
+      "stats": {
+        "hp": 95,
+        "power": 40,
+        "movementSpeed": 2,
+        "cooldownReduction": 2
+      },
+      "set": "chefBwork",
+      "icon": "item.6807"
+    },
+    "6811": {
+      "id": "6811",
+      "name": "Cape du Chef Bwork",
+      "category": "cape",
+      "stats": {
+        "hp": 95,
+        "power": 40,
+        "movementSpeed": 2,
+        "cooldownReduction": 2
+      },
+      "set": "chefBwork",
+      "icon": "item.6811"
+    },
+    "6812": {
+      "id": "6812",
+      "name": "Slip du Chef Bwork",
+      "category": "belt",
+      "stats": {
+        "hp": 95,
+        "power": 40,
+        "movementSpeed": 2,
+        "cooldownReduction": 2
+      },
+      "set": "chefBwork",
+      "icon": "item.6812"
+    },
+    "6813": {
+      "id": "6813",
+      "name": "Casque du Chef Bwork",
+      "category": "hat",
+      "stats": {
+        "hp": 95,
+        "power": 40,
+        "movementSpeed": 2,
+        "cooldownReduction": 2
+      },
+      "set": "chefBwork",
+      "icon": "item.6813"
+    },
+    "8108": {
+      "id": "8108",
+      "name": "Amulette du Tofu",
+      "category": "amulet",
+      "stats": {
+        "hp": 16,
+        "power": 16,
+        "movementSpeed": 4,
+        "cooldownReduction": 1
+      },
+      "set": "tofu",
+      "icon": "item.8108"
+    },
+    "8109": {
+      "id": "8109",
+      "name": "Anneau du Tofu",
+      "category": "ring",
+      "stats": {
+        "hp": 16,
+        "power": 16,
+        "movementSpeed": 4,
+        "cooldownReduction": 1
+      },
+      "set": "tofu",
+      "icon": "item.8109"
+    },
+    "8110": {
+      "id": "8110",
+      "name": "Baguette du Tofu",
+      "category": "weapon",
+      "stats": {
+        "hp": 16,
+        "power": 16,
+        "movementSpeed": 4,
+        "cooldownReduction": 1
+      },
+      "set": "tofu",
+      "icon": "item.8110"
+    },
+    "8111": {
+      "id": "8111",
+      "name": "Pantoufles du Tofu",
+      "category": "boots",
+      "stats": {
+        "hp": 16,
+        "power": 16,
+        "movementSpeed": 4,
+        "cooldownReduction": 1
+      },
+      "set": "tofu",
+      "icon": "item.8111"
+    },
+    "8112": {
+      "id": "8112",
+      "name": "Cape du Tofu",
+      "category": "cape",
+      "stats": {
+        "hp": 16,
+        "power": 16,
+        "movementSpeed": 4,
+        "cooldownReduction": 1
+      },
+      "set": "tofu",
+      "icon": "item.8112"
+    },
+    "8113": {
+      "id": "8113",
+      "name": "Ceinture du Tofu",
+      "category": "belt",
+      "stats": {
+        "hp": 16,
+        "power": 16,
+        "movementSpeed": 4,
+        "cooldownReduction": 1
+      },
+      "set": "tofu",
+      "icon": "item.8113"
+    },
+    "8114": {
+      "id": "8114",
+      "name": "Kaskofu",
+      "category": "hat",
+      "stats": {
+        "hp": 16,
+        "power": 16,
+        "movementSpeed": 4,
+        "cooldownReduction": 1
+      },
+      "set": "tofu",
+      "icon": "item.8114"
+    },
+    "8132": {
+      "id": "8132",
+      "name": "Scarature Noire",
+      "category": "belt",
+      "stats": {
+        "hp": 100,
+        "power": 48,
+        "movementSpeed": 1,
+        "cooldownReduction": 1
+      },
+      "set": "blackScara",
+      "icon": "item.8132"
+    },
+    "8133": {
+      "id": "8133",
+      "name": "Scaracoiffe Noire",
+      "category": "hat",
+      "stats": {
+        "hp": 100,
+        "power": 48,
+        "movementSpeed": 1,
+        "cooldownReduction": 1
+      },
+      "set": "blackScara",
+      "icon": "item.8133"
+    },
+    "8134": {
+      "id": "8134",
+      "name": "Scaracape Noire",
+      "category": "cape",
+      "stats": {
+        "hp": 100,
+        "power": 48,
+        "movementSpeed": 1,
+        "cooldownReduction": 1
+      },
+      "set": "blackScara",
+      "icon": "item.8134"
+    },
+    "8136": {
+      "id": "8136",
+      "name": "Scaranneau Noir",
+      "category": "ring",
+      "stats": {
+        "hp": 100,
+        "power": 48,
+        "movementSpeed": 1,
+        "cooldownReduction": 1
+      },
+      "set": "blackScara",
+      "icon": "item.8136"
+    },
+    "8253": {
+      "id": "8253",
+      "name": "Amulette en Mousse",
+      "category": "amulet",
+      "stats": {
+        "hp": 14,
+        "power": 10,
+        "cooldownReduction": 1
+      },
+      "set": "mousse",
+      "icon": "item.8253"
+    },
+    "8254": {
+      "id": "8254",
+      "name": "Anneau en Mousse",
+      "category": "ring",
+      "stats": {
+        "hp": 18,
+        "power": 6,
+        "cooldownReduction": 1
+      },
+      "set": "mousse",
+      "icon": "item.8254"
+    },
+    "8255": {
+      "id": "8255",
+      "name": "Pelle en Mousse",
+      "category": "weapon",
+      "stats": {
+        "hp": 10,
+        "power": 10
+      },
+      "set": "mousse",
+      "icon": "item.8255"
+    },
+    "8256": {
+      "id": "8256",
+      "name": "Bottes en Mousse",
+      "category": "boots",
+      "stats": {
+        "hp": 22,
+        "power": 6,
+        "cooldownReduction": 2
+      },
+      "set": "mousse",
+      "icon": "item.8256"
+    },
+    "8257": {
+      "id": "8257",
+      "name": "Ceinture en Mousse",
+      "category": "belt",
+      "stats": {
+        "hp": 30,
+        "power": 6
+      },
+      "set": "mousse",
+      "icon": "item.8257"
+    },
+    "8258": {
+      "id": "8258",
+      "name": "Cape en Mousse",
+      "category": "cape",
+      "stats": {
+        "hp": 30,
+        "power": 7,
+        "cooldownReduction": 1
+      },
+      "set": "mousse",
+      "icon": "item.8258"
+    },
+    "8259": {
+      "id": "8259",
+      "name": "Coiffe en Mousse",
+      "category": "hat",
+      "stats": {
+        "hp": 26,
+        "power": 10,
+        "cooldownReduction": 1
+      },
+      "set": "mousse",
+      "icon": "item.8259"
+    },
+    "9148": {
+      "id": "9148",
+      "name": "Blopanneau Multicolore Royal",
+      "category": "ring",
+      "stats": {
+        "hp": 110,
+        "power": 90,
+        "movementSpeed": 2,
+        "cooldownReduction": 4
+      },
+      "set": "blopMulti",
+      "icon": "item.9148"
+    },
+    "9157": {
+      "id": "9157",
+      "name": "Amublop Multicolore Royale",
+      "category": "amulet",
+      "stats": {
+        "hp": 110,
+        "power": 90,
+        "movementSpeed": 2,
+        "cooldownReduction": 4
+      },
+      "set": "blopMulti",
+      "icon": "item.9157"
+    },
+    "9166": {
+      "id": "9166",
+      "name": "Bloptes Multicolores Royales",
+      "category": "boots",
+      "stats": {
+        "hp": 110,
+        "power": 90,
+        "movementSpeed": 2,
+        "cooldownReduction": 4
+      },
+      "set": "blopMulti",
+      "icon": "item.9166"
+    },
+    "9175": {
+      "id": "9175",
+      "name": "Blopture Multicolore Royale",
+      "category": "belt",
+      "stats": {
+        "hp": 110,
+        "power": 90,
+        "movementSpeed": 2,
+        "cooldownReduction": 4
+      },
+      "set": "blopMulti",
+      "icon": "item.9175"
+    },
+    "devHat": {
+      "id": "devHat",
+      "name": "Coiffe du dev",
+      "category": "hat",
+      "set": "developer",
+      "icon": "item.devHat",
+      "stats": {
+        "hp": 10000,
+        "power": 10000,
+        "movementSpeed": 150,
+        "cooldownReduction": 90
+      },
+      "statLimits": {
+        "movementSpeed": 150,
+        "cooldownReduction": 90
+      }
+    }
+  },
+  "sets": {
+    "bouftou": {
+      "name": "Panoplie du Bouftou",
+      "thresholds": {
+        "2": {
+          "hp": 24,
+          "power": 14
+        },
+        "3": {
+          "hp": 48,
+          "power": 30
+        },
+        "4": {
+          "hp": 80,
+          "power": 48
+        },
+        "5": {
+          "hp": 112,
+          "power": 68
+        },
+        "6": {
+          "hp": 144,
+          "power": 88
+        },
+        "7": {
+          "hp": 180,
+          "power": 110
+        }
+      }
+    },
+    "adventurer": {
+      "name": "Panoplie de l’Aventurier",
+      "thresholds": {
+        "2": {
+          "hp": 12,
+          "power": 5
+        },
+        "3": {
+          "hp": 22,
+          "power": 9
+        },
+        "4": {
+          "hp": 32,
+          "power": 14
+        },
+        "5": {
+          "hp": 44,
+          "power": 19
+        },
+        "6": {
+          "hp": 56,
+          "power": 24
+        }
+      }
+    },
+    "mousse": {
+      "name": "Panoplie en Mousse",
+      "thresholds": {
+        "2": {
+          "hp": 18,
+          "power": 8,
+          "cooldownReduction": 2
+        },
+        "3": {
+          "hp": 32,
+          "power": 15,
+          "cooldownReduction": 3
+        },
+        "4": {
+          "hp": 48,
+          "power": 24,
+          "cooldownReduction": 4
+        },
+        "5": {
+          "hp": 66,
+          "power": 34,
+          "cooldownReduction": 6
+        },
+        "6": {
+          "hp": 86,
+          "power": 44,
+          "cooldownReduction": 7
+        },
+        "7": {
+          "hp": 110,
+          "power": 55,
+          "cooldownReduction": 9
+        }
+      }
+    },
+    "royalBouftou": {
+      "name": "Panoplie du Bouftou Royal",
+      "thresholds": {
+        "2": {
+          "hp": 36,
+          "power": 21
+        },
+        "3": {
+          "hp": 72,
+          "power": 45
+        },
+        "4": {
+          "hp": 120,
+          "power": 72
+        },
+        "5": {
+          "hp": 168,
+          "power": 102
+        },
+        "6": {
+          "hp": 216,
+          "power": 132
+        },
+        "7": {
+          "hp": 270,
+          "power": 165
+        }
+      }
+    },
+    "tofu": {
+      "name": "Panoplie du Tofu",
+      "thresholds": {
+        "2": {
+          "hp": 16,
+          "power": 18,
+          "movementSpeed": 6,
+          "cooldownReduction": 2
+        },
+        "3": {
+          "hp": 24,
+          "power": 27,
+          "movementSpeed": 9,
+          "cooldownReduction": 3
+        },
+        "4": {
+          "hp": 32,
+          "power": 36,
+          "movementSpeed": 12,
+          "cooldownReduction": 4
+        },
+        "5": {
+          "hp": 40,
+          "power": 45,
+          "movementSpeed": 15,
+          "cooldownReduction": 5
+        },
+        "6": {
+          "hp": 48,
+          "power": 54,
+          "movementSpeed": 18,
+          "cooldownReduction": 6
+        },
+        "7": {
+          "hp": 56,
+          "power": 63,
+          "movementSpeed": 21,
+          "cooldownReduction": 7
+        }
+      }
+    },
+    "blackScara": {
+      "name": "Panoplie du Scarafeuille Noir",
+      "thresholds": {
+        "2": {
+          "hp": 90,
+          "power": 56,
+          "movementSpeed": 2,
+          "cooldownReduction": 2
+        },
+        "3": {
+          "hp": 135,
+          "power": 84,
+          "movementSpeed": 3,
+          "cooldownReduction": 3
+        },
+        "4": {
+          "hp": 180,
+          "power": 112,
+          "movementSpeed": 4,
+          "cooldownReduction": 4
+        }
+      }
+    },
+    "chefBwork": {
+      "name": "Panoplie du Chef Bwork",
+      "thresholds": {
+        "2": {
+          "hp": 80,
+          "power": 36,
+          "movementSpeed": 4,
+          "cooldownReduction": 2
+        },
+        "3": {
+          "hp": 120,
+          "power": 54,
+          "movementSpeed": 6,
+          "cooldownReduction": 3
+        },
+        "4": {
+          "hp": 160,
+          "power": 72,
+          "movementSpeed": 8,
+          "cooldownReduction": 4
+        },
+        "5": {
+          "hp": 200,
+          "power": 90,
+          "movementSpeed": 10,
+          "cooldownReduction": 5
+        },
+        "6": {
+          "hp": 240,
+          "power": 108,
+          "movementSpeed": 12,
+          "cooldownReduction": 6
+        },
+        "7": {
+          "hp": 280,
+          "power": 126,
+          "movementSpeed": 14,
+          "cooldownReduction": 7
+        }
+      }
+    },
+    "blopMulti": {
+      "name": "Panoplie Blop Multicolore Royale",
+      "thresholds": {
+        "2": {
+          "hp": 90,
+          "power": 80,
+          "movementSpeed": 4,
+          "cooldownReduction": 6
+        },
+        "3": {
+          "hp": 135,
+          "power": 120,
+          "movementSpeed": 6,
+          "cooldownReduction": 9
+        },
+        "4": {
+          "hp": 180,
+          "power": 160,
+          "movementSpeed": 8,
+          "cooldownReduction": 12
+        }
+      }
+    },
+    "developer": {
+      "name": "Équipement du développeur",
+      "thresholds": {}
+    }
+  },
+  "slots": [
+    "hat",
+    "cape",
+    "amulet",
+    "ring1",
+    "ring2",
+    "belt",
+    "boots",
+    "weapon"
+  ],
+  "slotNames": {
+    "hat": "Coiffe",
+    "cape": "Cape",
+    "amulet": "Amulette",
+    "ring1": "Anneau 1",
+    "ring2": "Anneau 2",
+    "belt": "Ceinture",
+    "boots": "Bottes",
+    "weapon": "Arme"
+  },
+  "resalePrices": {
+    "hat": 3,
+    "cape": 3,
+    "amulet": 2,
+    "ring": 1,
+    "ring1": 1,
+    "ring2": 1,
+    "belt": 2,
+    "boots": 2,
+    "weapon": 4
+  },
+  "spellDescriptions": {
+    "explosive": "Projectile explosif : dégâts de zone à l’impact.",
+    "flaming": "Flèche traversante dans la direction du curseur.",
+    "magic": "Projectile visant un ennemi.",
+    "power": "Augmente temporairement les dégâts.",
+    "dissolution": "Frappe les ennemis autour de vous et rend 50 % des dégâts réellement infligés en PV.",
+    "chastisement": "Pendant 5 secondes, chaque dégât subi donne 0,25 Puissance, conservée jusqu’à la fin du donjon.",
+    "transposition": "Échange votre position avec celle du personnage le plus proche du curseur sur le terrain accessible.",
+    "punishment": "Frappe la cible au contact. Dégâts maximaux à 50 % de vie.",
+    "sword": "Frappe les ennemis dans un cône devant vous.",
+    "jump": "Saute vers le curseur, jusqu’à la portée maximale, sur le terrain accessible.",
+    "intimidation": "Frappe et repousse les ennemis proches. Les obstacles arrêtent la poussée.",
+    "wrath": "Frappe très fortement en cône au contact. Chaque lancer multiplie les prochains dégâts de Colère par 1,5 jusqu’à la fin du donjon.",
+    "glyph": "Pose un glyphe persistant jusqu’à la fin du donjon. Inflige des dégâts chaque seconde. Plusieurs glyphes peuvent coexister.",
+    "cloudy": "Inflige des dégâts fixes à une cible près du curseur, sans limite de portée ni ligne de vue.",
+    "teleport": "Téléporte à courte portée vers le curseur sur le terrain accessible.",
+    "truce": "Suspend pendant 2 secondes les dégâts reçus et infligés. Les glyphes restent posés et reprennent ensuite."
+  }
+}

@@ -1,0 +1,31 @@
+[package]
+name = "bouftourust"
+version = "0.1.0"
+edition = "2024"
+description = "BouftouRush — jeu PC local en Rust et Bevy"
+
+[features]
+default = ["client"]
+client = ["dep:bevy_egui", "bevy/bevy_asset", "bevy/bevy_color", "bevy/bevy_core_pipeline", "bevy/bevy_render", "bevy/bevy_image", "bevy/bevy_mesh", "bevy/bevy_camera", "bevy/bevy_shader", "bevy/bevy_window", "bevy/bevy_winit", "bevy/png", "bevy/x11"]
+
+[[bin]]
+name = "bouftourust"
+path = "src/main.rs"
+required-features = ["client"]
+
+[dependencies]
+bevy = { version = "=0.17.3", default-features = false, features = ["std", "async_executor", "multi_threaded"] }
+bevy_egui = { version = "=0.38.0", optional = true, default-features = false, features = ["render", "default_fonts"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+directories = "6"
+
+[profile.dev]
+opt-level = 1
+[profile.dev.package."*"]
+opt-level = 3
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
+panic = "abort"
