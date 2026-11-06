@@ -266,7 +266,7 @@ pub(super) fn cast(
         effect(world, m, &spell.effect, start, 0., true);
         return;
     }
-    if matches!(id.as_str(), "explosive" | "flaming" | "magic") {
+    if matches!(id.as_str(), "explosive" | "flaming" | "magic" | "sword") {
         let travel = if spell.kind == "line" {
             range
         } else {
@@ -277,22 +277,30 @@ pub(super) fn cast(
             position: start,
             start,
             target: start + delta.normalize() * travel,
-            amount: damage(
-                class.base_damage,
-                spell.coefficient,
-                p.stats(d).power,
-                if s.time < s.buff_until {
-                    d.balance.buff_multiplier
-                } else {
-                    1.
-                },
-            ),
+            amount: if id == "sword" {
+                class_damage(world, s, p, d, spell.coefficient)
+            } else {
+                damage(
+                    class.base_damage,
+                    spell.coefficient,
+                    p.stats(d).power,
+                    if s.time < s.buff_until {
+                        d.balance.buff_multiplier
+                    } else {
+                        1.
+                    },
+                )
+            },
             speed: spell.speed,
             radius: spell.radius,
             hit: default(),
             age: 0.,
             hostile: false,
-            asset: format!("spell.{id}.projectile"),
+            asset: if id == "sword" {
+                spell.effect.clone()
+            } else {
+                format!("spell.{id}.projectile")
+            },
         });
         return;
     }
@@ -520,5 +528,82 @@ pub(super) fn glyphs(world: &mut World, s: &mut Session, p: &mut Profile, d: &Ga
                 hit(world, s, p, d, e, amount);
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn iop_sword_travels_then_hits_only_the_impact_area() {
+        let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("assets");
+        let d = GameData::load(&root).unwrap();
+        let m = Manifest::load(&root).unwrap();
+        let mut p = Profile::default();
+        p.class_id = "iop".into();
+        let mut world = World::new();
+        world.insert_resource(d.clone());
+        world.insert_resource(m.clone());
+        world.insert_resource(p.clone());
+        super::super::setup(&mut world);
+        let mut s = world.remove_resource::<Session>().unwrap();
+        s.phase = Phase::Combat;
+        let (start, target) = m
+            .hub
+            .walkable
+            .iter()
+            .find_map(|a| {
+                m.hub.walkable.iter().find_map(|b| {
+                    let start = Vec2::from(a.position);
+                    let target = Vec2::from(b.position);
+                    ((150. ..190.).contains(&start.distance(target))
+                        && s.navigation.clear(start, target))
+                    .then_some((start, target))
+                })
+            })
+            .expect("Une trajectoire dégagée au-delà de l'ancienne portée");
+        world.get_mut::<Actor>(s.player).unwrap().position = start;
+        let direction = (target - start).normalize();
+        let side = Vec2::new(-direction.y, direction.x);
+        let mut spawn = |position| {
+            world
+                .spawn((
+                    Actor::new(position, 1000.),
+                    Enemy {
+                        kind: d.monsters.keys().next().unwrap().clone(),
+                        damage: 0.,
+                        spawned: 0.,
+                        attack_at: f32::INFINITY,
+                        path_at: f32::INFINITY,
+                        dead_at: 0.,
+                        ranged_target: None,
+                        ranged_until: 0.,
+                    },
+                ))
+                .id()
+        };
+        let center = spawn(target);
+        let nearby = spawn(target + side * 40.);
+        let outside = spawn(target + side * 80.);
+        let en_route = spawn(start + direction * 60.);
+        cast(&mut world, &mut s, &mut p, &d, &m, 0, target);
+        let shot = world.query::<&Shot>().single(&world).unwrap().clone();
+        assert!(shot.target.distance(start) > 85.);
+        assert!(shot.target.distance(start) <= 200.);
+        update_shots(&mut world, &mut s, &mut p, &d, &m, 0.1);
+        for id in [center, nearby, outside, en_route] {
+            assert_eq!(world.get::<Actor>(id).unwrap().hp, 1000.);
+        }
+        for _ in 0..10 {
+            update_shots(&mut world, &mut s, &mut p, &d, &m, 0.1);
+        }
+        for id in [center, nearby] {
+            assert_eq!(world.get::<Actor>(id).unwrap().hp, 1000. - shot.amount);
+        }
+        for id in [outside, en_route] {
+            assert_eq!(world.get::<Actor>(id).unwrap().hp, 1000.);
+        }
+        assert_eq!(world.query::<&Shot>().iter(&world).count(), 0);
     }
 }

@@ -35,3 +35,15 @@ Le résultat se trouve dans `dist/BouftouRush-Windows/`. Copier **tout le dossie
 Le programme cherche d'abord `assets/` à côté du `.exe`. Les sauvegardes restent dans le profil utilisateur, séparées du jeu. `BOUFTOURUSH_ASSETS` et `BOUFTOURUSH_SAVE` permettent de choisir d'autres chemins.
 
 Les tests du cœur s'exécutent sans fenêtre ni renderer : `cargo test --locked --no-default-features`. Le client complet est vérifié avec `cargo check --locked --all-targets` et par lancement graphique.
+
+## Contrôle des clignotements
+
+Le client Windows privilégie DirectX 12 (sauf sélection explicite par `WGPU_BACKEND`), attend la compilation des pipelines et utilise des liaisons de textures individuelles. Ce chemin évite la préparation différée des shaders et les tableaux de textures bindless dans le rendu de la scène.
+
+Pour vérifier une séquence plutôt qu'une capture isolée :
+
+```powershell
+.\dist\BouftouRush-Windows\BouftouRush.exe --smoke-frames 360 --smoke-scene combat --smoke-capture-dir .local-tools\captures
+```
+
+Puis `python scripts/check-captures.py .local-tools/captures` avec Pillow installé. Ces lancements de contrôle utilisent un profil temporaire et ne modifient pas la progression du joueur.

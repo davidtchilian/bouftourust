@@ -354,7 +354,7 @@ pub(super) fn inventory(
                         }
                     }
                 });
-            ui.small("Simulation en pause · Sauvegarde locale");
+            ui.small("Simulation en pause");
         });
     state.inventory = open;
 }

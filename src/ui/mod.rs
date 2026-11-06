@@ -1,35 +1,7 @@
+pub use crate::ui_state::UiState;
 use crate::{assets::*, data::*, profile::*, rendering::*, simulation::*};
 use bevy::prelude::*;
 use bevy_egui::{EguiContexts, egui};
-#[derive(Resource)]
-pub struct UiState {
-    pub inventory: bool,
-    pub dungeons: bool,
-    pub help: bool,
-    pub selected: Option<String>,
-    pub filter: String,
-    pub direction: usize,
-    pub reduced_motion: bool,
-    pub aim: Vec2,
-    pub configured: bool,
-    pub fps: bool,
-}
-impl Default for UiState {
-    fn default() -> Self {
-        Self {
-            inventory: false,
-            dungeons: false,
-            help: true,
-            selected: None,
-            filter: String::new(),
-            direction: 7,
-            reduced_motion: false,
-            aim: Vec2::new(400., -200.),
-            configured: false,
-            fps: false,
-        }
-    }
-}
 fn color() -> egui::Color32 {
     egui::Color32::from_rgb(184, 237, 191)
 }
@@ -113,21 +85,29 @@ pub fn interface(
         return Ok(());
     };
     let stats = profile.stats(&data);
-    ctx.input(|i| {
-        if i.key_pressed(egui::Key::I) {
-            state.inventory = !state.inventory;
-            state.dungeons = false;
-            state.help = false;
-        }
-        if i.key_pressed(egui::Key::Escape) {
-            state.inventory = false;
-            state.dungeons = false;
-            state.help = false;
-        }
-        if i.key_pressed(egui::Key::F3) {
-            state.fps = !state.fps;
-        }
-    });
+    if session.phase != Phase::Combat {
+        state.manual_pause = false;
+    }
+    // Egui peut refaire la mise en page d'une même image : traiter les touches une fois.
+    let frame = ctx.cumulative_frame_nr();
+    let fresh_input = state.input_frame != Some(frame);
+    state.input_frame = Some(frame);
+    if fresh_input {
+        ctx.input(|i| {
+            let pressed=|key|i.events.iter().any(|event|matches!(event,egui::Event::Key{key:k,pressed:true,repeat:false,..} if *k==key));
+            if pressed(egui::Key::I) {
+                state.inventory = !state.inventory;
+                state.dungeons = false;
+                state.help = false;
+            }
+            if pressed(egui::Key::Escape) {
+                state.escape(session.phase);
+            }
+            if pressed(egui::Key::F3) {
+                state.fps = !state.fps;
+            }
+        });
+    }
     egui::TopBottomPanel::bottom("hud")
         .exact_height(132.)
         .frame(
@@ -293,12 +273,6 @@ pub fn interface(
                         if profile.class_id == "feca" {
                             ui.small(format!("{} glyphes", session.glyphs.len()));
                         }
-                        ui.small(if store.error.is_some() {
-                            "Échec de sauvegarde"
-                        } else {
-                            "Sauvegarde locale"
-                        })
-                        .on_hover_text(store.path.display().to_string());
                     });
                 });
             });
@@ -392,7 +366,7 @@ pub fn interface(
                 y -= 19.;
             }
         });
-    if !state.inventory && !state.dungeons && !ctx.wants_keyboard_input() {
+    if fresh_input && !state.pauses_game() && !ctx.wants_keyboard_input() {
         for (index, key) in [egui::Key::A, egui::Key::Z, egui::Key::E, egui::Key::R]
             .iter()
             .enumerate()
@@ -402,7 +376,7 @@ pub fn interface(
             }
         }
     }
-    if state.inventory || state.dungeons {
+    if state.pauses_game() {
         let painter = ctx.layer_painter(egui::LayerId::new(
             egui::Order::Background,
             egui::Id::new("veil"),
@@ -458,8 +432,26 @@ pub fn interface(
             }
         });
     }
+    if state.manual_pause
+        && session.phase == Phase::Combat
+        && !state.inventory
+        && !state.dungeons
+        && !state.help
+    {
+        egui::Window::new("Pause")
+            .id(egui::Id::new("combat-pause"))
+            .collapsible(false)
+            .resizable(false)
+            .anchor(egui::Align2::CENTER_CENTER, [0., -40.])
+            .show(&ctx, |ui| {
+                ui.label("Le combat est en pause.");
+                if ui.button("Reprendre (Échap)").clicked() {
+                    state.manual_pause = false;
+                }
+            });
+    }
     if let Some(error) = &store.error {
-        egui::Window::new("Sauvegarde locale").show(&ctx, |ui| {
+        egui::Window::new("Enregistrement impossible").show(&ctx, |ui| {
             ui.colored_label(egui::Color32::LIGHT_RED, error);
             ui.label("Le fichier existant est conservé.");
         });
@@ -484,7 +476,7 @@ pub fn interface(
             reduced_motion: state.reduced_motion,
         });
     }
-    session.paused = state.inventory || state.dungeons;
+    session.paused = state.pauses_game();
     Ok(())
 }
 fn s_depth(s: &Session, a: &Actor) -> f32 {

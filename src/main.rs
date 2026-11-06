@@ -1,5 +1,9 @@
 #![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")]
 use bevy::prelude::*;
+use bevy::render::{
+    RenderPlugin,
+    settings::{Backends, RenderCreation, WgpuSettings},
+};
 use bevy_egui::{EguiPlugin, EguiPrimaryContextPass};
 use bouftourust::{
     assets::Manifest,
@@ -99,6 +103,13 @@ fn run() -> Result<(), String> {
             ui.dungeons = scene == "dungeons";
         }
     }
+    // Le rendu 2D ne nécessite pas les chemins GPU avancés. Sous Windows,
+    // privilégier DX12 et attendre les pipelines pour éviter une image effacée
+    // pendant leur compilation. WGPU_BACKEND reste prioritaire pour le diagnostic.
+    let mut gpu_settings = WgpuSettings::default();
+    if cfg!(windows) && std::env::var_os("WGPU_BACKEND").is_none() {
+        gpu_settings.backends = Some(Backends::DX12);
+    }
     let writer = SaveWorker::new(store.path.clone());
     let mut app = App::new();
     app.insert_resource(data)
@@ -112,6 +123,11 @@ fn run() -> Result<(), String> {
         .init_resource::<Textures>()
         .add_plugins(
             DefaultPlugins
+                .set(RenderPlugin {
+                    render_creation: RenderCreation::Automatic(gpu_settings),
+                    synchronous_pipeline_compilation: true,
+                    ..default()
+                })
                 .set(AssetPlugin {
                     file_path: root.to_string_lossy().into_owned(),
                     ..default()
@@ -126,7 +142,10 @@ fn run() -> Result<(), String> {
                     ..default()
                 }),
         )
-        .add_plugins(EguiPlugin::default())
+        .add_plugins(EguiPlugin {
+            bindless_mode_array_size: None,
+            ..default()
+        })
         .add_plugins(GamePlugin)
         .add_systems(Startup, |mut commands: Commands| {
             commands.spawn(Camera2d);
@@ -146,8 +165,20 @@ fn run() -> Result<(), String> {
             .get(index + 1)
             .and_then(|a| a.parse::<u32>().ok())
             .unwrap_or(180);
-        app.insert_resource(Smoke { frames: 0, limit })
-            .add_systems(Update, smoke);
+        let captures = args
+            .iter()
+            .position(|a| a == "--smoke-capture-dir")
+            .and_then(|i| args.get(i + 1))
+            .map(PathBuf::from);
+        if let Some(dir) = &captures {
+            std::fs::create_dir_all(dir).map_err(|e| e.to_string())?;
+        }
+        app.insert_resource(Smoke {
+            frames: 0,
+            limit,
+            captures,
+        })
+        .add_systems(Update, smoke);
     }
     app.run();
     Ok(())
@@ -156,6 +187,7 @@ fn run() -> Result<(), String> {
 struct Smoke {
     frames: u32,
     limit: u32,
+    captures: Option<PathBuf>,
 }
 fn smoke(
     mut smoke: ResMut<Smoke>,
@@ -167,6 +199,15 @@ fn smoke(
         return;
     }
     smoke.frames += 1;
+    if let Some(dir) = &smoke.captures {
+        if smoke.frames >= 30 && smoke.frames <= smoke.limit && smoke.frames % 3 == 0 {
+            commands
+                .spawn(bevy::render::view::screenshot::Screenshot::primary_window())
+                .observe(bevy::render::view::screenshot::save_to_disk(
+                    dir.join(format!("frame-{:05}.png", smoke.frames)),
+                ));
+        }
+    }
     if smoke.frames == smoke.limit {
         commands
             .spawn(bevy::render::view::screenshot::Screenshot::primary_window())

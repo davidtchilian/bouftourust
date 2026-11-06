@@ -113,10 +113,10 @@
       "name": "Épée de Iop",
       "coefficient": 2.8,
       "cooldown": 2,
-      "range": 85,
-      "speed": 0,
-      "radius": 0,
-      "kind": "cone",
+      "range": 200,
+      "speed": 420,
+      "radius": 65,
+      "kind": "area",
       "effect": "spell.sword.cast"
     },
     "jump": {
@@ -3488,7 +3488,7 @@
     "chastisement": "Pendant 5 secondes, chaque dégât subi donne 0,25 Puissance, conservée jusqu’à la fin du donjon.",
     "transposition": "Échange votre position avec celle du personnage le plus proche du curseur sur le terrain accessible.",
     "punishment": "Frappe la cible au contact. Dégâts maximaux à 50 % de vie.",
-    "sword": "Frappe les ennemis dans un cône devant vous.",
+    "sword": "Projette une épée jusqu’à 200 de portée. Inflige des dégâts dans un rayon de 65 à l’impact.",
     "jump": "Saute vers le curseur, jusqu’à la portée maximale, sur le terrain accessible.",
     "intimidation": "Frappe et repousse les ennemis proches. Les obstacles arrêtent la poussée.",
     "wrath": "Frappe très fortement en cône au contact. Chaque lancer multiplie les prochains dégâts de Colère par 1,5 jusqu’à la fin du donjon.",

@@ -45,7 +45,7 @@ Le workflow [Windows natif](.github/workflows/windows.yml) compile, teste et pr�
 - **Clic droit** : rejoindre le point visé. Maintenir pour suivre la souris, relâcher pour conserver la destination.
 - **A Z E R** : quatre sorts de la classe, dirigés vers le curseur. Crâ : Flèche explosive, enflammée, magique, Tir puissant.
 - **I** : inventaire, filtres de panoplie, aperçu équipé rotatif. Double-clic sur un objet pour l'équiper ; cliquer un emplacement porté pour le retirer.
-- **Échap** : fermer les fenêtres. Les menus donjons et inventaire mettent la simulation en pause.
+- **Échap** : fermer la fenêtre ouverte ; en combat sans fenêtre, mettre en pause ou reprendre. Le bouton « Reprendre » relance aussi le combat. Les menus donjons et inventaire mettent la simulation en pause.
 - **Donjons** : entrée libre, trois vagues puis le boss. Extrême multiplie les monstres par cinq et leur Vie par 1,5, et donne la panoplie complète à la victoire.
 - **F3** : afficher FPS, nombre d'acteurs et de textures. L'aide propose une réduction des animations d'aperçu.
 
@@ -53,7 +53,7 @@ Les classes disponibles sont Crâ, Sacrieur, Iop et Féca. Les donjons sont Inca
 
 ## Sauvegarde et ancienne progression
 
-La progression est enregistrée en JSON dans le dossier de données utilisateur : `%LOCALAPPDATA%\BouftouRush\BouftouRush\data\profile.json` sous Windows (le chemin exact apparaît au survol de « Sauvegarde locale »), `$XDG_DATA_HOME/bouftourush/profile.json` ou `~/.local/share/bouftourush/profile.json` sous Linux. Un fichier `.bak` conserve la version précédente. Un profil illisible provoque une erreur explicite et reste intact.
+La progression est enregistrée en JSON dans le dossier de données utilisateur : `%LOCALAPPDATA%\BouftouRush\BouftouRush\data\profile.json` sous Windows, `$XDG_DATA_HOME/bouftourush/profile.json` ou `~/.local/share/bouftourush/profile.json` sous Linux. Un fichier `.bak` conserve la version précédente. Un profil illisible provoque une erreur explicite et reste intact.
 
 `BOUFTOURUSH_SAVE` permet de choisir un fichier de sauvegarde ; `BOUFTOURUSH_ASSETS` permet de choisir le dossier d'assets. Aucun chemin de l'ancien serveur n'est utilisé automatiquement.
 
