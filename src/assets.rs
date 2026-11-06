@@ -89,6 +89,8 @@ pub struct Part {
     pub matrix: [f32; 6],
     #[serde(default)]
     pub hide_with_hat: bool,
+    #[serde(default)]
+    pub show_with_hat: bool,
 }
 #[derive(Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]

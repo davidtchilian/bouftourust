@@ -340,7 +340,7 @@ impl Art<'_, '_, '_> {
         let flip = mirror.unwrap_or(pose.flip_x);
         let hat = p.worn("hat").unwrap_or("none");
         for part in &pose.frames[i % pose.frames.len()].layers {
-            if part.hide_with_hat && hat != "none" {
+            if (part.hide_with_hat && hat != "none") || (part.show_with_hat && hat == "none") {
                 continue;
             }
             let mut asset = part.asset_id.as_deref();

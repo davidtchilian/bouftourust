@@ -27,14 +27,14 @@ Le lot provient de `../bouftourush/public/assets/`. Chaque animation garde sa pr
 
 ```sh
 python3 scripts/import-assets.py ../bouftourush/public/assets
-python3 scripts/fix-iop-hair.py
 python3 -m venv .local-tools/python
-.local-tools/python/bin/pip install Pillow
+.local-tools/python/bin/pip install Pillow CairoSVG
 .local-tools/python/bin/python scripts/prepare-masks.py
+.local-tools/python/bin/python scripts/fix-iop-hair.py --ffdec ../bouftourush/.local-assets/tools/ffdec/ffdec.jar
 python3 scripts/import-assets.py --check
 ```
 
-`fix-iop-hair.py` marque les deux couches des cheveux du Iop (couleur et contours ombrés) pour les masquer intégralement quand une coiffe est équipée, dans toutes les animations et le portrait.
+`fix-iop-hair.py` extrait les cinq têtes natives prévues pour une coiffe (frame 2 des symboles de tête du SWF du Iop). Il les place selon les matrices originales de chaque frame, uniquement quand une coiffe est équipée. Cela remplace la tête aux cheveux longs sans supprimer le visage, à l’arrêt, en mouvement et dans le portrait. Les cinq PNG sont versionnés dans `assets/iop-heads/`. Java et JPEXS sont nécessaires uniquement à cette régénération ; les SVG intermédiaires restent dans `.local-assets/iop-heads/`.
 
 `prepare-masks.py` applique les masques de disparition dans le repère source à chaque pièce/accessoire compatible. Les images dérivées sont petites, transparentes et versionnées. Ce précalcul préserve les matrices GAC et évite une génération d'images pendant le jeu.
 

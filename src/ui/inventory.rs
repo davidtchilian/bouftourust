@@ -62,7 +62,9 @@ fn portrait(ui: &mut egui::Ui, art: &mut Art, state: &mut UiState, p: &Profile, 
                     f32::NEG_INFINITY,
                 ];
                 for part in &pose.frames[0].layers {
-                    if part.hide_with_hat && p.worn("hat").is_some() {
+                    if (part.hide_with_hat && p.worn("hat").is_some())
+                        || (part.show_with_hat && p.worn("hat").is_none())
+                    {
                         continue;
                     }
                     let resolved = part.asset_id.as_deref().or_else(|| {

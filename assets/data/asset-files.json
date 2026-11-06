@@ -5870,6 +5870,31 @@
     "sha256": "0f47c2df7c383b6a6b5fcb6bb1c96895e1623946723fa24a32c6f7ab52392295"
   },
   {
+    "path": "iop-heads/B.png",
+    "bytes": 8258,
+    "sha256": "9764c75c37e971801c0efedea1e618475bccfa6c43fc9f56b6087a907025ef86"
+  },
+  {
+    "path": "iop-heads/F.png",
+    "bytes": 11037,
+    "sha256": "9163ba0e324a67a3fbb769f581901816c40cb2d557e8e32da9d17ab9c25f4e7e"
+  },
+  {
+    "path": "iop-heads/L.png",
+    "bytes": 10277,
+    "sha256": "ff8faa7ea587527d9f3d6cdebb58e72a0744622f269db6f0e9e27dc8080c28fc"
+  },
+  {
+    "path": "iop-heads/R.png",
+    "bytes": 9954,
+    "sha256": "936a954be2bb5c565259d3e15dedecd0438a97557b9a4ae3f7beeb737cee49d6"
+  },
+  {
+    "path": "iop-heads/S.png",
+    "bytes": 10889,
+    "sha256": "d9ac3f3d4176f828c99fc2d1c8cbb930d824a0c619bf0f510874e4e6ad3837e7"
+  },
+  {
     "path": "prepared/atlases/game/page-10.png",
     "bytes": 1318207,
     "sha256": "965c8005359293dfe4a01431963db59f6f63adc70967f7ef1bc93d88aeb234fd"
