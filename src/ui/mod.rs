@@ -23,15 +23,41 @@ fn style(ctx: &egui::Context) {
         s.spacing.item_spacing = egui::vec2(10., 8.);
     });
 }
+fn stat_value(value: f32) -> String {
+    if value.fract().abs() < 0.001 {
+        format!("{value:+.0}")
+    } else {
+        format!("{value:+.1}").replace('.', ",")
+    }
+}
 fn stats_text(stats: &Stats) -> String {
-    format!(
-        "+{:.0} Vie · +{:.0} Puissance\n+{:.0} % vitesse · −{:.0} % recharge",
-        stats.hp, stats.power, stats.movement_speed, stats.cooldown_reduction
-    )
+    [
+        (stats.hp, "Vie"),
+        (stats.power, "Puissance"),
+        (stats.movement_speed, "% vitesse"),
+        (stats.cooldown_reduction, "% récupération"),
+    ]
+    .into_iter()
+    .filter(|(value, _)| *value != 0.)
+    .map(|(value, label)| format!("{} {label}", stat_value(value)))
+    .collect::<Vec<_>>()
+    .join("\n")
 }
 fn item_tooltip(ui: &mut egui::Ui, item: &Item, data: &GameData) {
-    ui.strong(&item.name);
-    ui.label(stats_text(&item.stats));
+    item_details(ui, &item.name, &item.stats, item, data);
+}
+fn instance_tooltip(ui: &mut egui::Ui, instance: &Instance, data: &GameData) {
+    item_details(
+        ui,
+        &instance.name(data),
+        &instance.stats(data),
+        &data.items[&instance.item],
+        data,
+    );
+}
+fn item_details(ui: &mut egui::Ui, name: &str, stats: &Stats, item: &Item, data: &GameData) {
+    ui.strong(name);
+    ui.label(stats_text(stats));
     if let Some(set) = data.sets.get(&item.set) {
         ui.colored_label(color(), &set.name);
         for (n, stats) in &set.thresholds {
@@ -40,8 +66,11 @@ fn item_tooltip(ui: &mut egui::Ui, item: &Item, data: &GameData) {
                 stats_text(stats).replace('\n', " · ")
             ));
         }
+    } else {
+        ui.small("Hors panoplie");
     }
 }
+
 mod inventory;
 use inventory::inventory;
 mod dungeons;
@@ -50,7 +79,7 @@ use dungeons::dungeons;
 pub fn interface(
     mut contexts: EguiContexts,
     mut textures: ResMut<Textures>,
-    server: Res<AssetServer>,
+    (server, images): (Res<AssetServer>, Res<Assets<Image>>),
     manifest: Res<Manifest>,
     data: Res<GameData>,
     profile: Res<Profile>,
@@ -150,14 +179,42 @@ pub fn interface(
                     let remaining = (session.cooldowns[index] - session.time).max(0.);
                     ui.vertical(|ui| {
                         let response = art
-                            .icon(ui, &format!("ui.spell.{id}"), egui::vec2(38., 38.))
-                            .on_hover_text(format!(
-                                "{}\nRecharge : {:.2} s\nDégâts ×{:.1} · Portée {:.0}",
-                                spell.name,
-                                spell.cooldown * (1. - stats.cooldown_reduction / 100.),
-                                spell.coefficient,
-                                spell.range.unwrap_or(f32::INFINITY)
-                            ));
+                            .spell_icon(
+                                ui,
+                                &format!("ui.spell.{id}"),
+                                egui::vec2(38., 38.),
+                                remaining > 0.,
+                                &images,
+                            )
+                            .on_hover_text(
+                                if ["sournoiserie", "mass_trap", "invisibility", "mortal_attack"]
+                                    .contains(&id.as_str())
+                                {
+                                    format!(
+                                        "{}\n{}\nRecharge : {:.2} s",
+                                        spell.name,
+                                        data.spell_descriptions[id],
+                                        spell.cooldown * (1. - stats.cooldown_reduction / 100.)
+                                    )
+                                } else if id == "iop_power" {
+                                    format!(
+                                        "Puissance\nDégâts ×2 pendant 5 s\nRecharge : {:.2} s",
+                                        spell.cooldown * (1. - stats.cooldown_reduction / 100.)
+                                    )
+                                } else {
+                                    format!(
+                                        "{}\nRecharge : {:.2} s\nDégâts ×{:.1} · Portée {:.0}",
+                                        spell.name,
+                                        spell.cooldown * (1. - stats.cooldown_reduction / 100.),
+                                        spell.coefficient,
+                                        spell.range.unwrap_or(f32::INFINITY)
+                                    ) + if id == "wrath" {
+                                        "\nZone autour du curseur · rayon 60"
+                                    } else {
+                                        ""
+                                    }
+                                },
+                            );
                         if response.clicked() {
                             actions.0.push(Action::Cast(index, state.aim));
                         }
@@ -186,6 +243,7 @@ pub fn interface(
                 }
                 ui.separator();
                 ui.vertical(|ui| {
+                    ui.set_max_width(300.);
                     ui.horizontal_wrapped(|ui| {
                         ui.strong(
                             session
@@ -246,34 +304,78 @@ pub fn interface(
                                 ));
                             }
                         }
+                    });
+                });
+                ui.separator();
+                ui.vertical(|ui| {
+                    ui.set_min_width(220.);
+                    ui.label(egui::RichText::new("Effets actifs").size(18.).strong());
+                    let mut statuses = Vec::new();
+                    if session.phase == Phase::Combat {
                         if session.buff_until > session.time {
-                            ui.colored_label(
-                                color(),
-                                format!(
-                                    "Tir puissant · {:.1} s",
-                                    session.buff_until - session.time
-                                ),
-                            );
+                            let (name, multiplier) = if profile.class_id == "iop" {
+                                (
+                                    "Puissance",
+                                    data.spells["iop_power"].buff_multiplier.unwrap_or(2.),
+                                )
+                            } else {
+                                ("Tir puissant", data.balance.buff_multiplier)
+                            };
+                            statuses.push(format!(
+                                "{name} ×{multiplier:.1} · {:.1} s",
+                                session.buff_until - session.time
+                            ));
                         }
                         if session.truce_until > session.time {
-                            ui.label(format!(
+                            statuses.push(format!(
                                 "Trêve · {:.1} s",
                                 session.truce_until - session.time
                             ));
                         }
+                        if profile.class_id == "sram" {
+                            if session.invisible_until > session.time {
+                                statuses.push(format!(
+                                    "Invisible · {:.1} s",
+                                    session.invisible_until - session.time
+                                ));
+                            }
+                            if !session.traps.is_empty() {
+                                statuses.push(format!("{} pièges actifs", session.traps.len()));
+                            }
+                        }
                         if profile.class_id == "sacrier" {
-                            ui.small(format!(
-                                "Châtiment : +{:.0} Puissance",
-                                session.combat_power
-                            ));
+                            if session.chastisement_until > session.time {
+                                statuses.push(format!(
+                                    "Châtiment · {:.1} s",
+                                    session.chastisement_until - session.time
+                                ));
+                            }
+                            if session.combat_power > 0. {
+                                statuses.push(format!(
+                                    "+{:.0} Puissance acquise",
+                                    session.combat_power
+                                ));
+                            }
                         }
                         if profile.class_id == "iop" {
-                            ui.small(format!("Colère ×{:.2}", session.wrath));
+                            statuses.push(format!("Prochaine Colère ×{:.2}", session.wrath));
                         }
-                        if profile.class_id == "feca" {
-                            ui.small(format!("{} glyphes", session.glyphs.len()));
+                        if profile.class_id == "feca" && !session.glyphs.is_empty() {
+                            statuses.push(format!("{} glyphes actifs", session.glyphs.len()));
                         }
-                    });
+                    }
+                    if statuses.is_empty() {
+                        ui.label(egui::RichText::new("Aucun effet actif").size(16.).weak());
+                    } else {
+                        for status in statuses {
+                            ui.label(
+                                egui::RichText::new(status)
+                                    .size(16.)
+                                    .strong()
+                                    .color(color()),
+                            );
+                        }
+                    }
                 });
             });
         });

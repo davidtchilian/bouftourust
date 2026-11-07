@@ -9,6 +9,39 @@ use std::{
 pub struct Instance {
     pub uid: String,
     pub item: String,
+    #[serde(default, rename = "fusionLevel", skip_serializing_if = "is_normal")]
+    pub fusion_level: u8,
+}
+fn is_normal(level: &u8) -> bool {
+    *level == 0
+}
+impl Instance {
+    pub fn multiplier(&self) -> f32 {
+        match self.fusion_level {
+            1 => 1.5,
+            2 => 2.,
+            3 => 3.,
+            _ => 1.,
+        }
+    }
+    pub fn name(&self, data: &GameData) -> String {
+        let name = &data.items[&self.item].name;
+        if self.fusion_level == 0 {
+            name.clone()
+        } else {
+            format!("{name} {}", "*".repeat(self.fusion_level as usize + 1))
+        }
+    }
+    pub fn stats(&self, data: &GameData) -> Stats {
+        let base = &data.items[&self.item].stats;
+        let multiplier = self.multiplier();
+        Stats {
+            hp: base.hp * multiplier,
+            power: base.power * multiplier,
+            movement_speed: base.movement_speed * multiplier,
+            cooldown_reduction: base.cooldown_reduction * multiplier,
+        }
+    }
 }
 #[derive(Resource, Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", default)]
@@ -43,12 +76,13 @@ impl Default for Profile {
     }
 }
 impl Profile {
-    pub fn worn(&self, slot: &str) -> Option<&str> {
+    pub fn worn_instance(&self, slot: &str) -> Option<&Instance> {
         let uid = self.equipment.get(slot)?;
-        self.inventory
-            .iter()
-            .find(|i| &i.uid == uid)
-            .map(|i| i.item.as_str())
+        self.inventory.iter().find(|item| &item.uid == uid)
+    }
+    pub fn worn(&self, slot: &str) -> Option<&str> {
+        self.worn_instance(slot)
+            .map(|instance| instance.item.as_str())
     }
     pub fn limits(&self, data: &GameData) -> Limits {
         let mut l = Limits {
@@ -71,6 +105,9 @@ impl Profile {
         let mut sets: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
         for slot in &data.slots {
             if let Some(item) = self.worn(slot).and_then(|id| data.items.get(id)) {
+                if item.set.is_empty() {
+                    continue;
+                }
                 sets.entry(item.set.clone())
                     .or_default()
                     .insert(item.id.clone());
@@ -78,15 +115,23 @@ impl Profile {
         }
         sets
     }
+    pub fn bag_sets(&self, data: &GameData) -> BTreeSet<String> {
+        self.inventory
+            .iter()
+            .filter(|item| !self.equipment.values().any(|uid| uid == &item.uid))
+            .map(|item| data.items[&item.item].set.clone())
+            .collect()
+    }
     pub fn stats(&self, data: &GameData) -> Stats {
         let mut stats = Stats {
             hp: data.balance.starting_hp + (self.level - 1) as f32 * data.balance.hp_per_level,
             power: (self.level - 1) as f32 * data.balance.power_per_level,
-            ..default()
+            cooldown_reduction: (self.level - 1) as f32 * data.balance.cooldown_reduction_per_level,
+            movement_speed: (self.level - 1) as f32 * data.balance.movement_speed_per_level,
         };
         for slot in &data.slots {
-            if let Some(item) = self.worn(slot).and_then(|id| data.items.get(id)) {
-                stats.add(&item.stats);
+            if let Some(item) = self.worn_instance(slot) {
+                stats.add(&item.stats(data));
             }
         }
         for (id, ids) in self.set_counts(data) {
@@ -129,7 +174,48 @@ impl Profile {
         self.inventory.push(Instance {
             uid: format!("local-{}", self.serial),
             item: item.into(),
+            fusion_level: 0,
         });
+    }
+    pub fn fusion_plan(&self, uid: &str) -> Option<Vec<String>> {
+        let selected = self.inventory.iter().find(|item| item.uid == uid)?;
+        if selected.fusion_level >= 3 || self.equipment.values().any(|worn| worn == uid) {
+            return None;
+        }
+        let mut ingredients = vec![uid.to_owned()];
+        ingredients.extend(
+            self.inventory
+                .iter()
+                .filter(|item| {
+                    item.uid != uid
+                        && item.item == selected.item
+                        && item.fusion_level == selected.fusion_level
+                        && !self.equipment.values().any(|worn| worn == &item.uid)
+                })
+                .take(2)
+                .map(|item| item.uid.clone()),
+        );
+        (ingredients.len() == 3).then_some(ingredients)
+    }
+    pub fn fuse(&mut self, uid: &str, expected_level: u8, data: &GameData) -> bool {
+        if !self.inventory.iter().any(|item| {
+            item.uid == uid
+                && item.fusion_level == expected_level
+                && data.items.contains_key(&item.item)
+        }) {
+            return false;
+        }
+        let Some(ingredients) = self.fusion_plan(uid) else {
+            return false;
+        };
+        self.inventory
+            .retain(|item| item.uid == uid || !ingredients.contains(&item.uid));
+        self.inventory
+            .iter_mut()
+            .find(|item| item.uid == uid)
+            .unwrap()
+            .fusion_level += 1;
+        true
     }
     pub fn equip(&mut self, uid: &str, slot: Option<&str>, data: &GameData) -> bool {
         let Some(instance) = self.inventory.iter().find(|i| i.uid == uid) else {
@@ -173,7 +259,7 @@ impl Profile {
         let mut sold = BTreeSet::new();
         let mut value = 0;
         for i in &self.inventory {
-            if worn.contains(&i.uid) {
+            if worn.contains(&i.uid) || i.fusion_level > 0 {
                 continue;
             }
             if !worn_types.contains(&i.item) && seen.insert(&i.item) {
@@ -212,7 +298,7 @@ impl Profile {
         }
         let mut uids = BTreeSet::new();
         for i in &self.inventory {
-            if !data.items.contains_key(&i.item) || !uids.insert(&i.uid) {
+            if !data.items.contains_key(&i.item) || !uids.insert(&i.uid) || i.fusion_level > 3 {
                 return Err("Objet inconnu ou identifiant en double".into());
             }
         }

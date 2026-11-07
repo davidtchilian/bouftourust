@@ -48,11 +48,11 @@
         "completed": []
       },
       "stats": {
-        "hp": 640,
-        "power": 260,
+        "hp": 480,
+        "power": 145,
         "cooldownReduction": 0
       },
-      "speed": 0,
+      "speed": 0.0,
       "sale": {
         "sold": 14,
         "kamas": 34
@@ -106,11 +106,11 @@
         "completed": []
       },
       "stats": {
-        "hp": 928,
-        "power": 356,
-        "cooldownReduction": 0
+        "hp": 720,
+        "power": 265,
+        "cooldownReduction": 4.800000000000001
       },
-      "speed": 0,
+      "speed": 4.800000000000001,
       "sale": {
         "sold": 14,
         "kamas": 34
@@ -164,11 +164,11 @@
         "completed": []
       },
       "stats": {
-        "hp": 1828,
-        "power": 656,
-        "cooldownReduction": 0
+        "hp": 1470,
+        "power": 640,
+        "cooldownReduction": 19.8
       },
-      "speed": 0,
+      "speed": 19.8,
       "sale": {
         "sold": 14,
         "kamas": 34
@@ -217,11 +217,11 @@
         "completed": []
       },
       "stats": {
-        "hp": 320,
-        "power": 50,
+        "hp": 260,
+        "power": 30,
         "cooldownReduction": 0
       },
-      "speed": 0,
+      "speed": 0.0,
       "sale": {
         "sold": 12,
         "kamas": 26
@@ -270,11 +270,11 @@
         "completed": []
       },
       "stats": {
-        "hp": 608,
-        "power": 146,
-        "cooldownReduction": 0
+        "hp": 500,
+        "power": 150,
+        "cooldownReduction": 4.800000000000001
       },
-      "speed": 0,
+      "speed": 4.800000000000001,
       "sale": {
         "sold": 12,
         "kamas": 26
@@ -323,11 +323,11 @@
         "completed": []
       },
       "stats": {
-        "hp": 1508,
-        "power": 446,
-        "cooldownReduction": 0
+        "hp": 1250,
+        "power": 525,
+        "cooldownReduction": 19.8
       },
-      "speed": 0,
+      "speed": 19.8,
       "sale": {
         "sold": 12,
         "kamas": 26
@@ -381,11 +381,11 @@
         "completed": []
       },
       "stats": {
-        "hp": 440,
-        "power": 110,
-        "cooldownReduction": 15
+        "hp": 340,
+        "power": 70,
+        "cooldownReduction": 10.0
       },
-      "speed": 0,
+      "speed": 0.0,
       "sale": {
         "sold": 14,
         "kamas": 34
@@ -439,11 +439,11 @@
         "completed": []
       },
       "stats": {
-        "hp": 728,
-        "power": 206,
-        "cooldownReduction": 15
+        "hp": 580,
+        "power": 190,
+        "cooldownReduction": 14.8
       },
-      "speed": 0,
+      "speed": 4.800000000000001,
       "sale": {
         "sold": 14,
         "kamas": 34
@@ -497,11 +497,11 @@
         "completed": []
       },
       "stats": {
-        "hp": 1628,
-        "power": 506,
-        "cooldownReduction": 15
+        "hp": 1330,
+        "power": 565,
+        "cooldownReduction": 29.8
       },
-      "speed": 0,
+      "speed": 19.8,
       "sale": {
         "sold": 14,
         "kamas": 34
@@ -555,11 +555,11 @@
         "completed": []
       },
       "stats": {
-        "hp": 870,
-        "power": 390,
+        "hp": 610,
+        "power": 205,
         "cooldownReduction": 0
       },
-      "speed": 0,
+      "speed": 0.0,
       "sale": {
         "sold": 14,
         "kamas": 34
@@ -613,11 +613,11 @@
         "completed": []
       },
       "stats": {
-        "hp": 1158,
-        "power": 486,
-        "cooldownReduction": 0
+        "hp": 850,
+        "power": 325,
+        "cooldownReduction": 4.800000000000001
       },
-      "speed": 0,
+      "speed": 4.800000000000001,
       "sale": {
         "sold": 14,
         "kamas": 34
@@ -671,314 +671,314 @@
         "completed": []
       },
       "stats": {
-        "hp": 2058,
-        "power": 786,
-        "cooldownReduction": 0
-      },
-      "speed": 0,
-      "sale": {
-        "sold": 14,
-        "kamas": 34
-      }
-    },
-    {
-      "setId": "tofu",
-      "profile": {
-        "level": 1,
-        "xp": 0,
-        "kamas": 34,
-        "inventory": [
-          {
-            "uid": "fixture-1",
-            "item": "8108"
-          },
-          {
-            "uid": "fixture-2",
-            "item": "8109"
-          },
-          {
-            "uid": "fixture-3",
-            "item": "8110"
-          },
-          {
-            "uid": "fixture-4",
-            "item": "8111"
-          },
-          {
-            "uid": "fixture-5",
-            "item": "8112"
-          },
-          {
-            "uid": "fixture-6",
-            "item": "8113"
-          },
-          {
-            "uid": "fixture-7",
-            "item": "8114"
-          }
-        ],
-        "equipment": {
-          "amulet": "fixture-1",
-          "ring1": "fixture-2",
-          "weapon": "fixture-3",
-          "boots": "fixture-4",
-          "cape": "fixture-5",
-          "belt": "fixture-6",
-          "hat": "fixture-7"
-        },
-        "completed": []
-      },
-      "stats": {
-        "hp": 348,
-        "power": 175,
-        "cooldownReduction": 14
-      },
-      "speed": 49,
-      "sale": {
-        "sold": 14,
-        "kamas": 34
-      }
-    },
-    {
-      "setId": "tofu",
-      "profile": {
-        "level": 25,
-        "xp": 0,
-        "kamas": 34,
-        "inventory": [
-          {
-            "uid": "fixture-1",
-            "item": "8108"
-          },
-          {
-            "uid": "fixture-2",
-            "item": "8109"
-          },
-          {
-            "uid": "fixture-3",
-            "item": "8110"
-          },
-          {
-            "uid": "fixture-4",
-            "item": "8111"
-          },
-          {
-            "uid": "fixture-5",
-            "item": "8112"
-          },
-          {
-            "uid": "fixture-6",
-            "item": "8113"
-          },
-          {
-            "uid": "fixture-7",
-            "item": "8114"
-          }
-        ],
-        "equipment": {
-          "amulet": "fixture-1",
-          "ring1": "fixture-2",
-          "weapon": "fixture-3",
-          "boots": "fixture-4",
-          "cape": "fixture-5",
-          "belt": "fixture-6",
-          "hat": "fixture-7"
-        },
-        "completed": []
-      },
-      "stats": {
-        "hp": 636,
-        "power": 271,
-        "cooldownReduction": 14
-      },
-      "speed": 49,
-      "sale": {
-        "sold": 14,
-        "kamas": 34
-      }
-    },
-    {
-      "setId": "tofu",
-      "profile": {
-        "level": 100,
-        "xp": 0,
-        "kamas": 34,
-        "inventory": [
-          {
-            "uid": "fixture-1",
-            "item": "8108"
-          },
-          {
-            "uid": "fixture-2",
-            "item": "8109"
-          },
-          {
-            "uid": "fixture-3",
-            "item": "8110"
-          },
-          {
-            "uid": "fixture-4",
-            "item": "8111"
-          },
-          {
-            "uid": "fixture-5",
-            "item": "8112"
-          },
-          {
-            "uid": "fixture-6",
-            "item": "8113"
-          },
-          {
-            "uid": "fixture-7",
-            "item": "8114"
-          }
-        ],
-        "equipment": {
-          "amulet": "fixture-1",
-          "ring1": "fixture-2",
-          "weapon": "fixture-3",
-          "boots": "fixture-4",
-          "cape": "fixture-5",
-          "belt": "fixture-6",
-          "hat": "fixture-7"
-        },
-        "completed": []
-      },
-      "stats": {
-        "hp": 1536,
-        "power": 571,
-        "cooldownReduction": 14
-      },
-      "speed": 49,
-      "sale": {
-        "sold": 14,
-        "kamas": 34
-      }
-    },
-    {
-      "setId": "blackScara",
-      "profile": {
-        "level": 1,
-        "xp": 0,
-        "kamas": 18,
-        "inventory": [
-          {
-            "uid": "fixture-1",
-            "item": "8132"
-          },
-          {
-            "uid": "fixture-2",
-            "item": "8133"
-          },
-          {
-            "uid": "fixture-3",
-            "item": "8134"
-          },
-          {
-            "uid": "fixture-4",
-            "item": "8136"
-          }
-        ],
-        "equipment": {
-          "belt": "fixture-1",
-          "hat": "fixture-2",
-          "cape": "fixture-3",
-          "ring1": "fixture-4"
-        },
-        "completed": []
-      },
-      "stats": {
-        "hp": 760,
-        "power": 304,
-        "cooldownReduction": 8
-      },
-      "speed": 8,
-      "sale": {
-        "sold": 8,
-        "kamas": 18
-      }
-    },
-    {
-      "setId": "blackScara",
-      "profile": {
-        "level": 25,
-        "xp": 0,
-        "kamas": 18,
-        "inventory": [
-          {
-            "uid": "fixture-1",
-            "item": "8132"
-          },
-          {
-            "uid": "fixture-2",
-            "item": "8133"
-          },
-          {
-            "uid": "fixture-3",
-            "item": "8134"
-          },
-          {
-            "uid": "fixture-4",
-            "item": "8136"
-          }
-        ],
-        "equipment": {
-          "belt": "fixture-1",
-          "hat": "fixture-2",
-          "cape": "fixture-3",
-          "ring1": "fixture-4"
-        },
-        "completed": []
-      },
-      "stats": {
-        "hp": 1048,
-        "power": 400,
-        "cooldownReduction": 8
-      },
-      "speed": 8,
-      "sale": {
-        "sold": 8,
-        "kamas": 18
-      }
-    },
-    {
-      "setId": "blackScara",
-      "profile": {
-        "level": 100,
-        "xp": 0,
-        "kamas": 18,
-        "inventory": [
-          {
-            "uid": "fixture-1",
-            "item": "8132"
-          },
-          {
-            "uid": "fixture-2",
-            "item": "8133"
-          },
-          {
-            "uid": "fixture-3",
-            "item": "8134"
-          },
-          {
-            "uid": "fixture-4",
-            "item": "8136"
-          }
-        ],
-        "equipment": {
-          "belt": "fixture-1",
-          "hat": "fixture-2",
-          "cape": "fixture-3",
-          "ring1": "fixture-4"
-        },
-        "completed": []
-      },
-      "stats": {
-        "hp": 1948,
+        "hp": 1600,
         "power": 700,
-        "cooldownReduction": 8
+        "cooldownReduction": 19.8
       },
-      "speed": 8,
+      "speed": 19.8,
+      "sale": {
+        "sold": 14,
+        "kamas": 34
+      }
+    },
+    {
+      "setId": "tofu",
+      "profile": {
+        "level": 1,
+        "xp": 0,
+        "kamas": 34,
+        "inventory": [
+          {
+            "uid": "fixture-1",
+            "item": "8108"
+          },
+          {
+            "uid": "fixture-2",
+            "item": "8109"
+          },
+          {
+            "uid": "fixture-3",
+            "item": "8110"
+          },
+          {
+            "uid": "fixture-4",
+            "item": "8111"
+          },
+          {
+            "uid": "fixture-5",
+            "item": "8112"
+          },
+          {
+            "uid": "fixture-6",
+            "item": "8113"
+          },
+          {
+            "uid": "fixture-7",
+            "item": "8114"
+          }
+        ],
+        "equipment": {
+          "amulet": "fixture-1",
+          "ring1": "fixture-2",
+          "weapon": "fixture-3",
+          "boots": "fixture-4",
+          "cape": "fixture-5",
+          "belt": "fixture-6",
+          "hat": "fixture-7"
+        },
+        "completed": []
+      },
+      "stats": {
+        "hp": 340,
+        "power": 160,
+        "cooldownReduction": 8.0
+      },
+      "speed": 36.0,
+      "sale": {
+        "sold": 14,
+        "kamas": 34
+      }
+    },
+    {
+      "setId": "tofu",
+      "profile": {
+        "level": 25,
+        "xp": 0,
+        "kamas": 34,
+        "inventory": [
+          {
+            "uid": "fixture-1",
+            "item": "8108"
+          },
+          {
+            "uid": "fixture-2",
+            "item": "8109"
+          },
+          {
+            "uid": "fixture-3",
+            "item": "8110"
+          },
+          {
+            "uid": "fixture-4",
+            "item": "8111"
+          },
+          {
+            "uid": "fixture-5",
+            "item": "8112"
+          },
+          {
+            "uid": "fixture-6",
+            "item": "8113"
+          },
+          {
+            "uid": "fixture-7",
+            "item": "8114"
+          }
+        ],
+        "equipment": {
+          "amulet": "fixture-1",
+          "ring1": "fixture-2",
+          "weapon": "fixture-3",
+          "boots": "fixture-4",
+          "cape": "fixture-5",
+          "belt": "fixture-6",
+          "hat": "fixture-7"
+        },
+        "completed": []
+      },
+      "stats": {
+        "hp": 580,
+        "power": 280,
+        "cooldownReduction": 12.8
+      },
+      "speed": 40.8,
+      "sale": {
+        "sold": 14,
+        "kamas": 34
+      }
+    },
+    {
+      "setId": "tofu",
+      "profile": {
+        "level": 100,
+        "xp": 0,
+        "kamas": 34,
+        "inventory": [
+          {
+            "uid": "fixture-1",
+            "item": "8108"
+          },
+          {
+            "uid": "fixture-2",
+            "item": "8109"
+          },
+          {
+            "uid": "fixture-3",
+            "item": "8110"
+          },
+          {
+            "uid": "fixture-4",
+            "item": "8111"
+          },
+          {
+            "uid": "fixture-5",
+            "item": "8112"
+          },
+          {
+            "uid": "fixture-6",
+            "item": "8113"
+          },
+          {
+            "uid": "fixture-7",
+            "item": "8114"
+          }
+        ],
+        "equipment": {
+          "amulet": "fixture-1",
+          "ring1": "fixture-2",
+          "weapon": "fixture-3",
+          "boots": "fixture-4",
+          "cape": "fixture-5",
+          "belt": "fixture-6",
+          "hat": "fixture-7"
+        },
+        "completed": []
+      },
+      "stats": {
+        "hp": 1330,
+        "power": 655,
+        "cooldownReduction": 27.8
+      },
+      "speed": 55.8,
+      "sale": {
+        "sold": 14,
+        "kamas": 34
+      }
+    },
+    {
+      "setId": "blackScara",
+      "profile": {
+        "level": 1,
+        "xp": 0,
+        "kamas": 18,
+        "inventory": [
+          {
+            "uid": "fixture-1",
+            "item": "8132"
+          },
+          {
+            "uid": "fixture-2",
+            "item": "8133"
+          },
+          {
+            "uid": "fixture-3",
+            "item": "8134"
+          },
+          {
+            "uid": "fixture-4",
+            "item": "8136"
+          }
+        ],
+        "equipment": {
+          "belt": "fixture-1",
+          "hat": "fixture-2",
+          "cape": "fixture-3",
+          "ring1": "fixture-4"
+        },
+        "completed": []
+      },
+      "stats": {
+        "hp": 410,
+        "power": 155,
+        "cooldownReduction": 0
+      },
+      "speed": 0.0,
+      "sale": {
+        "sold": 8,
+        "kamas": 18
+      }
+    },
+    {
+      "setId": "blackScara",
+      "profile": {
+        "level": 25,
+        "xp": 0,
+        "kamas": 18,
+        "inventory": [
+          {
+            "uid": "fixture-1",
+            "item": "8132"
+          },
+          {
+            "uid": "fixture-2",
+            "item": "8133"
+          },
+          {
+            "uid": "fixture-3",
+            "item": "8134"
+          },
+          {
+            "uid": "fixture-4",
+            "item": "8136"
+          }
+        ],
+        "equipment": {
+          "belt": "fixture-1",
+          "hat": "fixture-2",
+          "cape": "fixture-3",
+          "ring1": "fixture-4"
+        },
+        "completed": []
+      },
+      "stats": {
+        "hp": 650,
+        "power": 275,
+        "cooldownReduction": 4.800000000000001
+      },
+      "speed": 4.800000000000001,
+      "sale": {
+        "sold": 8,
+        "kamas": 18
+      }
+    },
+    {
+      "setId": "blackScara",
+      "profile": {
+        "level": 100,
+        "xp": 0,
+        "kamas": 18,
+        "inventory": [
+          {
+            "uid": "fixture-1",
+            "item": "8132"
+          },
+          {
+            "uid": "fixture-2",
+            "item": "8133"
+          },
+          {
+            "uid": "fixture-3",
+            "item": "8134"
+          },
+          {
+            "uid": "fixture-4",
+            "item": "8136"
+          }
+        ],
+        "equipment": {
+          "belt": "fixture-1",
+          "hat": "fixture-2",
+          "cape": "fixture-3",
+          "ring1": "fixture-4"
+        },
+        "completed": []
+      },
+      "stats": {
+        "hp": 1400,
+        "power": 650,
+        "cooldownReduction": 19.8
+      },
+      "speed": 19.8,
       "sale": {
         "sold": 8,
         "kamas": 18
@@ -1028,174 +1028,174 @@
           "cape": "fixture-5",
           "belt": "fixture-6",
           "hat": "fixture-7"
-        },
-        "completed": []
-      },
-      "stats": {
-        "hp": 1125,
-        "power": 406,
-        "cooldownReduction": 21
-      },
-      "speed": 28,
-      "sale": {
-        "sold": 14,
-        "kamas": 34
-      }
-    },
-    {
-      "setId": "chefBwork",
-      "profile": {
-        "level": 25,
-        "xp": 0,
-        "kamas": 34,
-        "inventory": [
-          {
-            "uid": "fixture-1",
-            "item": "6799"
-          },
-          {
-            "uid": "fixture-2",
-            "item": "6804"
-          },
-          {
-            "uid": "fixture-3",
-            "item": "6805"
-          },
-          {
-            "uid": "fixture-4",
-            "item": "6807"
-          },
-          {
-            "uid": "fixture-5",
-            "item": "6811"
-          },
-          {
-            "uid": "fixture-6",
-            "item": "6812"
-          },
-          {
-            "uid": "fixture-7",
-            "item": "6813"
-          }
-        ],
-        "equipment": {
-          "weapon": "fixture-1",
-          "amulet": "fixture-2",
-          "ring1": "fixture-3",
-          "boots": "fixture-4",
-          "cape": "fixture-5",
-          "belt": "fixture-6",
-          "hat": "fixture-7"
-        },
-        "completed": []
-      },
-      "stats": {
-        "hp": 1413,
-        "power": 502,
-        "cooldownReduction": 21
-      },
-      "speed": 28,
-      "sale": {
-        "sold": 14,
-        "kamas": 34
-      }
-    },
-    {
-      "setId": "chefBwork",
-      "profile": {
-        "level": 100,
-        "xp": 0,
-        "kamas": 34,
-        "inventory": [
-          {
-            "uid": "fixture-1",
-            "item": "6799"
-          },
-          {
-            "uid": "fixture-2",
-            "item": "6804"
-          },
-          {
-            "uid": "fixture-3",
-            "item": "6805"
-          },
-          {
-            "uid": "fixture-4",
-            "item": "6807"
-          },
-          {
-            "uid": "fixture-5",
-            "item": "6811"
-          },
-          {
-            "uid": "fixture-6",
-            "item": "6812"
-          },
-          {
-            "uid": "fixture-7",
-            "item": "6813"
-          }
-        ],
-        "equipment": {
-          "weapon": "fixture-1",
-          "amulet": "fixture-2",
-          "ring1": "fixture-3",
-          "boots": "fixture-4",
-          "cape": "fixture-5",
-          "belt": "fixture-6",
-          "hat": "fixture-7"
-        },
-        "completed": []
-      },
-      "stats": {
-        "hp": 2313,
-        "power": 802,
-        "cooldownReduction": 21
-      },
-      "speed": 28,
-      "sale": {
-        "sold": 14,
-        "kamas": 34
-      }
-    },
-    {
-      "setId": "blopMulti",
-      "profile": {
-        "level": 1,
-        "xp": 0,
-        "kamas": 14,
-        "inventory": [
-          {
-            "uid": "fixture-1",
-            "item": "9148"
-          },
-          {
-            "uid": "fixture-2",
-            "item": "9157"
-          },
-          {
-            "uid": "fixture-3",
-            "item": "9166"
-          },
-          {
-            "uid": "fixture-4",
-            "item": "9175"
-          }
-        ],
-        "equipment": {
-          "ring1": "fixture-1",
-          "amulet": "fixture-2",
-          "boots": "fixture-3",
-          "belt": "fixture-4"
         },
         "completed": []
       },
       "stats": {
         "hp": 800,
-        "power": 520,
-        "cooldownReduction": 28
+        "power": 250,
+        "cooldownReduction": 6.0
       },
-      "speed": 16,
+      "speed": 8.0,
+      "sale": {
+        "sold": 14,
+        "kamas": 34
+      }
+    },
+    {
+      "setId": "chefBwork",
+      "profile": {
+        "level": 25,
+        "xp": 0,
+        "kamas": 34,
+        "inventory": [
+          {
+            "uid": "fixture-1",
+            "item": "6799"
+          },
+          {
+            "uid": "fixture-2",
+            "item": "6804"
+          },
+          {
+            "uid": "fixture-3",
+            "item": "6805"
+          },
+          {
+            "uid": "fixture-4",
+            "item": "6807"
+          },
+          {
+            "uid": "fixture-5",
+            "item": "6811"
+          },
+          {
+            "uid": "fixture-6",
+            "item": "6812"
+          },
+          {
+            "uid": "fixture-7",
+            "item": "6813"
+          }
+        ],
+        "equipment": {
+          "weapon": "fixture-1",
+          "amulet": "fixture-2",
+          "ring1": "fixture-3",
+          "boots": "fixture-4",
+          "cape": "fixture-5",
+          "belt": "fixture-6",
+          "hat": "fixture-7"
+        },
+        "completed": []
+      },
+      "stats": {
+        "hp": 1040,
+        "power": 370,
+        "cooldownReduction": 10.8
+      },
+      "speed": 12.8,
+      "sale": {
+        "sold": 14,
+        "kamas": 34
+      }
+    },
+    {
+      "setId": "chefBwork",
+      "profile": {
+        "level": 100,
+        "xp": 0,
+        "kamas": 34,
+        "inventory": [
+          {
+            "uid": "fixture-1",
+            "item": "6799"
+          },
+          {
+            "uid": "fixture-2",
+            "item": "6804"
+          },
+          {
+            "uid": "fixture-3",
+            "item": "6805"
+          },
+          {
+            "uid": "fixture-4",
+            "item": "6807"
+          },
+          {
+            "uid": "fixture-5",
+            "item": "6811"
+          },
+          {
+            "uid": "fixture-6",
+            "item": "6812"
+          },
+          {
+            "uid": "fixture-7",
+            "item": "6813"
+          }
+        ],
+        "equipment": {
+          "weapon": "fixture-1",
+          "amulet": "fixture-2",
+          "ring1": "fixture-3",
+          "boots": "fixture-4",
+          "cape": "fixture-5",
+          "belt": "fixture-6",
+          "hat": "fixture-7"
+        },
+        "completed": []
+      },
+      "stats": {
+        "hp": 1790,
+        "power": 745,
+        "cooldownReduction": 25.8
+      },
+      "speed": 27.8,
+      "sale": {
+        "sold": 14,
+        "kamas": 34
+      }
+    },
+    {
+      "setId": "blopMulti",
+      "profile": {
+        "level": 1,
+        "xp": 0,
+        "kamas": 14,
+        "inventory": [
+          {
+            "uid": "fixture-1",
+            "item": "9148"
+          },
+          {
+            "uid": "fixture-2",
+            "item": "9157"
+          },
+          {
+            "uid": "fixture-3",
+            "item": "9166"
+          },
+          {
+            "uid": "fixture-4",
+            "item": "9175"
+          }
+        ],
+        "equipment": {
+          "ring1": "fixture-1",
+          "amulet": "fixture-2",
+          "boots": "fixture-3",
+          "belt": "fixture-4"
+        },
+        "completed": []
+      },
+      "stats": {
+        "hp": 400,
+        "power": 250,
+        "cooldownReduction": 18.0
+      },
+      "speed": 0.0,
       "sale": {
         "sold": 8,
         "kamas": 14
@@ -1234,11 +1234,11 @@
         "completed": []
       },
       "stats": {
-        "hp": 1088,
-        "power": 616,
-        "cooldownReduction": 28
+        "hp": 640,
+        "power": 370,
+        "cooldownReduction": 22.8
       },
-      "speed": 16,
+      "speed": 4.800000000000001,
       "sale": {
         "sold": 8,
         "kamas": 14
@@ -1277,11 +1277,11 @@
         "completed": []
       },
       "stats": {
-        "hp": 1988,
-        "power": 916,
-        "cooldownReduction": 28
+        "hp": 1390,
+        "power": 745,
+        "cooldownReduction": 30
       },
-      "speed": 16,
+      "speed": 19.8,
       "sale": {
         "sold": 8,
         "kamas": 14
@@ -1333,8 +1333,8 @@
         "completed": []
       },
       "stats": {
-        "hp": 10468,
-        "power": 10096,
+        "hp": 10420,
+        "power": 10120,
         "cooldownReduction": 90
       },
       "speed": 150,
@@ -1361,14 +1361,308 @@
         "completed": []
       },
       "stats": {
-        "hp": 11368,
-        "power": 10396,
+        "hp": 11170,
+        "power": 10495,
         "cooldownReduction": 90
       },
       "speed": 150,
       "sale": {
         "sold": 2,
         "kamas": 6
+      }
+    },
+    {
+      "setId": "meulou",
+      "profile": {
+        "level": 1,
+        "xp": 0,
+        "kamas": 0,
+        "inventory": [
+          {
+            "uid": "balanced-0",
+            "item": "8262"
+          },
+          {
+            "uid": "balanced-1",
+            "item": "8263"
+          },
+          {
+            "uid": "balanced-2",
+            "item": "8264"
+          },
+          {
+            "uid": "balanced-3",
+            "item": "8265"
+          },
+          {
+            "uid": "balanced-4",
+            "item": "8266"
+          },
+          {
+            "uid": "balanced-5",
+            "item": "8267"
+          }
+        ],
+        "equipment": {
+          "amulet": "balanced-0",
+          "ring1": "balanced-1",
+          "boots": "balanced-2",
+          "cape": "balanced-3",
+          "belt": "balanced-4",
+          "hat": "balanced-5"
+        },
+        "completed": []
+      },
+      "speed": 16.0,
+      "stats": {
+        "hp": 900,
+        "power": 400,
+        "cooldownReduction": 8.0
+      }
+    },
+    {
+      "setId": "meulou",
+      "profile": {
+        "level": 25,
+        "xp": 0,
+        "kamas": 0,
+        "inventory": [
+          {
+            "uid": "balanced-0",
+            "item": "8262"
+          },
+          {
+            "uid": "balanced-1",
+            "item": "8263"
+          },
+          {
+            "uid": "balanced-2",
+            "item": "8264"
+          },
+          {
+            "uid": "balanced-3",
+            "item": "8265"
+          },
+          {
+            "uid": "balanced-4",
+            "item": "8266"
+          },
+          {
+            "uid": "balanced-5",
+            "item": "8267"
+          }
+        ],
+        "equipment": {
+          "amulet": "balanced-0",
+          "ring1": "balanced-1",
+          "boots": "balanced-2",
+          "cape": "balanced-3",
+          "belt": "balanced-4",
+          "hat": "balanced-5"
+        },
+        "completed": []
+      },
+      "speed": 20.8,
+      "stats": {
+        "hp": 1140,
+        "power": 520,
+        "cooldownReduction": 12.8
+      }
+    },
+    {
+      "setId": "meulou",
+      "profile": {
+        "level": 100,
+        "xp": 0,
+        "kamas": 0,
+        "inventory": [
+          {
+            "uid": "balanced-0",
+            "item": "8262"
+          },
+          {
+            "uid": "balanced-1",
+            "item": "8263"
+          },
+          {
+            "uid": "balanced-2",
+            "item": "8264"
+          },
+          {
+            "uid": "balanced-3",
+            "item": "8265"
+          },
+          {
+            "uid": "balanced-4",
+            "item": "8266"
+          },
+          {
+            "uid": "balanced-5",
+            "item": "8267"
+          }
+        ],
+        "equipment": {
+          "amulet": "balanced-0",
+          "ring1": "balanced-1",
+          "boots": "balanced-2",
+          "cape": "balanced-3",
+          "belt": "balanced-4",
+          "hat": "balanced-5"
+        },
+        "completed": []
+      },
+      "speed": 35.8,
+      "stats": {
+        "hp": 1890,
+        "power": 895,
+        "cooldownReduction": 27.8
+      }
+    },
+    {
+      "setId": "ancestral",
+      "profile": {
+        "level": 1,
+        "xp": 0,
+        "kamas": 0,
+        "inventory": [
+          {
+            "uid": "balanced-0",
+            "item": "8463"
+          },
+          {
+            "uid": "balanced-1",
+            "item": "8464"
+          },
+          {
+            "uid": "balanced-2",
+            "item": "8465"
+          },
+          {
+            "uid": "balanced-3",
+            "item": "8466"
+          },
+          {
+            "uid": "balanced-4",
+            "item": "8467"
+          },
+          {
+            "uid": "balanced-5",
+            "item": "8468"
+          }
+        ],
+        "equipment": {
+          "hat": "balanced-0",
+          "cape": "balanced-1",
+          "amulet": "balanced-2",
+          "ring1": "balanced-3",
+          "boots": "balanced-4",
+          "belt": "balanced-5"
+        },
+        "completed": []
+      },
+      "speed": 6.0,
+      "stats": {
+        "hp": 1000,
+        "power": 300,
+        "cooldownReduction": 14.0
+      }
+    },
+    {
+      "setId": "ancestral",
+      "profile": {
+        "level": 25,
+        "xp": 0,
+        "kamas": 0,
+        "inventory": [
+          {
+            "uid": "balanced-0",
+            "item": "8463"
+          },
+          {
+            "uid": "balanced-1",
+            "item": "8464"
+          },
+          {
+            "uid": "balanced-2",
+            "item": "8465"
+          },
+          {
+            "uid": "balanced-3",
+            "item": "8466"
+          },
+          {
+            "uid": "balanced-4",
+            "item": "8467"
+          },
+          {
+            "uid": "balanced-5",
+            "item": "8468"
+          }
+        ],
+        "equipment": {
+          "hat": "balanced-0",
+          "cape": "balanced-1",
+          "amulet": "balanced-2",
+          "ring1": "balanced-3",
+          "boots": "balanced-4",
+          "belt": "balanced-5"
+        },
+        "completed": []
+      },
+      "speed": 10.8,
+      "stats": {
+        "hp": 1240,
+        "power": 420,
+        "cooldownReduction": 18.8
+      }
+    },
+    {
+      "setId": "ancestral",
+      "profile": {
+        "level": 100,
+        "xp": 0,
+        "kamas": 0,
+        "inventory": [
+          {
+            "uid": "balanced-0",
+            "item": "8463"
+          },
+          {
+            "uid": "balanced-1",
+            "item": "8464"
+          },
+          {
+            "uid": "balanced-2",
+            "item": "8465"
+          },
+          {
+            "uid": "balanced-3",
+            "item": "8466"
+          },
+          {
+            "uid": "balanced-4",
+            "item": "8467"
+          },
+          {
+            "uid": "balanced-5",
+            "item": "8468"
+          }
+        ],
+        "equipment": {
+          "hat": "balanced-0",
+          "cape": "balanced-1",
+          "amulet": "balanced-2",
+          "ring1": "balanced-3",
+          "boots": "balanced-4",
+          "belt": "balanced-5"
+        },
+        "completed": []
+      },
+      "speed": 25.8,
+      "stats": {
+        "hp": 1990,
+        "power": 795,
+        "cooldownReduction": 30
       }
     }
   ],
@@ -1685,25 +1979,25 @@
       "amount": 25,
       "level": 2,
       "xp": 0,
-      "hp": 12
+      "hp": 10
     },
     {
       "amount": 200,
       "level": 3,
       "xp": 110,
-      "hp": 24
+      "hp": 20
     },
     {
       "amount": 2000,
       "level": 9,
       "xp": 236,
-      "hp": 96
+      "hp": 80
     },
     {
       "amount": 1000000,
       "level": 100,
       "xp": 0,
-      "hp": 1188
+      "hp": 990
     }
   ]
 }

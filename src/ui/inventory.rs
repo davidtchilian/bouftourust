@@ -1,39 +1,63 @@
 use super::*;
 
+fn fusion_frame(frame: egui::Frame, level: u8) -> egui::Frame {
+    let color = match level {
+        1 => egui::Color32::from_rgb(65, 155, 255),
+        2 => egui::Color32::from_rgb(180, 85, 245),
+        3 => egui::Color32::from_rgb(255, 195, 55),
+        _ => return frame,
+    };
+    frame
+        .stroke(egui::Stroke::new(2_f32, color))
+        .shadow(egui::epaint::Shadow {
+            offset: [0, 0],
+            blur: 8,
+            spread: 1,
+            color: color.gamma_multiply(0.5),
+        })
+}
+
 fn slot(
     ui: &mut egui::Ui,
     art: &mut Art,
     p: &Profile,
     d: &GameData,
     actions: &mut Actions,
+    state: &mut UiState,
     slot: &str,
 ) {
     ui.vertical(|ui| {
         ui.small(&d.slot_names[slot]);
-        let response = egui::Frame::new()
-            .fill(egui::Color32::from_rgb(17, 30, 33))
-            .stroke(egui::Stroke::new(
-                1_f32,
-                egui::Color32::from_rgb(52, 72, 74),
-            ))
-            .corner_radius(9)
-            .inner_margin(4.)
-            .show(ui, |ui| {
-                if let Some(id) = p.worn(slot) {
-                    art.icon(ui, &d.items[id].icon, egui::vec2(46., 46.))
-                        .on_hover_ui(|ui| {
-                            item_tooltip(ui, &d.items[id], d);
-                            ui.small("Cliquer pour retirer");
-                        })
-                } else {
-                    ui.add_sized(
-                        [46., 46.],
-                        egui::Button::new(egui::RichText::new("Vide").small()).frame(false),
-                    )
-                }
-            })
-            .inner;
+        let response = fusion_frame(
+            egui::Frame::new()
+                .fill(egui::Color32::from_rgb(17, 30, 33))
+                .stroke(egui::Stroke::new(
+                    1_f32,
+                    egui::Color32::from_rgb(52, 72, 74),
+                ))
+                .corner_radius(9)
+                .inner_margin(4.),
+            p.worn_instance(slot).map_or(0, |item| item.fusion_level),
+        )
+        .show(ui, |ui| {
+            if let Some(id) = p.worn(slot) {
+                art.icon(ui, &d.items[id].icon, egui::vec2(46., 46.))
+                    .on_hover_ui(|ui| {
+                        instance_tooltip(ui, p.worn_instance(slot).unwrap(), d);
+                        ui.small("Cliquer pour examiner · double-cliquer pour retirer");
+                    })
+            } else {
+                ui.add_sized(
+                    [46., 46.],
+                    egui::Button::new(egui::RichText::new("Vide").small()).frame(false),
+                )
+            }
+        })
+        .inner;
         if response.clicked() && p.worn(slot).is_some() {
+            state.selected = p.equipment.get(slot).cloned();
+        }
+        if response.double_clicked() && p.worn(slot).is_some() {
             actions.0.push(Action::Unequip(slot.into()));
         }
     });
@@ -102,7 +126,18 @@ fn portrait(ui: &mut egui::Ui, art: &mut Art, state: &mut UiState, p: &Profile, 
                         mirror * (bounds[0] + bounds[2]) / 2.,
                         (bounds[1] + bounds[3]) / 2.,
                     ) * scale;
-                art.actor(ui.painter(), &id, p, 0., origin, scale, None, None, true);
+                art.actor(
+                    ui.painter(),
+                    &id,
+                    p,
+                    0.,
+                    origin,
+                    scale,
+                    None,
+                    None,
+                    true,
+                    1.,
+                );
                 ui.vertical_centered(|ui| {
                     if ui.button("Tourner").clicked() {
                         state.direction = (state.direction + 1) % 8;
@@ -127,14 +162,14 @@ fn sheet(
         ui.vertical(|ui| {
             ui.set_width(58.);
             for name in ["hat", "cape", "amulet", "weapon"] {
-                slot(ui, art, p, d, actions, name);
+                slot(ui, art, p, d, actions, state, name);
             }
         });
         portrait(ui, art, state, p, portrait_width);
         ui.vertical(|ui| {
             ui.set_width(58.);
             for name in ["ring1", "ring2", "belt", "boots"] {
-                slot(ui, art, p, d, actions, name);
+                slot(ui, art, p, d, actions, state, name);
             }
         });
     });
@@ -153,11 +188,11 @@ fn sheet(
                         ("Puissance", format!("{:.0}", stats.power)),
                         (
                             "Réduction recharge",
-                            format!("{:.0} %", stats.cooldown_reduction),
+                            format!("{:.1} %", stats.cooldown_reduction).replace('.', ","),
                         ),
                         (
                             "Bonus de déplacement",
-                            format!("{:.0} %", stats.movement_speed),
+                            format!("{:.1} %", stats.movement_speed).replace('.', ","),
                         ),
                         ("Kamas", p.kamas.to_string()),
                     ] {
@@ -174,7 +209,7 @@ fn sheet(
                     }
                 });
         });
-    ui.small("Cliquez sur un équipement porté pour le retirer.");
+    ui.small("Un clic : statistiques · double-clic : retirer l’équipement.");
 }
 fn bag(
     ui: &mut egui::Ui,
@@ -184,11 +219,24 @@ fn bag(
     d: &GameData,
     actions: &mut Actions,
 ) {
+    let available_sets = p.bag_sets(d);
+    let filter_key = if state.filter == "__no_set" {
+        ""
+    } else {
+        state.filter.as_str()
+    };
+    if !state.filter.is_empty() && !available_sets.contains(filter_key) {
+        state.filter.clear();
+    }
     let bag: Vec<_> = p
         .inventory
         .iter()
         .filter(|i| !p.equipment.values().any(|uid| uid == &i.uid))
-        .filter(|i| state.filter.is_empty() || d.items[&i.item].set == state.filter)
+        .filter(|i| {
+            state.filter.is_empty()
+                || d.items[&i.item].set == state.filter
+                || (state.filter == "__no_set" && d.items[&i.item].set.is_empty())
+        })
         .collect();
     ui.horizontal(|ui| {
         ui.heading("Votre sac");
@@ -197,14 +245,21 @@ fn bag(
     ui.small("Double-cliquez sur un objet pour l'équiper.");
     egui::ComboBox::from_id_salt("filter")
         .selected_text(if state.filter.is_empty() {
-            "Toutes les panoplies"
+            "Tous les objets"
+        } else if state.filter == "__no_set" {
+            "Hors panoplie"
         } else {
             &d.sets[&state.filter].name
         })
         .show_ui(ui, |ui| {
-            ui.selectable_value(&mut state.filter, String::new(), "Toutes les panoplies");
+            ui.selectable_value(&mut state.filter, String::new(), "Tous les objets");
+            if available_sets.contains("") {
+                ui.selectable_value(&mut state.filter, "__no_set".into(), "Hors panoplie");
+            }
             for (id, set) in &d.sets {
-                ui.selectable_value(&mut state.filter, id.clone(), &set.name);
+                if available_sets.contains(id.as_str()) {
+                    ui.selectable_value(&mut state.filter, id.clone(), &set.name);
+                }
             }
         });
     egui::Frame::group(ui.style())
@@ -236,19 +291,20 @@ fn bag(
                                 for (index, i) in bag.iter().enumerate() {
                                     let item = &d.items[&i.item];
                                     let selected = state.selected.as_ref() == Some(&i.uid);
-                                    let response = egui::Frame::new()
-                                        .fill(if selected {
-                                            egui::Color32::from_rgb(42, 65, 53)
-                                        } else {
-                                            egui::Color32::from_rgb(17, 30, 33)
-                                        })
-                                        .corner_radius(6)
-                                        .inner_margin(4.)
-                                        .show(ui, |ui| {
-                                            art.icon(ui, &item.icon, egui::vec2(46., 46.))
-                                        })
-                                        .inner
-                                        .on_hover_ui(|ui| item_tooltip(ui, item, d));
+                                    let response = fusion_frame(
+                                        egui::Frame::new()
+                                            .fill(if selected {
+                                                egui::Color32::from_rgb(42, 65, 53)
+                                            } else {
+                                                egui::Color32::from_rgb(17, 30, 33)
+                                            })
+                                            .corner_radius(6)
+                                            .inner_margin(4.),
+                                        i.fusion_level,
+                                    )
+                                    .show(ui, |ui| art.icon(ui, &item.icon, egui::vec2(46., 46.)))
+                                    .inner
+                                    .on_hover_ui(|ui| instance_tooltip(ui, i, d));
                                     if response.clicked() {
                                         state.selected = Some(i.uid.clone());
                                     }
@@ -274,11 +330,18 @@ fn bag(
                 .and_then(|uid| p.inventory.iter().find(|i| &i.uid == uid))
             {
                 let item = &d.items[&i.item];
-                ui.strong(&item.name);
-                ui.label(stats_text(&item.stats));
-                ui.colored_label(color(), &d.sets[&item.set].name);
+                ui.strong(i.name(d));
+                ui.label(egui::RichText::new(stats_text(&i.stats(d))).size(16.));
+                if let Some(set) = d.sets.get(&item.set) {
+                    ui.colored_label(color(), &set.name);
+                } else {
+                    ui.small("Hors panoplie");
+                }
                 ui.horizontal(|ui| {
-                    if item.category == "ring" {
+                    if let Some((slot, _)) = p.equipment.iter().find(|(_, uid)| *uid == &i.uid) {
+                        ui.label(format!("Équipé · {}", d.slot_names[slot]));
+                        ui.small("Double-cliquez sur l’icône portée pour le retirer.");
+                    } else if item.category == "ring" {
                         for (slot, label) in [("ring1", "Anneau 1"), ("ring2", "Anneau 2")] {
                             if ui.button(label).clicked() {
                                 actions
@@ -290,13 +353,26 @@ fn bag(
                         actions.0.push(Action::Equip(i.uid.clone(), None));
                     }
                 });
+                if i.fusion_level == 3 {
+                    ui.small("Fusion maximale");
+                } else if !p.equipment.values().any(|uid| uid == &i.uid) {
+                    let count = p.inventory.iter().filter(|other| other.item == i.item && other.fusion_level == i.fusion_level
+                        && !p.equipment.values().any(|uid| uid == &other.uid)).count();
+                    ui.horizontal(|ui| {
+                        if ui.add_enabled(p.fusion_plan(&i.uid).is_some(), egui::Button::new("Fusionner"))
+                            .on_hover_text("Consomme 3 exemplaires non équipés de cet objet, au même niveau de fusion.").clicked() {
+                            actions.0.push(Action::Fuse(i.uid.clone(), i.fusion_level));
+                        }
+                        ui.small(format!("{count}/3 exemplaires de même niveau dans le sac"));
+                    });
+                }
             } else {
                 ui.strong("Un équipement à examiner ?");
                 ui.label("Sélectionnez un objet pour consulter ses bonus et l'équiper.");
             }
         });
     let (sold, value) = p.sale_plan(d);
-    ui.with_layout(egui::Layout::right_to_left(egui::Align::Center),|ui|{if ui.add_enabled(!sold.is_empty(),egui::Button::new(format!("Vendre doublons · +{value} kamas"))).on_hover_text("Sur tout le sac : protège les objets portés et conserve un exemplaire libre des autres objets.").clicked(){actions.0.push(Action::Sell);}});
+    ui.with_layout(egui::Layout::right_to_left(egui::Align::Center),|ui|{if ui.add_enabled(!sold.is_empty(),egui::Button::new(format!("Vendre doublons · +{value} kamas"))).on_hover_text("Sur tout le sac : protège les objets portés et fusionnés, et conserve un exemplaire libre des autres objets.").clicked(){actions.0.push(Action::Sell);}});
 }
 pub(super) fn inventory(
     ctx: &egui::Context,

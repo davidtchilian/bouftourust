@@ -2,8 +2,8 @@
   "balance": {
     "maxLevel": 100,
     "startingHp": 180,
-    "hpPerLevel": 12,
-    "powerPerLevel": 4,
+    "hpPerLevel": 10,
+    "powerPerLevel": 5,
     "baseDamage": 16,
     "playerSpeed": 95,
     "waveDelay": 1.8,
@@ -17,7 +17,9 @@
     "maxCooldownReduction": 30,
     "maxMovementSpeedBonus": 60,
     "lootChance": 0.05,
-    "bossLootChance": 0.4
+    "bossLootChance": 0.4,
+    "cooldownReductionPerLevel": 0.2,
+    "movementSpeedPerLevel": 0.2
   },
   "spells": {
     "explosive": {
@@ -148,7 +150,7 @@
       "cooldown": 25,
       "range": 60,
       "speed": 0,
-      "radius": 0,
+      "radius": 60,
       "kind": "wrath",
       "effect": "spell.wrath.cast"
     },
@@ -195,6 +197,64 @@
       "radius": 0,
       "kind": "truce",
       "effect": "spell.truce.cast"
+    },
+    "iop_power": {
+      "key": "e",
+      "name": "Puissance",
+      "coefficient": 0,
+      "cooldown": 16,
+      "range": 0,
+      "speed": 0,
+      "radius": 0,
+      "kind": "buff",
+      "effect": "spell.power.cast",
+      "buffDuration": 5,
+      "buffMultiplier": 2
+    },
+    "sournoiserie": {
+      "key": "a",
+      "name": "Sournoiserie",
+      "coefficient": 1.2,
+      "cooldown": 0.6,
+      "range": 200,
+      "radius": 0,
+      "speed": 0,
+      "kind": "direct",
+      "effect": ""
+    },
+    "mass_trap": {
+      "key": "z",
+      "name": "Piège de Masse",
+      "coefficient": 2.8,
+      "cooldown": 1.5,
+      "range": null,
+      "radius": 75,
+      "speed": 0,
+      "kind": "trap",
+      "effect": "spell.sram.trap"
+    },
+    "invisibility": {
+      "key": "e",
+      "name": "Invisibilité",
+      "coefficient": 0,
+      "cooldown": 14,
+      "range": 0,
+      "radius": 0,
+      "speed": 0,
+      "kind": "invisibility",
+      "effect": "spell.sram.invisibility",
+      "buffDuration": 4
+    },
+    "mortal_attack": {
+      "key": "r",
+      "name": "Attaque Mortelle",
+      "coefficient": 4.5,
+      "cooldown": 4,
+      "range": 40,
+      "radius": 0,
+      "speed": 0,
+      "kind": "mortal",
+      "effect": "spell.sram.mortal"
     }
   },
   "classBalance": {
@@ -246,7 +306,7 @@
       "abilities": [
         "sword",
         "jump",
-        "intimidation",
+        "iop_power",
         "wrath"
       ]
     },
@@ -261,6 +321,19 @@
         "cloudy",
         "teleport",
         "truce"
+      ]
+    },
+    "sram": {
+      "id": "sram",
+      "name": "Sram",
+      "sprite": "sram",
+      "baseDamage": 16,
+      "speed": 95,
+      "abilities": [
+        "sournoiserie",
+        "mass_trap",
+        "invisibility",
+        "mortal_attack"
       ]
     }
   },
@@ -717,6 +790,129 @@
         "royalReinette",
         "blopignon"
       ]
+    },
+    "ancestral": {
+      "id": "ancestral",
+      "name": "Donjon de l’Abraknyde Ancestral",
+      "map": "ancestral",
+      "rewardSet": "ancestral",
+      "tier": 8,
+      "recommendedGear": "Panoplie Blop Multicolore Royale conseillée",
+      "description": "L’Ancestral avance très lentement et invoque toutes les 3 s. Une invocation sur 200 peut être un autre Ancestral. Panoplie Ancestrale : très grande Vie, Puissance, mobilité et récupération.",
+      "scaling": {
+        "hpPerWave": 0.12,
+        "damagePerWave": 0.08
+      },
+      "loot": {
+        "normalChance": 0.025,
+        "bossChance": 0.4
+      },
+      "normalWaves": [
+        [
+          "abraknyde",
+          "abraknyde",
+          "abraknyde",
+          "abraknyde",
+          "abraknyde",
+          "abraknyde",
+          "abrakne",
+          "abrakne",
+          "abrakne"
+        ],
+        [
+          "abraknyde",
+          "abraknyde",
+          "abraknyde",
+          "darkAbraknyde",
+          "darkAbraknyde",
+          "darkAbraknyde",
+          "darkAbraknyde",
+          "abrakne",
+          "abrakne",
+          "abrakne"
+        ],
+        [
+          "darkAbraknyde",
+          "darkAbraknyde",
+          "darkAbraknyde",
+          "darkAbraknyde",
+          "darkAbraknyde",
+          "darkAbrakne",
+          "darkAbrakne",
+          "darkAbrakne",
+          "darkAbrakne",
+          "darkAbrakne"
+        ]
+      ],
+      "bossWave": [
+        "ancestral",
+        "darkAbraknyde",
+        "darkAbraknyde",
+        "darkAbrakne",
+        "darkAbrakne"
+      ]
+    },
+    "canides": {
+      "id": "canides",
+      "name": "Donjon des Canidés",
+      "map": "meulou",
+      "rewardSet": "meulou",
+      "tier": 9,
+      "recommendedGear": "Panoplie Ancestrale conseillée",
+      "description": "Le Meulou invoque deux Mulous toutes les 5 s. À chaque paire, ses alliés vivants gagnent +50 dégâts, jusqu’à +300. Sa panoplie privilégie les dégâts, avec moins de Vie et de récupération que l’Ancestrale.",
+      "scaling": {
+        "hpPerWave": 0.12,
+        "damagePerWave": 0.08
+      },
+      "loot": {
+        "normalChance": 0.025,
+        "bossChance": 0.4
+      },
+      "normalWaves": [
+        [
+          "milimulou",
+          "milimulou",
+          "milimulou",
+          "milimulou",
+          "milimulou",
+          "crocGland",
+          "crocGland",
+          "crocGland",
+          "crocGland"
+        ],
+        [
+          "crocGland",
+          "crocGland",
+          "crocGland",
+          "crocGland",
+          "kanigrou",
+          "kanigrou",
+          "kanigrou",
+          "kanigrou",
+          "mulou",
+          "mulou"
+        ],
+        [
+          "mulou",
+          "mulou",
+          "mulou",
+          "mulou",
+          "ouginak",
+          "ouginak",
+          "ouginak",
+          "ouginak",
+          "kanigrou",
+          "kanigrou",
+          "kanigrou"
+        ]
+      ],
+      "bossWave": [
+        "meulou",
+        "mulou",
+        "mulou",
+        "ouginak",
+        "kanigrou"
+      ]
     }
   },
   "dungeonModes": {
@@ -904,7 +1100,11 @@
           "item": "6813",
           "weight": 1
         }
-      ]
+      ],
+      "allyHeal": {
+        "interval": 12,
+        "amount": 500
+      }
     },
     "bworkestre": {
       "name": "Chef Bworkestre",
@@ -978,7 +1178,16 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "blopIndigo": {
       "name": "Blop Indigo",
@@ -1009,7 +1218,16 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "blopGriotte": {
       "name": "Blop Griotte",
@@ -1040,7 +1258,16 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "blopReinette": {
       "name": "Blop Reinette",
@@ -1071,7 +1298,16 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "biblopIndigo": {
       "name": "Biblop Indigo",
@@ -1102,7 +1338,16 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "biblopCoco": {
       "name": "Biblop Coco",
@@ -1133,7 +1378,16 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "biblopGriotte": {
       "name": "Biblop Griotte",
@@ -1164,7 +1418,16 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "biblopReinette": {
       "name": "Biblop Reinette",
@@ -1195,7 +1458,16 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "gloutoblop": {
       "name": "Gloutoblop",
@@ -1226,7 +1498,17 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "flatDamage": 1000000,
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "blopignon": {
       "name": "Blopignon",
@@ -1257,7 +1539,16 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "tronkoblop": {
       "name": "Tronkoblop",
@@ -1288,7 +1579,16 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "royalCoco": {
       "name": "Blop Coco Royal",
@@ -1319,7 +1619,16 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "royalGriotte": {
       "name": "Blop Griotte Royal",
@@ -1350,7 +1659,16 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "royalIndigo": {
       "name": "Blop Indigo Royal",
@@ -1381,7 +1699,16 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "royalReinette": {
       "name": "Blop Reinette Royal",
@@ -1412,7 +1739,16 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "royalBlopMulti": {
       "name": "Blop Multicolore Royal",
@@ -1443,7 +1779,25 @@
           "item": "9175",
           "weight": 1
         }
-      ]
+      ],
+      "summon": {
+        "interval": 5,
+        "kinds": [
+          "royalCoco",
+          "royalIndigo",
+          "royalGriotte",
+          "royalReinette"
+        ]
+      },
+      "bonusLoot": {
+        "chance": 0.005,
+        "table": [
+          {
+            "item": "2469",
+            "weight": 1
+          }
+        ]
+      }
     },
     "tofu": {
       "name": "Tofu",
@@ -1572,7 +1926,12 @@
           "item": "8114",
           "weight": 1
         }
-      ]
+      ],
+      "speedBurst": {
+        "interval": 10,
+        "duration": 1,
+        "multiplier": 5
+      }
     },
     "blueScara": {
       "name": "Scarafeuille Bleu",
@@ -1758,7 +2117,11 @@
           "item": "8136",
           "weight": 1
         }
-      ]
+      ],
+      "invulnerability": {
+        "interval": 5,
+        "duration": 2
+      }
     },
     "white": {
       "name": "Boufton Blanc",
@@ -1932,7 +2295,7 @@
       "name": "Bouftou Royal",
       "sprite": "1574",
       "hp": 1400,
-      "speed": 49,
+      "speed": 53,
       "detect": 700,
       "range": 32,
       "damage": 52,
@@ -2587,6 +2950,457 @@
           "weight": 2
         }
       ]
+    },
+    "abraknyde": {
+      "name": "Abraknyde",
+      "sprite": "1001",
+      "hp": 700,
+      "speed": 44,
+      "detect": 900,
+      "range": 25,
+      "damage": 65,
+      "interval": 1.8,
+      "xp": 65,
+      "kamas": 22,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8463",
+          "weight": 1
+        },
+        {
+          "item": "8464",
+          "weight": 1
+        },
+        {
+          "item": "8465",
+          "weight": 1
+        },
+        {
+          "item": "8466",
+          "weight": 1
+        },
+        {
+          "item": "8467",
+          "weight": 1
+        },
+        {
+          "item": "8468",
+          "weight": 1
+        }
+      ]
+    },
+    "darkAbraknyde": {
+      "name": "Abraknyde Sombre",
+      "sprite": "1158",
+      "hp": 1100,
+      "speed": 44,
+      "detect": 900,
+      "range": 25,
+      "damage": 73,
+      "interval": 1.8,
+      "xp": 65,
+      "kamas": 22,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8463",
+          "weight": 1
+        },
+        {
+          "item": "8464",
+          "weight": 1
+        },
+        {
+          "item": "8465",
+          "weight": 1
+        },
+        {
+          "item": "8466",
+          "weight": 1
+        },
+        {
+          "item": "8467",
+          "weight": 1
+        },
+        {
+          "item": "8468",
+          "weight": 1
+        }
+      ]
+    },
+    "abrakne": {
+      "name": "Abrakne",
+      "sprite": "1333",
+      "hp": 650,
+      "speed": 44,
+      "detect": 900,
+      "range": 25,
+      "damage": 81,
+      "interval": 1.8,
+      "xp": 65,
+      "kamas": 22,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8463",
+          "weight": 1
+        },
+        {
+          "item": "8464",
+          "weight": 1
+        },
+        {
+          "item": "8465",
+          "weight": 1
+        },
+        {
+          "item": "8466",
+          "weight": 1
+        },
+        {
+          "item": "8467",
+          "weight": 1
+        },
+        {
+          "item": "8468",
+          "weight": 1
+        }
+      ]
+    },
+    "darkAbrakne": {
+      "name": "Abrakne Sombre",
+      "sprite": "1334",
+      "hp": 950,
+      "speed": 44,
+      "detect": 900,
+      "range": 25,
+      "damage": 89,
+      "interval": 1.8,
+      "xp": 65,
+      "kamas": 22,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8463",
+          "weight": 1
+        },
+        {
+          "item": "8464",
+          "weight": 1
+        },
+        {
+          "item": "8465",
+          "weight": 1
+        },
+        {
+          "item": "8466",
+          "weight": 1
+        },
+        {
+          "item": "8467",
+          "weight": 1
+        },
+        {
+          "item": "8468",
+          "weight": 1
+        }
+      ]
+    },
+    "ancestral": {
+      "name": "Abraknyde Ancestral",
+      "sprite": "1458",
+      "hp": 7200,
+      "speed": 10,
+      "detect": 900,
+      "range": 34,
+      "damage": 125,
+      "interval": 2.2,
+      "xp": 600,
+      "kamas": 250,
+      "boss": true,
+      "loot": [
+        {
+          "item": "8463",
+          "weight": 1
+        },
+        {
+          "item": "8464",
+          "weight": 1
+        },
+        {
+          "item": "8465",
+          "weight": 1
+        },
+        {
+          "item": "8466",
+          "weight": 1
+        },
+        {
+          "item": "8467",
+          "weight": 1
+        },
+        {
+          "item": "8468",
+          "weight": 1
+        }
+      ],
+      "summon": {
+        "interval": 3,
+        "kinds": [
+          "abraknyde",
+          "darkAbraknyde",
+          "abrakne",
+          "darkAbrakne"
+        ],
+        "rareKind": "ancestral",
+        "rareChance": 0.005
+      }
+    },
+    "milimulou": {
+      "name": "Milimulou",
+      "sprite": "1107",
+      "hp": 800,
+      "speed": 62,
+      "detect": 900,
+      "range": 26,
+      "damage": 95,
+      "interval": 1.8,
+      "xp": 85,
+      "kamas": 28,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8262",
+          "weight": 1
+        },
+        {
+          "item": "8263",
+          "weight": 1
+        },
+        {
+          "item": "8264",
+          "weight": 1
+        },
+        {
+          "item": "8265",
+          "weight": 1
+        },
+        {
+          "item": "8266",
+          "weight": 1
+        },
+        {
+          "item": "8267",
+          "weight": 1
+        }
+      ]
+    },
+    "kanigrou": {
+      "name": "Kanigrou",
+      "sprite": "1039",
+      "hp": 1500,
+      "speed": 62,
+      "detect": 900,
+      "range": 26,
+      "damage": 104,
+      "interval": 1.8,
+      "xp": 85,
+      "kamas": 28,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8262",
+          "weight": 1
+        },
+        {
+          "item": "8263",
+          "weight": 1
+        },
+        {
+          "item": "8264",
+          "weight": 1
+        },
+        {
+          "item": "8265",
+          "weight": 1
+        },
+        {
+          "item": "8266",
+          "weight": 1
+        },
+        {
+          "item": "8267",
+          "weight": 1
+        }
+      ]
+    },
+    "mulou": {
+      "name": "Mulou",
+      "sprite": "1069",
+      "hp": 1700,
+      "speed": 62,
+      "detect": 900,
+      "range": 26,
+      "damage": 113,
+      "interval": 1.8,
+      "xp": 85,
+      "kamas": 28,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8262",
+          "weight": 1
+        },
+        {
+          "item": "8263",
+          "weight": 1
+        },
+        {
+          "item": "8264",
+          "weight": 1
+        },
+        {
+          "item": "8265",
+          "weight": 1
+        },
+        {
+          "item": "8266",
+          "weight": 1
+        },
+        {
+          "item": "8267",
+          "weight": 1
+        }
+      ]
+    },
+    "ouginak": {
+      "name": "Ouginak",
+      "sprite": "1196",
+      "hp": 1600,
+      "speed": 62,
+      "detect": 900,
+      "range": 26,
+      "damage": 122,
+      "interval": 1.8,
+      "xp": 85,
+      "kamas": 28,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8262",
+          "weight": 1
+        },
+        {
+          "item": "8263",
+          "weight": 1
+        },
+        {
+          "item": "8264",
+          "weight": 1
+        },
+        {
+          "item": "8265",
+          "weight": 1
+        },
+        {
+          "item": "8266",
+          "weight": 1
+        },
+        {
+          "item": "8267",
+          "weight": 1
+        }
+      ]
+    },
+    "crocGland": {
+      "name": "Croc Gland",
+      "sprite": "1201",
+      "hp": 1000,
+      "speed": 62,
+      "detect": 900,
+      "range": 26,
+      "damage": 131,
+      "interval": 1.8,
+      "xp": 85,
+      "kamas": 28,
+      "boss": false,
+      "loot": [
+        {
+          "item": "8262",
+          "weight": 1
+        },
+        {
+          "item": "8263",
+          "weight": 1
+        },
+        {
+          "item": "8264",
+          "weight": 1
+        },
+        {
+          "item": "8265",
+          "weight": 1
+        },
+        {
+          "item": "8266",
+          "weight": 1
+        },
+        {
+          "item": "8267",
+          "weight": 1
+        }
+      ]
+    },
+    "meulou": {
+      "name": "Meulou",
+      "sprite": "1134",
+      "hp": 11000,
+      "speed": 70,
+      "detect": 900,
+      "range": 38,
+      "damage": 165,
+      "interval": 1.6,
+      "xp": 850,
+      "kamas": 350,
+      "boss": true,
+      "loot": [
+        {
+          "item": "8262",
+          "weight": 1
+        },
+        {
+          "item": "8263",
+          "weight": 1
+        },
+        {
+          "item": "8264",
+          "weight": 1
+        },
+        {
+          "item": "8265",
+          "weight": 1
+        },
+        {
+          "item": "8266",
+          "weight": 1
+        },
+        {
+          "item": "8267",
+          "weight": 1
+        }
+      ],
+      "summon": {
+        "interval": 5,
+        "count": 2,
+        "kinds": [
+          "mulou"
+        ],
+        "allyAttackBuff": {
+          "amount": 50,
+          "maximum": 300
+        }
+      }
     }
   },
   "items": {
@@ -2595,8 +3409,8 @@
       "name": "Coiffe du Bouftou",
       "category": "hat",
       "stats": {
-        "hp": 44,
-        "power": 24
+        "hp": 42,
+        "power": 16
       },
       "set": "bouftou",
       "icon": "item.2411"
@@ -2606,8 +3420,8 @@
       "name": "Cape Bouffante",
       "category": "cape",
       "stats": {
-        "hp": 62,
-        "power": 18
+        "hp": 46,
+        "power": 11
       },
       "set": "bouftou",
       "icon": "item.2414"
@@ -2617,8 +3431,8 @@
       "name": "Marteau du Bouftou",
       "category": "weapon",
       "stats": {
-        "hp": 24,
-        "power": 36
+        "hp": 19,
+        "power": 28
       },
       "set": "bouftou",
       "icon": "item.2416"
@@ -2628,8 +3442,8 @@
       "name": "Anneau de Bouze le Clerc",
       "category": "ring",
       "stats": {
-        "hp": 30,
-        "power": 14
+        "hp": 21,
+        "power": 17
       },
       "set": "bouftou",
       "icon": "item.2419"
@@ -2639,8 +3453,8 @@
       "name": "Boufbottes",
       "category": "boots",
       "stats": {
-        "hp": 42,
-        "power": 16
+        "hp": 35,
+        "power": 10
       },
       "set": "bouftou",
       "icon": "item.2422"
@@ -2650,8 +3464,8 @@
       "name": "Amulette du Bouftou",
       "category": "amulet",
       "stats": {
-        "hp": 22,
-        "power": 26
+        "hp": 27,
+        "power": 23
       },
       "set": "bouftou",
       "icon": "item.2425"
@@ -2661,8 +3475,8 @@
       "name": "Ceinture du Bouftou",
       "category": "belt",
       "stats": {
-        "hp": 56,
-        "power": 16
+        "hp": 50,
+        "power": 11
       },
       "set": "bouftou",
       "icon": "item.2428"
@@ -2672,8 +3486,8 @@
       "name": "Boufcoiffe Royale",
       "category": "hat",
       "stats": {
-        "hp": 66,
-        "power": 36
+        "hp": 61,
+        "power": 22
       },
       "set": "royalBouftou",
       "icon": "item.2438"
@@ -2683,8 +3497,8 @@
       "name": "Epée Royale du Bouftou",
       "category": "weapon",
       "stats": {
-        "hp": 36,
-        "power": 54
+        "hp": 27,
+        "power": 40
       },
       "set": "royalBouftou",
       "icon": "item.2440"
@@ -2694,8 +3508,8 @@
       "name": "Anneau Royal du Bouftou",
       "category": "ring",
       "stats": {
-        "hp": 45,
-        "power": 21
+        "hp": 30,
+        "power": 24
       },
       "set": "royalBouftou",
       "icon": "item.2441"
@@ -2705,8 +3519,8 @@
       "name": "Boufbottes Royales",
       "category": "boots",
       "stats": {
-        "hp": 63,
-        "power": 24
+        "hp": 50,
+        "power": 14
       },
       "set": "royalBouftou",
       "icon": "item.2442"
@@ -2716,8 +3530,8 @@
       "name": "Amulette Royale du Bouftou",
       "category": "amulet",
       "stats": {
-        "hp": 33,
-        "power": 39
+        "hp": 38,
+        "power": 33
       },
       "set": "royalBouftou",
       "icon": "item.2443"
@@ -2727,8 +3541,8 @@
       "name": "Ceinture Royale du Bouftou",
       "category": "belt",
       "stats": {
-        "hp": 84,
-        "power": 24
+        "hp": 72,
+        "power": 16
       },
       "set": "royalBouftou",
       "icon": "item.2444"
@@ -2738,8 +3552,8 @@
       "name": "Cape Bouffante Royale",
       "category": "cape",
       "stats": {
-        "hp": 93,
-        "power": 27
+        "hp": 66,
+        "power": 15
       },
       "set": "royalBouftou",
       "icon": "item.2445"
@@ -2749,8 +3563,8 @@
       "name": "Cape de l’Aventurier",
       "category": "cape",
       "stats": {
-        "hp": 18,
-        "power": 4
+        "hp": 13,
+        "power": 3
       },
       "set": "adventurer",
       "icon": "item.2473"
@@ -2760,8 +3574,8 @@
       "name": "Chapeau de l’Aventurier",
       "category": "hat",
       "stats": {
-        "hp": 14,
-        "power": 6
+        "hp": 12,
+        "power": 4
       },
       "set": "adventurer",
       "icon": "item.2474"
@@ -2771,8 +3585,8 @@
       "name": "Anneau de l’Aventurier",
       "category": "ring",
       "stats": {
-        "hp": 10,
-        "power": 4
+        "hp": 6,
+        "power": 5
       },
       "set": "adventurer",
       "icon": "item.2475"
@@ -2782,7 +3596,7 @@
       "name": "Bottes de l’Aventurier",
       "category": "boots",
       "stats": {
-        "hp": 16,
+        "hp": 10,
         "power": 3
       },
       "set": "adventurer",
@@ -2793,7 +3607,7 @@
       "name": "Ceinture de l’aventurier",
       "category": "belt",
       "stats": {
-        "hp": 18,
+        "hp": 15,
         "power": 3
       },
       "set": "adventurer",
@@ -2815,10 +3629,8 @@
       "name": "Lame du Chef Bwork",
       "category": "weapon",
       "stats": {
-        "hp": 95,
-        "power": 40,
-        "movementSpeed": 2,
-        "cooldownReduction": 2
+        "hp": 40,
+        "power": 48
       },
       "set": "chefBwork",
       "icon": "item.6799"
@@ -2828,9 +3640,8 @@
       "name": "Amulette du Chef Bwork",
       "category": "amulet",
       "stats": {
-        "hp": 95,
+        "hp": 56,
         "power": 40,
-        "movementSpeed": 2,
         "cooldownReduction": 2
       },
       "set": "chefBwork",
@@ -2841,10 +3652,9 @@
       "name": "Bracelet du Chef Bwork",
       "category": "ring",
       "stats": {
-        "hp": 95,
-        "power": 40,
-        "movementSpeed": 2,
-        "cooldownReduction": 2
+        "hp": 44,
+        "power": 30,
+        "cooldownReduction": 1
       },
       "set": "chefBwork",
       "icon": "item.6805"
@@ -2854,10 +3664,9 @@
       "name": "Bottes du Chef Bwork",
       "category": "boots",
       "stats": {
-        "hp": 95,
-        "power": 40,
-        "movementSpeed": 2,
-        "cooldownReduction": 2
+        "hp": 71,
+        "power": 17,
+        "movementSpeed": 5
       },
       "set": "chefBwork",
       "icon": "item.6807"
@@ -2868,9 +3677,8 @@
       "category": "cape",
       "stats": {
         "hp": 95,
-        "power": 40,
-        "movementSpeed": 2,
-        "cooldownReduction": 2
+        "power": 18,
+        "movementSpeed": 1
       },
       "set": "chefBwork",
       "icon": "item.6811"
@@ -2880,10 +3688,8 @@
       "name": "Slip du Chef Bwork",
       "category": "belt",
       "stats": {
-        "hp": 95,
-        "power": 40,
-        "movementSpeed": 2,
-        "cooldownReduction": 2
+        "hp": 103,
+        "power": 20
       },
       "set": "chefBwork",
       "icon": "item.6812"
@@ -2893,10 +3699,9 @@
       "name": "Casque du Chef Bwork",
       "category": "hat",
       "stats": {
-        "hp": 95,
-        "power": 40,
-        "movementSpeed": 2,
-        "cooldownReduction": 2
+        "hp": 87,
+        "power": 27,
+        "cooldownReduction": 1
       },
       "set": "chefBwork",
       "icon": "item.6813"
@@ -2906,10 +3711,9 @@
       "name": "Amulette du Tofu",
       "category": "amulet",
       "stats": {
-        "hp": 16,
-        "power": 16,
-        "movementSpeed": 4,
-        "cooldownReduction": 1
+        "hp": 14,
+        "power": 25,
+        "cooldownReduction": 3
       },
       "set": "tofu",
       "icon": "item.8108"
@@ -2919,10 +3723,9 @@
       "name": "Anneau du Tofu",
       "category": "ring",
       "stats": {
-        "hp": 16,
-        "power": 16,
-        "movementSpeed": 4,
-        "cooldownReduction": 1
+        "hp": 11,
+        "power": 19,
+        "cooldownReduction": 2
       },
       "set": "tofu",
       "icon": "item.8109"
@@ -2932,10 +3735,8 @@
       "name": "Baguette du Tofu",
       "category": "weapon",
       "stats": {
-        "hp": 16,
-        "power": 16,
-        "movementSpeed": 4,
-        "cooldownReduction": 1
+        "hp": 10,
+        "power": 31
       },
       "set": "tofu",
       "icon": "item.8110"
@@ -2945,10 +3746,9 @@
       "name": "Pantoufles du Tofu",
       "category": "boots",
       "stats": {
-        "hp": 16,
-        "power": 16,
-        "movementSpeed": 4,
-        "cooldownReduction": 1
+        "hp": 18,
+        "power": 11,
+        "movementSpeed": 19
       },
       "set": "tofu",
       "icon": "item.8111"
@@ -2958,10 +3758,9 @@
       "name": "Cape du Tofu",
       "category": "cape",
       "stats": {
-        "hp": 16,
-        "power": 16,
-        "movementSpeed": 4,
-        "cooldownReduction": 1
+        "hp": 25,
+        "power": 12,
+        "movementSpeed": 6
       },
       "set": "tofu",
       "icon": "item.8112"
@@ -2971,10 +3770,8 @@
       "name": "Ceinture du Tofu",
       "category": "belt",
       "stats": {
-        "hp": 16,
-        "power": 16,
-        "movementSpeed": 4,
-        "cooldownReduction": 1
+        "hp": 27,
+        "power": 13
       },
       "set": "tofu",
       "icon": "item.8113"
@@ -2984,9 +3781,8 @@
       "name": "Kaskofu",
       "category": "hat",
       "stats": {
-        "hp": 16,
-        "power": 16,
-        "movementSpeed": 4,
+        "hp": 23,
+        "power": 17,
         "cooldownReduction": 1
       },
       "set": "tofu",
@@ -2997,10 +3793,8 @@
       "name": "Scarature Noire",
       "category": "belt",
       "stats": {
-        "hp": 100,
-        "power": 48,
-        "movementSpeed": 1,
-        "cooldownReduction": 1
+        "hp": 58,
+        "power": 26
       },
       "set": "blackScara",
       "icon": "item.8132"
@@ -3010,10 +3804,8 @@
       "name": "Scaracoiffe Noire",
       "category": "hat",
       "stats": {
-        "hp": 100,
-        "power": 48,
-        "movementSpeed": 1,
-        "cooldownReduction": 1
+        "hp": 49,
+        "power": 35
       },
       "set": "blackScara",
       "icon": "item.8133"
@@ -3023,10 +3815,8 @@
       "name": "Scaracape Noire",
       "category": "cape",
       "stats": {
-        "hp": 100,
-        "power": 48,
-        "movementSpeed": 1,
-        "cooldownReduction": 1
+        "hp": 53,
+        "power": 24
       },
       "set": "blackScara",
       "icon": "item.8134"
@@ -3036,10 +3826,8 @@
       "name": "Scaranneau Noir",
       "category": "ring",
       "stats": {
-        "hp": 100,
-        "power": 48,
-        "movementSpeed": 1,
-        "cooldownReduction": 1
+        "hp": 24,
+        "power": 39
       },
       "set": "blackScara",
       "icon": "item.8136"
@@ -3050,8 +3838,8 @@
       "category": "amulet",
       "stats": {
         "hp": 14,
-        "power": 10,
-        "cooldownReduction": 1
+        "power": 11,
+        "cooldownReduction": 4
       },
       "set": "mousse",
       "icon": "item.8253"
@@ -3061,9 +3849,9 @@
       "name": "Anneau en Mousse",
       "category": "ring",
       "stats": {
-        "hp": 18,
-        "power": 6,
-        "cooldownReduction": 1
+        "hp": 11,
+        "power": 8,
+        "cooldownReduction": 2
       },
       "set": "mousse",
       "icon": "item.8254"
@@ -3074,7 +3862,7 @@
       "category": "weapon",
       "stats": {
         "hp": 10,
-        "power": 10
+        "power": 13
       },
       "set": "mousse",
       "icon": "item.8255"
@@ -3084,9 +3872,8 @@
       "name": "Bottes en Mousse",
       "category": "boots",
       "stats": {
-        "hp": 22,
-        "power": 6,
-        "cooldownReduction": 2
+        "hp": 18,
+        "power": 5
       },
       "set": "mousse",
       "icon": "item.8256"
@@ -3096,7 +3883,7 @@
       "name": "Ceinture en Mousse",
       "category": "belt",
       "stats": {
-        "hp": 30,
+        "hp": 27,
         "power": 6
       },
       "set": "mousse",
@@ -3107,9 +3894,8 @@
       "name": "Cape en Mousse",
       "category": "cape",
       "stats": {
-        "hp": 30,
-        "power": 7,
-        "cooldownReduction": 1
+        "hp": 25,
+        "power": 5
       },
       "set": "mousse",
       "icon": "item.8258"
@@ -3119,8 +3905,8 @@
       "name": "Coiffe en Mousse",
       "category": "hat",
       "stats": {
-        "hp": 26,
-        "power": 10,
+        "hp": 23,
+        "power": 8,
         "cooldownReduction": 1
       },
       "set": "mousse",
@@ -3131,10 +3917,9 @@
       "name": "Blopanneau Multicolore Royal",
       "category": "ring",
       "stats": {
-        "hp": 110,
-        "power": 90,
-        "movementSpeed": 2,
-        "cooldownReduction": 4
+        "hp": 28,
+        "power": 56,
+        "cooldownReduction": 5
       },
       "set": "blopMulti",
       "icon": "item.9148"
@@ -3144,10 +3929,9 @@
       "name": "Amublop Multicolore Royale",
       "category": "amulet",
       "stats": {
-        "hp": 110,
-        "power": 90,
-        "movementSpeed": 2,
-        "cooldownReduction": 4
+        "hp": 36,
+        "power": 75,
+        "cooldownReduction": 8
       },
       "set": "blopMulti",
       "icon": "item.9157"
@@ -3157,10 +3941,8 @@
       "name": "Bloptes Multicolores Royales",
       "category": "boots",
       "stats": {
-        "hp": 110,
-        "power": 90,
-        "movementSpeed": 2,
-        "cooldownReduction": 4
+        "hp": 46,
+        "power": 32
       },
       "set": "blopMulti",
       "icon": "item.9166"
@@ -3170,10 +3952,8 @@
       "name": "Blopture Multicolore Royale",
       "category": "belt",
       "stats": {
-        "hp": 110,
-        "power": 90,
-        "movementSpeed": 2,
-        "cooldownReduction": 4
+        "hp": 66,
+        "power": 37
       },
       "set": "blopMulti",
       "icon": "item.9175"
@@ -3194,6 +3974,160 @@
         "movementSpeed": 150,
         "cooldownReduction": 90
       }
+    },
+    "8463": {
+      "id": "8463",
+      "name": "Abracaska Ancestral",
+      "category": "hat",
+      "stats": {
+        "hp": 125,
+        "power": 43,
+        "cooldownReduction": 2
+      },
+      "set": "ancestral",
+      "icon": "item.8463"
+    },
+    "8464": {
+      "id": "8464",
+      "name": "Abracapa Ancestrale",
+      "category": "cape",
+      "stats": {
+        "hp": 137,
+        "power": 29,
+        "movementSpeed": 1
+      },
+      "set": "ancestral",
+      "icon": "item.8464"
+    },
+    "8465": {
+      "id": "8465",
+      "name": "Torque Ancestral",
+      "category": "amulet",
+      "stats": {
+        "hp": 80,
+        "power": 63,
+        "cooldownReduction": 5
+      },
+      "set": "ancestral",
+      "icon": "item.8465"
+    },
+    "8466": {
+      "id": "8466",
+      "name": "Anneau Ancestral",
+      "category": "ring",
+      "stats": {
+        "hp": 63,
+        "power": 47,
+        "cooldownReduction": 3
+      },
+      "set": "ancestral",
+      "icon": "item.8466"
+    },
+    "8467": {
+      "id": "8467",
+      "name": "Protège-Tibias Ancestraux",
+      "category": "boots",
+      "stats": {
+        "hp": 103,
+        "power": 27,
+        "movementSpeed": 3
+      },
+      "set": "ancestral",
+      "icon": "item.8467"
+    },
+    "8468": {
+      "id": "8468",
+      "name": "Abrature Ancestrale",
+      "category": "belt",
+      "stats": {
+        "hp": 148,
+        "power": 31
+      },
+      "set": "ancestral",
+      "icon": "item.8468"
+    },
+    "8262": {
+      "id": "8262",
+      "name": "La Meulette",
+      "category": "amulet",
+      "stats": {
+        "hp": 70,
+        "power": 83,
+        "cooldownReduction": 3
+      },
+      "set": "meulou",
+      "icon": "item.8262"
+    },
+    "8263": {
+      "id": "8263",
+      "name": "Anneau du Meulou",
+      "category": "ring",
+      "stats": {
+        "hp": 55,
+        "power": 63,
+        "cooldownReduction": 2
+      },
+      "set": "meulou",
+      "icon": "item.8263"
+    },
+    "8264": {
+      "id": "8264",
+      "name": "Bottes du Meulou",
+      "category": "boots",
+      "stats": {
+        "hp": 90,
+        "power": 36,
+        "movementSpeed": 8
+      },
+      "set": "meulou",
+      "icon": "item.8264"
+    },
+    "8265": {
+      "id": "8265",
+      "name": "Cape du Meulou",
+      "category": "cape",
+      "stats": {
+        "hp": 120,
+        "power": 39,
+        "movementSpeed": 3
+      },
+      "set": "meulou",
+      "icon": "item.8265"
+    },
+    "8266": {
+      "id": "8266",
+      "name": "Ceinture du Meulou",
+      "category": "belt",
+      "stats": {
+        "hp": 131,
+        "power": 42
+      },
+      "set": "meulou",
+      "icon": "item.8266"
+    },
+    "8267": {
+      "id": "8267",
+      "name": "Coiffe du Meulou",
+      "category": "hat",
+      "stats": {
+        "hp": 110,
+        "power": 57,
+        "cooldownReduction": 1
+      },
+      "set": "meulou",
+      "icon": "item.8267"
+    },
+    "2469": {
+      "id": "2469",
+      "name": "Gelano",
+      "category": "ring",
+      "set": "",
+      "stats": {
+        "hp": 0,
+        "power": 0,
+        "cooldownReduction": 10
+      },
+      "icon": "item.2469"
     }
   },
   "sets": {
@@ -3201,28 +4135,28 @@
       "name": "Panoplie du Bouftou",
       "thresholds": {
         "2": {
-          "hp": 24,
-          "power": 14
+          "hp": 11,
+          "power": 5
         },
         "3": {
-          "hp": 48,
-          "power": 30
+          "hp": 19,
+          "power": 9
         },
         "4": {
-          "hp": 80,
-          "power": 48
+          "hp": 28,
+          "power": 14
         },
         "5": {
-          "hp": 112,
-          "power": 68
+          "hp": 38,
+          "power": 18
         },
         "6": {
-          "hp": 144,
-          "power": 88
+          "hp": 49,
+          "power": 24
         },
         "7": {
-          "hp": 180,
-          "power": 110
+          "hp": 60,
+          "power": 29
         }
       }
     },
@@ -3230,24 +4164,24 @@
       "name": "Panoplie de l’Aventurier",
       "thresholds": {
         "2": {
-          "hp": 12,
-          "power": 5
+          "hp": 4,
+          "power": 1
         },
         "3": {
-          "hp": 22,
-          "power": 9
+          "hp": 6,
+          "power": 2
         },
         "4": {
-          "hp": 32,
-          "power": 14
+          "hp": 9,
+          "power": 3
         },
         "5": {
-          "hp": 44,
-          "power": 19
+          "hp": 13,
+          "power": 5
         },
         "6": {
-          "hp": 56,
-          "power": 24
+          "hp": 16,
+          "power": 6
         }
       }
     },
@@ -3255,34 +4189,34 @@
       "name": "Panoplie en Mousse",
       "thresholds": {
         "2": {
-          "hp": 18,
-          "power": 8,
-          "cooldownReduction": 2
+          "hp": 6,
+          "power": 3,
+          "cooldownReduction": 1
         },
         "3": {
-          "hp": 32,
-          "power": 15,
-          "cooldownReduction": 3
+          "hp": 10,
+          "power": 4,
+          "cooldownReduction": 1
         },
         "4": {
-          "hp": 48,
-          "power": 24,
-          "cooldownReduction": 4
+          "hp": 15,
+          "power": 7,
+          "cooldownReduction": 1
         },
         "5": {
-          "hp": 66,
-          "power": 34,
-          "cooldownReduction": 6
+          "hp": 20,
+          "power": 9,
+          "cooldownReduction": 2
         },
         "6": {
-          "hp": 86,
-          "power": 44,
-          "cooldownReduction": 7
+          "hp": 26,
+          "power": 11,
+          "cooldownReduction": 2
         },
         "7": {
-          "hp": 110,
-          "power": 55,
-          "cooldownReduction": 9
+          "hp": 32,
+          "power": 14,
+          "cooldownReduction": 3
         }
       }
     },
@@ -3290,28 +4224,28 @@
       "name": "Panoplie du Bouftou Royal",
       "thresholds": {
         "2": {
-          "hp": 36,
-          "power": 21
+          "hp": 16,
+          "power": 8
         },
         "3": {
-          "hp": 72,
-          "power": 45
+          "hp": 27,
+          "power": 13
         },
         "4": {
-          "hp": 120,
-          "power": 72
+          "hp": 40,
+          "power": 19
         },
         "5": {
-          "hp": 168,
-          "power": 102
+          "hp": 55,
+          "power": 26
         },
         "6": {
-          "hp": 216,
-          "power": 132
+          "hp": 70,
+          "power": 33
         },
         "7": {
-          "hp": 270,
-          "power": 165
+          "hp": 86,
+          "power": 41
         }
       }
     },
@@ -3319,40 +4253,39 @@
       "name": "Panoplie du Tofu",
       "thresholds": {
         "2": {
-          "hp": 16,
-          "power": 18,
-          "movementSpeed": 6,
-          "cooldownReduction": 2
+          "hp": 6,
+          "power": 6,
+          "movementSpeed": 2
         },
         "3": {
-          "hp": 24,
-          "power": 27,
-          "movementSpeed": 9,
-          "cooldownReduction": 3
+          "hp": 10,
+          "power": 10,
+          "movementSpeed": 4,
+          "cooldownReduction": 1
         },
         "4": {
-          "hp": 32,
-          "power": 36,
-          "movementSpeed": 12,
-          "cooldownReduction": 4
+          "hp": 15,
+          "power": 15,
+          "movementSpeed": 5,
+          "cooldownReduction": 1
         },
         "5": {
-          "hp": 40,
-          "power": 45,
-          "movementSpeed": 15,
-          "cooldownReduction": 5
+          "hp": 20,
+          "power": 20,
+          "movementSpeed": 7,
+          "cooldownReduction": 1
         },
         "6": {
-          "hp": 48,
-          "power": 54,
-          "movementSpeed": 18,
-          "cooldownReduction": 6
+          "hp": 26,
+          "power": 26,
+          "movementSpeed": 9,
+          "cooldownReduction": 2
         },
         "7": {
-          "hp": 56,
-          "power": 63,
-          "movementSpeed": 21,
-          "cooldownReduction": 7
+          "hp": 32,
+          "power": 32,
+          "movementSpeed": 11,
+          "cooldownReduction": 2
         }
       }
     },
@@ -3360,22 +4293,16 @@
       "name": "Panoplie du Scarafeuille Noir",
       "thresholds": {
         "2": {
-          "hp": 90,
-          "power": 56,
-          "movementSpeed": 2,
-          "cooldownReduction": 2
+          "hp": 18,
+          "power": 12
         },
         "3": {
-          "hp": 135,
-          "power": 84,
-          "movementSpeed": 3,
-          "cooldownReduction": 3
+          "hp": 31,
+          "power": 21
         },
         "4": {
-          "hp": 180,
-          "power": 112,
-          "movementSpeed": 4,
-          "cooldownReduction": 4
+          "hp": 46,
+          "power": 31
         }
       }
     },
@@ -3383,40 +4310,38 @@
       "name": "Panoplie du Chef Bwork",
       "thresholds": {
         "2": {
-          "hp": 80,
-          "power": 36,
-          "movementSpeed": 4,
-          "cooldownReduction": 2
+          "hp": 23,
+          "power": 9
         },
         "3": {
-          "hp": 120,
-          "power": 54,
-          "movementSpeed": 6,
-          "cooldownReduction": 3
+          "hp": 40,
+          "power": 16,
+          "movementSpeed": 1,
+          "cooldownReduction": 1
         },
         "4": {
-          "hp": 160,
-          "power": 72,
-          "movementSpeed": 8,
-          "cooldownReduction": 4
+          "hp": 58,
+          "power": 23,
+          "movementSpeed": 1,
+          "cooldownReduction": 1
         },
         "5": {
-          "hp": 200,
-          "power": 90,
-          "movementSpeed": 10,
-          "cooldownReduction": 5
+          "hp": 79,
+          "power": 32,
+          "movementSpeed": 1,
+          "cooldownReduction": 1
         },
         "6": {
-          "hp": 240,
-          "power": 108,
-          "movementSpeed": 12,
-          "cooldownReduction": 6
+          "hp": 101,
+          "power": 41,
+          "movementSpeed": 2,
+          "cooldownReduction": 2
         },
         "7": {
-          "hp": 280,
-          "power": 126,
-          "movementSpeed": 14,
-          "cooldownReduction": 7
+          "hp": 124,
+          "power": 50,
+          "movementSpeed": 2,
+          "cooldownReduction": 2
         }
       }
     },
@@ -3424,28 +4349,93 @@
       "name": "Panoplie Blop Multicolore Royale",
       "thresholds": {
         "2": {
-          "hp": 90,
-          "power": 80,
-          "movementSpeed": 4,
-          "cooldownReduction": 6
+          "hp": 17,
+          "power": 20,
+          "cooldownReduction": 2
         },
         "3": {
-          "hp": 135,
-          "power": 120,
-          "movementSpeed": 6,
-          "cooldownReduction": 9
+          "hp": 30,
+          "power": 34,
+          "cooldownReduction": 3
         },
         "4": {
-          "hp": 180,
-          "power": 160,
-          "movementSpeed": 8,
-          "cooldownReduction": 12
+          "hp": 44,
+          "power": 50,
+          "cooldownReduction": 5
         }
       }
     },
     "developer": {
       "name": "Équipement du développeur",
       "thresholds": {}
+    },
+    "ancestral": {
+      "name": "Panoplie Ancestrale",
+      "thresholds": {
+        "2": {
+          "hp": 37,
+          "power": 14,
+          "cooldownReduction": 1
+        },
+        "3": {
+          "hp": 64,
+          "power": 24,
+          "movementSpeed": 1,
+          "cooldownReduction": 2
+        },
+        "4": {
+          "hp": 95,
+          "power": 35,
+          "movementSpeed": 1,
+          "cooldownReduction": 2
+        },
+        "5": {
+          "hp": 128,
+          "power": 47,
+          "movementSpeed": 2,
+          "cooldownReduction": 3
+        },
+        "6": {
+          "hp": 164,
+          "power": 60,
+          "movementSpeed": 2,
+          "cooldownReduction": 4
+        }
+      }
+    },
+    "meulou": {
+      "name": "Panoplie du Meulou",
+      "thresholds": {
+        "2": {
+          "hp": 33,
+          "power": 18,
+          "movementSpeed": 1
+        },
+        "3": {
+          "hp": 56,
+          "power": 31,
+          "movementSpeed": 2,
+          "cooldownReduction": 1
+        },
+        "4": {
+          "hp": 83,
+          "power": 46,
+          "movementSpeed": 3,
+          "cooldownReduction": 1
+        },
+        "5": {
+          "hp": 113,
+          "power": 63,
+          "movementSpeed": 4,
+          "cooldownReduction": 2
+        },
+        "6": {
+          "hp": 144,
+          "power": 80,
+          "movementSpeed": 5,
+          "cooldownReduction": 2
+        }
+      }
     }
   },
   "slots": [
@@ -3495,6 +4485,10 @@
     "glyph": "Pose un glyphe persistant jusqu’à la fin du donjon. Inflige des dégâts chaque seconde. Plusieurs glyphes peuvent coexister.",
     "cloudy": "Inflige des dégâts fixes à une cible près du curseur, sans limite de portée ni ligne de vue.",
     "teleport": "Téléporte à courte portée vers le curseur sur le terrain accessible.",
-    "truce": "Suspend pendant 2 secondes les dégâts reçus et infligés. Les glyphes restent posés et reprennent ensuite."
+    "truce": "Suspend pendant 2 secondes les dégâts reçus et infligés. Les glyphes restent posés et reprennent ensuite.",
+    "sournoiserie": "Attaque rapide à moyenne portée.",
+    "mass_trap": "Piège posé sur une case praticable à portée infinie. Empilable sans limite ; passage sur cette case : explosion en zone.",
+    "invisibility": "Invisible 4 s : les ennemis cherchent la dernière position connue. Une attaque directe révèle le Sram ; les pièges ne le révèlent pas.",
+    "mortal_attack": "Très courte portée. 50 % de chance de dégâts ×3."
   }
 }

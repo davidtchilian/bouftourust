@@ -1,3 +1,5 @@
+// Export historique TypeScript : pour le nouvel équilibrage, utiliser
+// python3 scripts/export-balanced-fixtures.py (données Rust courantes).
 import {writeFileSync} from 'node:fs';
 import {items,sets} from '../../bouftourush/src/data/items.ts';
 import {newProfile,finalStats,movementSpeedBonus,awardXp,equip} from '../../bouftourush/src/game/progression/profile.ts';

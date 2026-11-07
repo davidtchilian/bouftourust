@@ -43,4 +43,6 @@ New-Item -ItemType Directory -Force "$bundle\assets" | Out-Null
 Copy-Item assets\* "$bundle\assets" -Recurse -Force
 Copy-Item README.md "$bundle\LISEZ-MOI.md" -Force
 Copy-Item docs\ASSETS.md "$bundle\ASSETS.md" -Force
+New-Item -ItemType Directory -Force "$bundle\docs" | Out-Null
+Copy-Item docs\EQUILIBRAGE.md "$bundle\docs\EQUILIBRAGE.md" -Force
 Write-Host "Jeu Windows prêt : $bundle\BouftouRush.exe"

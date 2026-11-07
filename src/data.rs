@@ -90,6 +90,61 @@ pub struct Monster {
     pub bonus_loot: Option<BonusLoot>,
     pub speed_burst: Option<Burst>,
     pub ranged_attack: Option<Ranged>,
+    pub ally_heal: Option<AllyHeal>,
+    pub summon: Option<Summon>,
+    pub invulnerability: Option<Invulnerability>,
+    pub flat_damage: Option<f32>,
+}
+#[derive(Clone, Deserialize)]
+pub struct AllyHeal {
+    pub interval: f32,
+    pub amount: f32,
+}
+#[derive(Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Summon {
+    pub interval: f32,
+    pub kinds: Vec<String>,
+    pub rare_kind: Option<String>,
+    #[serde(default)]
+    pub rare_chance: f32,
+    #[serde(default = "single_summon")]
+    pub count: usize,
+    pub ally_attack_buff: Option<AllyAttackBuff>,
+}
+fn single_summon() -> usize {
+    1
+}
+#[derive(Clone, Deserialize)]
+pub struct AllyAttackBuff {
+    pub amount: f32,
+    pub maximum: f32,
+}
+impl Summon {
+    pub fn choose(&self, roll: f32) -> &str {
+        if let Some(kind) = &self.rare_kind {
+            if roll < self.rare_chance {
+                return kind;
+            }
+        }
+        let ordinary = if self.rare_kind.is_some() {
+            (roll - self.rare_chance) / (1. - self.rare_chance)
+        } else {
+            roll
+        };
+        &self.kinds
+            [((ordinary.max(0.) * self.kinds.len() as f32) as usize).min(self.kinds.len() - 1)]
+    }
+}
+#[derive(Clone, Deserialize)]
+pub struct Invulnerability {
+    pub interval: f32,
+    pub duration: f32,
+}
+impl Invulnerability {
+    pub fn active(&self, age: f32) -> bool {
+        age >= self.interval && age % self.interval < self.duration
+    }
 }
 #[derive(Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -119,6 +174,7 @@ pub struct Loot {
     pub boss_chance: f32,
 }
 #[derive(Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Spell {
     pub name: String,
     pub coefficient: f32,
@@ -128,6 +184,8 @@ pub struct Spell {
     pub radius: f32,
     pub kind: String,
     pub effect: String,
+    pub buff_duration: Option<f32>,
+    pub buff_multiplier: Option<f32>,
 }
 #[derive(Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -146,6 +204,8 @@ pub struct Balance {
     pub starting_hp: f32,
     pub hp_per_level: f32,
     pub power_per_level: f32,
+    pub cooldown_reduction_per_level: f32,
+    pub movement_speed_per_level: f32,
     pub wave_delay: f32,
     pub cast_lock: f32,
     pub cast_animation: f32,

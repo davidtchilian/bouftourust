@@ -4,9 +4,12 @@ mod actions;
 use actions::*;
 mod movement;
 use movement::*;
+mod bosses;
 mod combat;
 use combat::*;
+mod sram;
 mod sword;
+pub use sram::Trap;
 use sword::*;
 mod enemies;
 use enemies::*;
@@ -58,6 +61,8 @@ impl Actor {
 }
 #[derive(Component)]
 pub struct Player;
+#[derive(Component, Default)]
+pub struct AllyAttackBonus(pub f32);
 #[derive(Component, Clone)]
 pub struct Enemy {
     pub kind: String,
@@ -133,6 +138,9 @@ pub struct Session {
     pub wrath: f32,
     pub truce_until: f32,
     pub glyphs: Vec<Glyph>,
+    pub traps: Vec<sram::Trap>,
+    pub invisible_until: f32,
+    pub last_known_player: Vec2,
     pub navigation: Navigation,
     pub destination: Option<Vec2>,
     pub log: VecDeque<String>,
@@ -164,6 +172,7 @@ pub enum Action {
     Equip(String, Option<String>),
     Unequip(String),
     Sell,
+    Fuse(String, u8),
     Preferences {
         help_seen: bool,
         reduced_motion: bool,
@@ -206,6 +215,9 @@ fn setup(world: &mut World) {
         wrath: 1.,
         truce_until: 0.,
         glyphs: vec![],
+        traps: vec![],
+        invisible_until: 0.,
+        last_known_player: map.spawn.into(),
         navigation: Navigation::new(&map.walkable),
         destination: None,
         log: default(),
@@ -276,11 +288,13 @@ fn step(world: &mut World) {
             update_shots(world, &mut s, &mut p, &d, &m, dt);
         }
         if s.phase == Phase::Combat {
+            sram::trigger_traps(world, &mut s, &mut p, &d, &m, None);
             glyphs(world, &mut s, &mut p, &d);
             update_sword_waves(world, &mut s, &mut p, &d, &m, dt);
             update_shots(world, &mut s, &mut p, &d, &m, dt);
             if s.phase == Phase::Combat {
-                enemies(world, &mut s, &d, dt);
+                bosses::boss_abilities(world, &mut s, &d);
+                enemies(world, &mut s, &mut p, &d, &m, dt);
                 waves(world, &mut s, &mut p, &d, &m, dt);
             }
         }

@@ -11,6 +11,7 @@ pub struct Textures {
     frame: u64,
     signature: String,
     pinned: HashSet<String>,
+    grayscale_icons: HashMap<String, egui::TextureHandle>,
 }
 impl Textures {
     pub fn get(
@@ -86,6 +87,9 @@ impl Textures {
                 }
             }
             let class = &d.classes[&p.class_id];
+            if p.class_id == "sram" {
+                ids.insert("spell.glyph.zone".into());
+            }
             for id in &class.abilities {
                 let spell = &d.spells[id];
                 ids.insert(format!("ui.spell.{id}"));
@@ -107,6 +111,9 @@ impl Textures {
                     .collect();
                 for kind in kinds {
                     let def = &d.monsters[kind];
+                    if def.invulnerability.is_some() {
+                        ids.insert("spell.truce.cast".into());
+                    }
                     let prefix = format!("mob.{}.", def.sprite);
                     for id in m.assets.keys().filter(|id| id.starts_with(&prefix)) {
                         ids.insert(id.clone());
@@ -203,6 +210,73 @@ pub struct Art<'a, 'w, 's> {
     pub contexts: &'a mut EguiContexts<'w, 's>,
 }
 impl Art<'_, '_, '_> {
+    pub fn spell_icon(
+        &mut self,
+        ui: &mut egui::Ui,
+        id: &str,
+        size: egui::Vec2,
+        cooldown: bool,
+        images: &Assets<Image>,
+    ) -> egui::Response {
+        if !cooldown {
+            return self.icon(ui, id, size);
+        }
+        let (rect, response) = ui.allocate_exact_size(size, egui::Sense::click());
+        let Some(asset) = self.manifest.assets.get(id) else {
+            return response;
+        };
+        let frame = &asset.frames[0];
+        self.textures.get(&frame.path, self.server, self.contexts);
+        if !self.textures.grayscale_icons.contains_key(id) {
+            let handle = &self.textures.images[&frame.path].0;
+            if let Some(image) = images.get(handle) {
+                if let Some(bytes) = &image.data {
+                    let width = image.width() as usize;
+                    let height = image.height() as usize;
+                    if bytes.len() == width * height * 4 {
+                        let [x, y, w, h] = frame
+                            .region
+                            .map(|r| [r[0], r[1], r[2], r[3]])
+                            .unwrap_or([0, 0, width as u32, height as u32]);
+                        let mut rgba = Vec::with_capacity(w as usize * h as usize * 4);
+                        for row in y..y + h {
+                            for col in x..x + w {
+                                let i = (row as usize * width + col as usize) * 4;
+                                let gray = ((u32::from(bytes[i]) * 54
+                                    + u32::from(bytes[i + 1]) * 183
+                                    + u32::from(bytes[i + 2]) * 19)
+                                    / 256) as u8;
+                                rgba.extend_from_slice(&[gray, gray, gray, bytes[i + 3]]);
+                            }
+                        }
+                        let texture = ui.ctx().load_texture(
+                            format!("cooldown:{id}"),
+                            egui::ColorImage::from_rgba_unmultiplied(
+                                [w as usize, h as usize],
+                                &rgba,
+                            ),
+                            egui::TextureOptions::LINEAR,
+                        );
+                        self.textures.grayscale_icons.insert(id.into(), texture);
+                    }
+                }
+            }
+        }
+        if let Some(texture) = self.textures.grayscale_icons.get(id) {
+            let scale = (rect.width() / asset.size[0]).min(rect.height() / asset.size[1]);
+            let fit = egui::Rect::from_center_size(
+                rect.center(),
+                egui::vec2(asset.size[0], asset.size[1]) * scale,
+            );
+            ui.painter().image(
+                texture.id(),
+                fit,
+                egui::Rect::from_min_max(egui::Pos2::ZERO, egui::pos2(1., 1.)),
+                egui::Color32::WHITE,
+            );
+        }
+        response
+    }
     pub fn quad(
         &mut self,
         painter: &egui::Painter,
@@ -331,6 +405,7 @@ impl Art<'_, '_, '_> {
         mirror: Option<bool>,
         window: Option<f32>,
         hd: bool,
+        opacity: f32,
     ) {
         let Some(pose) = self.manifest.composition.actors.get(id) else {
             return;
@@ -380,7 +455,7 @@ impl Art<'_, '_, '_> {
                     scale,
                     part.matrix,
                     flip,
-                    part.opacity,
+                    part.opacity * opacity,
                 );
             }
         }
@@ -414,6 +489,35 @@ pub fn world(
     let map_rect =
         egui::Rect::from_two_pos(view.project(Vec2::new(l, t)), view.project(Vec2::new(r, b)));
     let painter = painter.with_clip_rect(view.rect.intersect(map_rect));
+    let active_buff = if s.phase != Phase::Combat {
+        None
+    } else if p.class_id == "sacrier" && s.time < s.chastisement_until {
+        Some((
+            "chastisement",
+            s.chastisement_until,
+            d.class_balance.chastisement_duration,
+            0.4,
+            0.45,
+        ))
+    } else if p.class_id == "iop" && s.time < s.buff_until {
+        Some((
+            "iop_power",
+            s.buff_until,
+            d.spells["iop_power"].buff_duration.unwrap_or(5.),
+            1.,
+            0.8,
+        ))
+    } else if p.class_id == "sram" && s.time < s.invisible_until {
+        Some((
+            "invisibility",
+            s.invisible_until,
+            d.spells["invisibility"].buff_duration.unwrap_or(4.),
+            0.,
+            0.,
+        ))
+    } else {
+        None
+    };
     struct Draw {
         z: f32,
         id: String,
@@ -457,6 +561,27 @@ pub fn world(
         });
     }
     for (_, a, e) in actors {
+        if a.hp > 0.
+            && s.phase == Phase::Combat
+            && e.as_ref().is_some_and(|enemy| {
+                d.monsters[&enemy.kind]
+                    .invulnerability
+                    .as_ref()
+                    .is_some_and(|shield| shield.active(s.time - enemy.spawned))
+            })
+        {
+            draws.push(Draw {
+                z: 2000. + s.navigation.depth(a.position) + 0.4,
+                id: "status.invulnerable".into(),
+                point: a.position + Vec2::Y * 20.,
+                age: s.time,
+                flip: None,
+                angle: 0.,
+                scale: Vec2::ONE,
+                window: None,
+                player: false,
+            });
+        }
         let (id, flip, window) = if let Some(enemy) = e {
             let def = &d.monsters[&enemy.kind];
             let (side, flip) = facing(a.direction);
@@ -504,12 +629,16 @@ pub fn world(
             player: e.is_none(),
         });
     }
-    for glyph in &s.glyphs {
+    if !s.glyphs.is_empty() {
         for cell in &s.navigation.cells {
             let point = Vec2::from(cell.position);
-            if point.distance(glyph.position) <= d.spells["glyph"].radius {
+            if s.glyphs
+                .iter()
+                .any(|glyph| point.distance(glyph.position) <= d.spells["glyph"].radius)
+            {
                 draws.push(Draw {
-                    z: 1900.,
+                    // Above the baked ground (1999), below scenery and actors (2000+).
+                    z: 1999.5,
                     id: "spell.glyph.zone".into(),
                     point,
                     age: s.time,
@@ -521,6 +650,24 @@ pub fn world(
                 });
             }
         }
+    }
+    let mut trap_cells = HashMap::new();
+    for trap in &s.traps {
+        let key = (trap.position.x.to_bits(), trap.position.y.to_bits());
+        *trap_cells.entry(key).or_insert(0_usize) += 1;
+    }
+    for (&(x, y), _) in &trap_cells {
+        draws.push(Draw {
+            z: 1999.6,
+            id: "status.trap".into(),
+            point: Vec2::new(f32::from_bits(x), f32::from_bits(y)),
+            age: 0.,
+            flip: None,
+            angle: 0.,
+            scale: Vec2::ONE,
+            window: None,
+            player: false,
+        });
     }
     for shot in shots {
         draws.push(Draw {
@@ -551,7 +698,11 @@ pub fn world(
             } else {
                 0.
             },
-            scale: Vec2::ONE,
+            scale: if e.asset == "spell.sram.invisibility" {
+                Vec2::splat(0.15)
+            } else {
+                Vec2::ONE
+            },
             window: None,
             player: false,
         });
@@ -570,8 +721,103 @@ pub fn world(
                 draw.flip,
                 draw.window,
                 false,
+                if s.time < s.invisible_until { 0.3 } else { 1. },
             );
+            if let Some((spell, until, duration, scale, opacity)) =
+                active_buff.filter(|(_, _, _, scale, _)| *scale > 0.)
+            {
+                let id = &d.spells[spell].effect;
+                if let Some(animation) = art.manifest.assets.get(id) {
+                    let elapsed = s.time - (until - duration);
+                    let frame = frame_index(&animation.frames, elapsed, true, None);
+                    art.quad(
+                        &painter,
+                        id,
+                        frame,
+                        view.project(draw.point + Vec2::Y * 20.),
+                        view.scale * scale,
+                        [1., 0., 0., 1., 0., 0.],
+                        false,
+                        opacity,
+                    );
+                }
+            }
+        } else if draw.id == "spell.sram.trap" {
+            let animation = &art.manifest.assets[&draw.id];
+            let frame = animation.index(draw.age, None);
+            let scale = d.spells["mass_trap"].radius / animation.size[0];
+            for ray in 0..6 {
+                let angle = std::f32::consts::TAU * ray as f32 / 6.;
+                let (c, s) = (angle.cos() * scale, angle.sin() * scale);
+                art.quad(
+                    &painter,
+                    &draw.id,
+                    frame,
+                    origin,
+                    view.scale,
+                    [c, -s, s, c, 0., 0.],
+                    false,
+                    1.,
+                );
+            }
+        } else if draw.id == "status.trap" {
+            art.quad(
+                &painter,
+                "spell.glyph.zone",
+                0,
+                origin,
+                view.scale,
+                [1., 0., 0., 1., 0., 0.],
+                false,
+                0.65,
+            );
+            let count = trap_cells[&(draw.point.x.to_bits(), draw.point.y.to_bits())];
+            if count > 1 {
+                painter.text(
+                    origin,
+                    egui::Align2::CENTER_CENTER,
+                    format!("×{count}"),
+                    egui::FontId::proportional(13.),
+                    egui::Color32::WHITE,
+                );
+            }
+        } else if draw.id == "status.invulnerable" {
+            let id = "spell.truce.cast";
+            if let Some(animation) = art.manifest.assets.get(id) {
+                let frame = frame_index(&animation.frames, draw.age, true, None);
+                art.quad(
+                    &painter,
+                    id,
+                    frame,
+                    origin,
+                    view.scale,
+                    [1., 0., 0., 1., 0., 0.],
+                    false,
+                    0.7,
+                );
+            }
         } else if draw.id == "spell.glyph.zone" {
+            // Composite one light red tint per glyph covering this navigation cell.
+            let glyph_count = s
+                .glyphs
+                .iter()
+                .filter(|glyph| draw.point.distance(glyph.position) <= d.spells["glyph"].radius)
+                .count();
+            let opacity =
+                (255. * (1. - (1. - 48. / 255_f32).powf(glyph_count as f32))).round() as u8;
+            let corners = [
+                Vec2::new(0., 13.5),
+                Vec2::new(26.5, 0.),
+                Vec2::new(0., -13.5),
+                Vec2::new(-26.5, 0.),
+            ]
+            .map(|offset| view.project(draw.point + offset))
+            .to_vec();
+            painter.add(egui::Shape::convex_polygon(
+                corners,
+                egui::Color32::from_rgba_unmultiplied(255, 30, 20, opacity),
+                egui::Stroke::NONE,
+            ));
             let a = &art.manifest.assets[&draw.id];
             art.quad(
                 &painter,
@@ -623,10 +869,27 @@ pub fn world(
         let boss = e.as_ref().is_some_and(|e| d.monsters[&e.kind].boss);
         if let Some(e) = e {
             name = d.monsters[&e.kind].name.clone();
+            if let Some(dungeon) = s.dungeon.as_ref().and_then(|id| d.dungeons.get(id)) {
+                let base_damage = (d.monsters[&e.kind].damage
+                    * (1. + s.wave as f32 * dungeon.scaling.damage_per_wave))
+                    .round();
+                let bonus = e.damage - base_damage;
+                if bonus > 0. {
+                    name.push_str(&format!(" · Dégâts +{bonus:.0}"));
+                }
+            }
+            if s.phase == Phase::Combat
+                && d.monsters[&e.kind]
+                    .invulnerability
+                    .as_ref()
+                    .is_some_and(|shield| shield.active(s.time - e.spawned))
+            {
+                name.push_str(" · Invulnérable");
+            }
             if let Some(b) = &d.monsters[&e.kind].speed_burst {
                 let age = s.time - e.spawned;
                 if age >= b.interval && age % b.interval < b.duration {
-                    name.push_str(" · Vitesse ×2");
+                    name.push_str(&format!(" · Vitesse ×{:.0}", b.multiplier));
                 }
             }
         } else if s.phase == Phase::Hub {
@@ -635,6 +898,33 @@ pub fn world(
         let pos = view.project(a.position + Vec2::Y * if boss { 68. } else { 48. });
         let width = if boss { 100. } else { 60. };
         let rect = egui::Rect::from_center_size(pos, egui::vec2(width, 5.));
+        if let Some((spell, until, _, _, _)) = active_buff.filter(|_| e.is_none()) {
+            let badge =
+                egui::Rect::from_center_size(pos - egui::vec2(0., 20.), egui::vec2(136., 24.));
+            painter.rect_filled(
+                badge,
+                4.,
+                egui::Color32::from_rgba_unmultiplied(50, 15, 20, 230),
+            );
+            art.in_rect(
+                &painter,
+                &format!("ui.spell.{spell}"),
+                0.,
+                egui::Rect::from_min_size(badge.min + egui::vec2(2., 2.), egui::vec2(20., 20.)),
+                false,
+            );
+            painter.text(
+                badge.left_center() + egui::vec2(26., 0.),
+                egui::Align2::LEFT_CENTER,
+                format!(
+                    "{} · {:.0} s",
+                    d.spells[spell].name,
+                    (until - s.time).ceil()
+                ),
+                egui::FontId::proportional(12.),
+                egui::Color32::from_rgb(255, 170, 160),
+            );
+        }
         painter.rect_filled(rect, 2., egui::Color32::from_black_alpha(190));
         let fill = egui::Rect::from_min_size(
             rect.min,
@@ -681,7 +971,7 @@ pub fn world(
                 + Vec2::Y * (if f.kind == FloatKind::Loot { 72. } else { 48. } + f.age * 20.),
         );
         let font = egui::FontId::proportional(if f.kind == FloatKind::Damage {
-            17.
+            22.
         } else {
             12.
         });
@@ -699,6 +989,21 @@ pub fn world(
                 egui::Rect::from_min_size(egui::pos2(left, pos.y - 20.), egui::vec2(20., 20.));
             art.in_rect(&painter, icon, 0., rect, false);
         }
-        painter.galley(egui::pos2(left + icon_width, pos.y - size.y), galley, tint);
+        let text_pos = egui::pos2(left + icon_width, pos.y - size.y);
+        if f.kind == FloatKind::Damage {
+            for offset in [
+                egui::vec2(-1., -1.),
+                egui::vec2(1., -1.),
+                egui::vec2(-1., 1.),
+                egui::vec2(1., 1.),
+            ] {
+                painter.galley_with_override_text_color(
+                    text_pos + offset,
+                    galley.clone(),
+                    egui::Color32::from_black_alpha(230),
+                );
+            }
+        }
+        painter.galley(text_pos, galley, tint);
     }
 }

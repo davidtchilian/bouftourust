@@ -4,14 +4,26 @@ pub fn burst_seconds(b: &Burst, age: f32) -> f32 {
     let elapsed = (age - b.interval).max(0.);
     (elapsed / b.interval).floor() * b.duration + b.duration.min(elapsed % b.interval)
 }
-pub(super) fn enemies(world: &mut World, s: &mut Session, d: &GameData, dt: f32) {
-    let player_pos = world.get::<Actor>(s.player).unwrap().position;
+pub(super) fn enemies(
+    world: &mut World,
+    s: &mut Session,
+    p: &mut Profile,
+    d: &GameData,
+    m: &Manifest,
+    dt: f32,
+) {
+    let visible = s.time >= s.invisible_until;
+    if visible {
+        s.last_known_player = world.get::<Actor>(s.player).unwrap().position;
+    }
+    let player_pos = s.last_known_player;
     let ids: Vec<_> = world
         .query_filtered::<Entity, With<Enemy>>()
         .iter(world)
         .collect();
     for id in ids {
         let mut a = world.get::<Actor>(id).unwrap().clone();
+        let previous_position = a.position;
         let mut enemy = world.get::<Enemy>(id).unwrap().clone();
         a.animation += dt;
         if a.hp <= 0. {
@@ -54,7 +66,10 @@ pub(super) fn enemies(world: &mut World, s: &mut Session, d: &GameData, dt: f32)
                     .as_ref()
                     .map(|r| r.range)
                     .unwrap_or(def.range);
-                if length <= reach && s.navigation.clear(a.position, player_pos) {
+                if !visible && length < 3. {
+                    a.route.clear();
+                    a.action("idle");
+                } else if visible && length <= reach && s.navigation.clear(a.position, player_pos) {
                     a.route.clear();
                     if s.time >= enemy.attack_at {
                         enemy.attack_at = s.time + def.interval;
@@ -66,7 +81,7 @@ pub(super) fn enemies(world: &mut World, s: &mut Session, d: &GameData, dt: f32)
                             enemy.ranged_until = s.time + r.animation_duration;
                             a.until = enemy.ranged_until;
                         } else {
-                            damage_player(world, s, d, enemy.damage);
+                            damage_player(world, s, d, def.flat_damage.unwrap_or(enemy.damage));
                         }
                     } else if s.time >= a.until {
                         a.action("idle");
@@ -94,6 +109,20 @@ pub(super) fn enemies(world: &mut World, s: &mut Session, d: &GameData, dt: f32)
         }
         *world.get_mut::<Actor>(id).unwrap() = a;
         *world.get_mut::<Enemy>(id).unwrap() = enemy;
+        if world.get::<Actor>(id).is_some_and(|actor| actor.hp > 0.) {
+            super::sram::trigger_traps(
+                world,
+                s,
+                p,
+                d,
+                m,
+                Some((
+                    id,
+                    previous_position,
+                    world.get::<Actor>(id).unwrap().position,
+                )),
+            );
+        }
         if s.phase == Phase::Death {
             break;
         }

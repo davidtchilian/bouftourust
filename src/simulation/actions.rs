@@ -38,6 +38,9 @@ pub(super) fn change_map(
     s.wrath = 1.;
     s.truce_until = 0.;
     s.glyphs.clear();
+    s.traps.clear();
+    s.invisible_until = 0.;
+    s.last_known_player = map.spawn.into();
 }
 pub(super) fn process_actions(
     world: &mut World,
@@ -122,6 +125,13 @@ pub(super) fn process_actions(
                 let (n, k) = p.sell(d);
                 if n > 0 {
                     s.message(format!("{n} doublons vendus : +{k} kamas."));
+                    world.resource_mut::<SaveStore>().dirty = true;
+                }
+            }
+            Action::Fuse(uid, level) => {
+                if p.fuse(&uid, level, d) {
+                    let item = p.inventory.iter().find(|item| item.uid == uid).unwrap();
+                    s.message(format!("Fusion réussie : {}", item.name(d)));
                     world.resource_mut::<SaveStore>().dirty = true;
                 }
             }

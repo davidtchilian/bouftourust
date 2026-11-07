@@ -60,6 +60,9 @@ impl Navigation {
         self.cells[self.nearest(p)].id as f32
     }
     pub fn contains(&self, p: Vec2) -> bool {
+        self.cell_at(p).is_some()
+    }
+    pub fn cell_at(&self, p: Vec2) -> Option<usize> {
         let (x, y) = Self::bucket(p);
         for dx in -1..=1 {
             for dy in -1..=1 {
@@ -67,13 +70,13 @@ impl Navigation {
                     for &i in cells {
                         let c = self.cells[i].position;
                         if (c[0] - p.x).abs() / 26.5 + (c[1] - p.y).abs() / 13.5 <= 1.001 {
-                            return true;
+                            return Some(i);
                         }
                     }
                 }
             }
         }
-        false
+        None
     }
     pub fn clear(&self, a: Vec2, b: Vec2) -> bool {
         let steps = (a.distance(b) / 3.).ceil() as u32;

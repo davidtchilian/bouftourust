@@ -8,7 +8,52 @@ fn data() -> GameData {
     GameData::load(&root()).unwrap()
 }
 #[test]
-fn reference_progression() {
+fn level_gains_apply_retroactively_and_combine_with_equipment() {
+    let d = data();
+    let mut p: Profile = serde_json::from_str(r#"{"level":25}"#).unwrap();
+    for (level, hp, power, percentage) in [
+        (1, 180., 0., 0.),
+        (2, 190., 5., 0.2),
+        (25, 420., 120., 4.8),
+        (100, 1170., 495., 19.8),
+    ] {
+        p.level = level;
+        let stats = p.stats(&d);
+        assert_eq!(stats.hp, hp);
+        assert_eq!(stats.power, power);
+        assert!((stats.cooldown_reduction - percentage).abs() < 0.0001);
+        assert!((stats.movement_speed - percentage).abs() < 0.0001);
+    }
+    p.level = 25;
+    let healed = p.award_xp(xp_for_level(25), &d);
+    assert_eq!(p.level, 26);
+    assert_eq!(healed, 10.);
+    assert_eq!(p.stats(&d).hp, 430.);
+    assert_eq!(p.stats(&d).power, 125.);
+    assert!((p.stats(&d).cooldown_reduction - 5.).abs() < 0.0001);
+    p.give("2469");
+    let uid = p.inventory.last().unwrap().uid.clone();
+    assert!(p.equip(&uid, None, &d));
+    assert!((p.stats(&d).cooldown_reduction - 15.).abs() < 0.0001);
+    assert!((p.stats(&d).movement_speed - 5.).abs() < 0.0001);
+    p.level = 100;
+    p.give("2469");
+    let uid = p.inventory.last().unwrap().uid.clone();
+    assert!(p.equip(&uid, None, &d));
+    assert_eq!(
+        p.stats(&d).cooldown_reduction,
+        d.balance.max_cooldown_reduction
+    );
+    let restored: Profile = serde_json::from_str(&serde_json::to_string(&p).unwrap()).unwrap();
+    assert_eq!(restored.stats(&d).hp, p.stats(&d).hp);
+    assert_eq!(restored.stats(&d).power, p.stats(&d).power);
+    assert_eq!(
+        restored.stats(&d).cooldown_reduction,
+        p.stats(&d).cooldown_reduction
+    );
+}
+#[test]
+fn balanced_equipment_progression() {
     let d = data();
     let fixture: serde_json::Value =
         serde_json::from_str(include_str!("reference_progression.json")).unwrap();
@@ -23,19 +68,136 @@ fn reference_progression() {
             case["setId"]
         );
         assert_eq!(actual.power, expected["power"].as_f64().unwrap() as f32);
-        assert_eq!(
-            actual.cooldown_reduction,
-            expected["cooldownReduction"].as_f64().unwrap() as f32
+        assert!(
+            (actual.cooldown_reduction - expected["cooldownReduction"].as_f64().unwrap() as f32)
+                .abs()
+                < 0.0001
         );
-        assert_eq!(
-            actual.movement_speed,
-            case["speed"].as_f64().unwrap() as f32
-        );
+        assert!((actual.movement_speed - case["speed"].as_f64().unwrap() as f32).abs() < 0.0001);
         assert_eq!(
             p.sell(&d),
             (0, 0),
             "Une seconde vente ne doit rien rapporter"
         );
+    }
+}
+
+fn equip_set(profile: &mut Profile, d: &GameData, key: &str) {
+    for item in d.items.values().filter(|item| item.set == key) {
+        profile.give(&item.id);
+        let uid = profile.inventory.last().unwrap().uid.clone();
+        assert!(profile.equip(&uid, None, d));
+    }
+}
+
+#[test]
+fn bag_filters_exclude_worn_items_but_keep_free_duplicates() {
+    let d = data();
+    let mut p = Profile::default();
+    assert!(p.bag_sets(&d).is_empty());
+    p.give("2411");
+    let uid = p.inventory.last().unwrap().uid.clone();
+    assert!(p.equip(&uid, None, &d));
+    assert!(p.bag_sets(&d).is_empty());
+    p.give("2474");
+    assert_eq!(
+        p.bag_sets(&d).into_iter().collect::<Vec<_>>(),
+        ["adventurer"]
+    );
+    p.give("2411");
+    assert!(p.bag_sets(&d).contains("bouftou"));
+    p.give("2469");
+    assert!(p.bag_sets(&d).contains(""));
+}
+
+#[test]
+fn gelano_is_setless_adds_ten_recovery_points_and_respects_the_cap() {
+    let d = data();
+    let mut p = Profile::default();
+    for (slot, expected) in [("ring1", 10.), ("ring2", 20.)] {
+        p.give("2469");
+        let uid = p.inventory.last().unwrap().uid.clone();
+        assert!(p.equip(&uid, Some(slot), &d));
+        let stats = p.stats(&d);
+        assert_eq!(stats.cooldown_reduction, expected);
+        assert_eq!(stats.hp, d.balance.starting_hp);
+        assert_eq!(stats.power, 0.);
+        assert!(p.set_counts(&d).is_empty());
+    }
+    equip_set(&mut p, &d, "blopMulti");
+    p.give("2469");
+    let uid = p.inventory.last().unwrap().uid.clone();
+    assert!(p.equip(&uid, Some("ring2"), &d));
+    assert_eq!(
+        p.stats(&d).cooldown_reduction,
+        d.balance.max_cooldown_reduction
+    );
+    p.validate(&d).unwrap();
+    for monster in d.monsters.values() {
+        let gelano = monster
+            .bonus_loot
+            .as_ref()
+            .filter(|bonus| bonus.table.iter().any(|drop| drop.item == "2469"));
+        if monster.name.to_lowercase().contains("blop") {
+            assert_eq!(gelano.unwrap().chance, 0.005);
+        } else {
+            assert!(gelano.is_none());
+        }
+    }
+}
+
+#[test]
+fn equipment_preserves_specialties_and_limits_mixed_builds() {
+    let d = data();
+    let full = |key: &str| {
+        let mut p = Profile::default();
+        equip_set(&mut p, &d, key);
+        p.stats(&d)
+    };
+    let tofu = full("tofu");
+    let bwork = full("chefBwork");
+    let blop = full("blopMulti");
+    let ancestral = full("ancestral");
+    let meulou = full("meulou");
+    assert!(tofu.movement_speed > meulou.movement_speed);
+    assert!(bwork.hp > full("royalBouftou").hp);
+    assert!(ancestral.hp > meulou.hp);
+    assert!(meulou.power > ancestral.power);
+    assert!(ancestral.cooldown_reduction > meulou.cooldown_reduction);
+    assert!(blop.cooldown_reduction > ancestral.cooldown_reduction);
+    let keys: Vec<_> = d
+        .sets
+        .keys()
+        .filter(|id| id.as_str() != "developer")
+        .collect();
+    for a in &keys {
+        for b in &keys {
+            for ring in d.items.values().filter(|item| item.category == "ring") {
+                let mut p = Profile::default();
+                equip_set(&mut p, &d, a);
+                equip_set(&mut p, &d, b);
+                p.give(&ring.id);
+                let uid = p.inventory.last().unwrap().uid.clone();
+                assert!(p.equip(&uid, Some("ring2"), &d));
+                let stats = p.stats(&d);
+                assert!(stats.hp <= 1180., "{a}/{b}/{}: {} PV", ring.id, stats.hp);
+                assert!(
+                    stats.power <= 600.,
+                    "{a}/{b}/{}: {} Puissance",
+                    ring.id,
+                    stats.power
+                );
+                assert!(stats.movement_speed <= 40.);
+                assert!(
+                    stats.cooldown_reduction
+                        <= if ring.set.is_empty() {
+                            d.balance.max_cooldown_reduction
+                        } else {
+                            26.
+                        }
+                );
+            }
+        }
     }
 }
 #[test]
@@ -300,7 +462,7 @@ fn every_dungeon_completes_with_equipment() {
 #[test]
 fn other_classes_keep_their_four_abilities() {
     let mut app = game();
-    for class in ["sacrier", "iop", "feca"] {
+    for class in ["sacrier", "iop", "feca", "sram"] {
         app.world_mut().resource_mut::<Actions>().0.extend([
             Action::Hub,
             Action::Class(class.into()),

@@ -27,6 +27,8 @@ pub(super) fn waves(
         if s.wave as usize == total - 1 {
             s.phase = Phase::Victory;
             s.glyphs.clear();
+            s.traps.clear();
+            s.invisible_until = 0.;
             s.combat_power = 0.;
             s.truce_until = 0.;
             let mut a = world.get_mut::<Actor>(s.player).unwrap();

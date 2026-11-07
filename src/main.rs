@@ -65,6 +65,17 @@ fn run() -> Result<(), String> {
         .and_then(|i| args.get(i + 1))
         .cloned()
         .unwrap_or_default();
+    if smoke_mode && smoke_scene == "sram" {
+        profile.class_id = "sram".into();
+    }
+    if smoke_mode && matches!(smoke_scene.as_str(), "iop-buff" | "sacrier-buff") {
+        profile.class_id = if smoke_scene == "iop-buff" {
+            "iop"
+        } else {
+            "sacrier"
+        }
+        .into();
+    }
     if smoke_mode && smoke_scene == "inventory" {
         for item in data.items.values() {
             profile.give(&item.id);
@@ -93,13 +104,67 @@ fn run() -> Result<(), String> {
         );
         return Ok(());
     }
+    if smoke_mode && matches!(smoke_scene.as_str(), "ancestral" | "canides") {
+        for id in if smoke_scene == "ancestral" {
+            ["8463", "8464", "8465", "8466", "8467", "8468"]
+        } else {
+            ["8262", "8263", "8264", "8265", "8266", "8267"]
+        } {
+            profile.give(id);
+            let uid = profile.inventory.last().unwrap().uid.clone();
+            profile.equip(&uid, None, &data);
+        }
+    }
+    let mut fusion_selection = None;
+    if smoke_mode && smoke_scene == "fusion" {
+        let craft = |p: &mut Profile, id: &str, level: u8| -> String {
+            let mut group = Vec::new();
+            for _ in 0..3_usize.pow(level as u32) {
+                p.give(id);
+                group.push(p.inventory.last().unwrap().uid.clone());
+            }
+            for grade in 0..level {
+                let mut upgraded = Vec::new();
+                for triple in group.chunks_exact(3) {
+                    assert!(p.fuse(&triple[0], grade, &data));
+                    upgraded.push(triple[0].clone());
+                }
+                group = upgraded;
+            }
+            group[0].clone()
+        };
+        for (id, level, slot) in [
+            ("8259", 1, "hat"),
+            ("8258", 2, "cape"),
+            ("8254", 3, "ring1"),
+        ] {
+            let uid = craft(&mut profile, id, level);
+            profile.equip(&uid, Some(slot), &data);
+        }
+        for _ in 0..3 {
+            let uid = craft(&mut profile, "8254", 1);
+            fusion_selection.get_or_insert(uid);
+        }
+        craft(&mut profile, "8256", 2);
+        craft(&mut profile, "8253", 3);
+    }
     let mut ui = UiState::default();
+    if smoke_mode && smoke_scene == "inventory" {
+        ui.selected = profile
+            .inventory
+            .iter()
+            .find(|i| i.item == "2469")
+            .map(|i| i.uid.clone());
+    }
+    if fusion_selection.is_some() {
+        ui.selected = fusion_selection;
+    }
     ui.help = !profile.help_seen;
     ui.reduced_motion = profile.reduced_motion;
     if let Some(i) = args.iter().position(|a| a == "--smoke-scene") {
         if let Some(scene) = args.get(i + 1) {
             ui.help = false;
-            ui.inventory = scene == "inventory";
+            ui.inventory = matches!(scene.as_str(), "inventory" | "fusion");
             ui.dungeons = scene == "dungeons";
         }
     }
@@ -151,13 +216,23 @@ fn run() -> Result<(), String> {
             commands.spawn(Camera2d);
         })
         .add_systems(EguiPrimaryContextPass, interface);
-    if smoke_mode && smoke_scene == "combat" {
+    if smoke_mode
+        && matches!(
+            smoke_scene.as_str(),
+            "combat" | "iop-buff" | "sacrier-buff" | "ancestral" | "canides" | "sram"
+        )
+    {
         app.world_mut()
             .resource_mut::<bouftourust::simulation::Actions>()
             .0
             .push(bouftourust::simulation::Action::Enter(
-                "bouftou".into(),
-                true,
+                if matches!(smoke_scene.as_str(), "ancestral" | "canides") {
+                    &smoke_scene
+                } else {
+                    "bouftou"
+                }
+                .into(),
+                !matches!(smoke_scene.as_str(), "ancestral" | "canides" | "sram"),
             ));
     }
     if let Some(index) = args.iter().position(|a| a == "--smoke-frames") {
@@ -193,12 +268,54 @@ fn smoke(
     mut smoke: ResMut<Smoke>,
     mut commands: Commands,
     mut exit: MessageWriter<AppExit>,
-    session: Res<bouftourust::simulation::Session>,
+    mut session: ResMut<bouftourust::simulation::Session>,
+    mut actions: ResMut<bouftourust::simulation::Actions>,
+    profile: Res<Profile>,
+    actors: Query<&bouftourust::simulation::Actor>,
 ) {
     if session.loading {
         return;
     }
     smoke.frames += 1;
+    if session.phase == bouftourust::simulation::Phase::Combat
+        && session.wave == -1
+        && std::env::args().any(|arg| matches!(arg.as_str(), "ancestral" | "canides"))
+    {
+        session.wave = 2;
+        session.waiting = true;
+        session.delay = 0.;
+    }
+    if smoke.frames == 1
+        && matches!(profile.class_id.as_str(), "iop" | "sacrier")
+        && std::env::args().any(|arg| matches!(arg.as_str(), "iop-buff" | "sacrier-buff"))
+    {
+        if let Ok(actor) = actors.get(session.player) {
+            actions.0.push(bouftourust::simulation::Action::Cast(
+                if profile.class_id == "iop" { 2 } else { 1 },
+                actor.position,
+            ));
+        }
+    }
+    if profile.class_id == "sram"
+        && session.phase == bouftourust::simulation::Phase::Combat
+        && std::env::args().any(|arg| arg == "sram")
+    {
+        if let Ok(actor) = actors.get(session.player) {
+            if session.cooldowns[2] == 0. {
+                actions
+                    .0
+                    .push(bouftourust::simulation::Action::Cast(2, actor.position));
+            }
+            if session.cooldowns[1] <= session.time {
+                let aim = actor.position + Vec2::X * 53.;
+                let cell = session.navigation.nearest(aim);
+                actions.0.push(bouftourust::simulation::Action::Cast(
+                    1,
+                    session.navigation.cells[cell].position.into(),
+                ));
+            }
+        }
+    }
     if let Some(dir) = &smoke.captures {
         if smoke.frames >= 30 && smoke.frames <= smoke.limit && smoke.frames % 3 == 0 {
             commands
