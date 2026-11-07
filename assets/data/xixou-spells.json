@@ -1,0 +1,149 @@
+{
+  "explosive": {
+    "id": 179,
+    "name": "Flèche Explosive #179",
+    "page": "https://xixou.io/sorts/179/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/179.svg",
+    "svgSha256": "a7080a4c71a3b4f0be5f040c9505add36825307a34e92062b8ddc04e725d211d"
+  },
+  "flaming": {
+    "id": 165,
+    "name": "Flèche Enflammée #165",
+    "page": "https://xixou.io/sorts/165/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/165.svg",
+    "svgSha256": "bfb113c86bb6716ac92b318c3f21f9b7edc7ab2d565ad40cfa3abd4542bce147"
+  },
+  "magic": {
+    "id": 161,
+    "name": "Flèche Magique #161",
+    "page": "https://xixou.io/sorts/161/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/161.svg",
+    "svgSha256": "55c321803d7c82dcc4a8500c35e763c01d5cf182dcea81a9e76412961f497ff1"
+  },
+  "power": {
+    "id": 166,
+    "name": "Tir Puissant #166",
+    "page": "https://xixou.io/sorts/166/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/166.svg",
+    "svgSha256": "1a266c2b95f3d4beed7fe852c01d76fa93284b613f5cedadd529102c2f3fe811"
+  },
+  "dissolution": {
+    "id": 439,
+    "name": "Dissolution #439",
+    "page": "https://xixou.io/sorts/439/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/439.svg",
+    "svgSha256": "bad547f926b3fd8bb49dccf1645f0ce6f0ad7b72cfe5cecb2b87db4010a58396"
+  },
+  "chastisement": {
+    "id": 431,
+    "name": "Châtiment Forcé #431",
+    "page": "https://xixou.io/sorts/431/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/431.svg",
+    "svgSha256": "6874ebd9533ef6cf8ce7c92caf3880399a5b0a5d99aad112ece1c3a7f41f6531"
+  },
+  "transposition": {
+    "id": 438,
+    "name": "Transposition #438",
+    "page": "https://xixou.io/sorts/438/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/438.svg",
+    "svgSha256": "8161e00369a17c3e32a315a1adf517dde1eb0a1f1b032ca9d6835ec5c34d30c5"
+  },
+  "punishment": {
+    "id": 446,
+    "name": "Punition #446",
+    "page": "https://xixou.io/sorts/446/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/446.svg",
+    "svgSha256": "3c4b92efcc58e738088197ca8943bb12dfba34b1be4146fb7e08f94e1696230d"
+  },
+  "sword": {
+    "id": 160,
+    "name": "Epée de Iop #160",
+    "page": "https://xixou.io/sorts/160/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/160.svg",
+    "svgSha256": "8c953ea341a22121fafa48bc4cc3ed904b926f6419f61e6de2a4151dd2e30191"
+  },
+  "jump": {
+    "id": 142,
+    "name": "Bond #142",
+    "page": "https://xixou.io/sorts/142/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/142.svg",
+    "svgSha256": "a2b3afe387d3c714ca7e5b55eef63e83ca1245e292823f6ca2fc31101294a0ab"
+  },
+  "intimidation": {
+    "id": 143,
+    "name": "Intimidation #143",
+    "page": "https://xixou.io/sorts/143/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/143.svg",
+    "svgSha256": "cc60178f30251735fcb9ae492e18e7e7cd5ec1208c9682cd9697c28d973f6ee4"
+  },
+  "wrath": {
+    "id": 159,
+    "name": "Colère de Iop #159",
+    "page": "https://xixou.io/sorts/159/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/159.svg",
+    "svgSha256": "5c34a5c966cef516ffb8f2ed4dc87091277d25893ee727d2f3601d993a92d4b1"
+  },
+  "glyph": {
+    "id": 10,
+    "name": "Glyphe Enflammé #10",
+    "page": "https://xixou.io/sorts/10/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/10.svg",
+    "svgSha256": "39e5f6ee1d1d8e4075ffa4b4a6f7cec2fb491d61acd0d05dce906f9d957284bc"
+  },
+  "cloudy": {
+    "id": 9,
+    "name": "Attaque Nuageuse #9",
+    "page": "https://xixou.io/sorts/9/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/9.svg",
+    "svgSha256": "a62942b7352e6ffddde528242f9b260760c54a5947fbc8b09c848aeea47322af"
+  },
+  "teleport": {
+    "id": 11,
+    "name": "Téléportation #11",
+    "page": "https://xixou.io/sorts/11/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/11.svg",
+    "svgSha256": "42b63bd4b1ec653fc42be3ac977e27204ab97388e11a67b25ba873a9f9f2021d"
+  },
+  "truce": {
+    "id": 5,
+    "name": "Trêve #5",
+    "page": "https://xixou.io/sorts/5/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/5.svg",
+    "svgSha256": "cf01c7dcba0cd6bfba23aabf325419b25ecdea2c52997b63fa11b65ef2dcc606"
+  },
+  "iop_power": {
+    "id": 153,
+    "name": "Puissance #153",
+    "page": "https://xixou.io/sorts/153/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/153.svg",
+    "svgSha256": "dbf950b671eab8a8daea2e894efabfecf8883a545736d3c797cfa5553fb69da9"
+  },
+  "sournoiserie": {
+    "id": 61,
+    "name": "Sournoiserie #61",
+    "page": "https://xixou.io/sorts/61/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/61.svg",
+    "svgSha256": "2a27e4f7fe84c1ff9ca18950c56ed728688a393ec6c79aea2900b52c0f891322"
+  },
+  "mass_trap": {
+    "id": 79,
+    "name": "Piège de Masse #79",
+    "page": "https://xixou.io/sorts/79/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/79.svg",
+    "svgSha256": "6073cf0f03695d5d0d52e2118159cc0b2fdd3918ef818773723617bc3b8b64c0"
+  },
+  "invisibility": {
+    "id": 72,
+    "name": "Invisibilité #72",
+    "page": "https://xixou.io/sorts/72/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/72.svg",
+    "svgSha256": "37698e03446476cf152137c97e0ee092386a041028daf805899da79b8ddcf2a8"
+  },
+  "mortal_attack": {
+    "id": 76,
+    "name": "Attaque Mortelle #76",
+    "page": "https://xixou.io/sorts/76/",
+    "image": "https://xixou.io/wp-content/uploads/xixou-sorts-icones/officiel/76.svg",
+    "svgSha256": "40b7d8ff74f291ddc9347cdd63b951a9e527d37aff55a60deebc572244e6a22c"
+  }
+}

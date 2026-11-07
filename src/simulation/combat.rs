@@ -626,6 +626,40 @@ mod tests {
     }
 
     #[test]
+    fn stop_cancels_running_at_current_position_and_allows_a_new_destination() {
+        let (mut world, mut s, mut p, d, m) = arena();
+        s.time = 1.;
+        world.init_resource::<Actions>();
+        let position = world.get::<Actor>(s.player).unwrap().position;
+        let target = m
+            .hub
+            .walkable
+            .iter()
+            .map(|cell| Vec2::from(cell.position))
+            .find(|target| target.distance(position) > 100.)
+            .unwrap();
+        world.resource_mut::<Actions>().0.push(Action::Move(target));
+        process_actions(&mut world, &mut s, &mut p, &d, &m);
+        super::super::player_movement(&mut world, &s, &p, &d, 0.1);
+        let stopped = world.get::<Actor>(s.player).unwrap().position;
+        assert_ne!(stopped, position);
+        world.resource_mut::<Actions>().0.push(Action::Stop);
+        process_actions(&mut world, &mut s, &mut p, &d, &m);
+        assert!(s.destination.is_none());
+        for _ in 0..10 {
+            super::super::player_movement(&mut world, &s, &p, &d, 0.1);
+        }
+        let actor = world.get::<Actor>(s.player).unwrap();
+        assert_eq!(actor.position, stopped);
+        assert!(actor.route.is_empty());
+        assert_eq!(actor.action, "idle");
+        world.resource_mut::<Actions>().0.push(Action::Move(target));
+        process_actions(&mut world, &mut s, &mut p, &d, &m);
+        super::super::player_movement(&mut world, &s, &p, &d, 0.1);
+        assert_ne!(world.get::<Actor>(s.player).unwrap().position, stopped);
+    }
+
+    #[test]
     fn ancestral_summons_every_three_seconds_with_exact_rare_probability() {
         let (mut world, mut s, _, d, _) = arena();
         s.dungeon = Some("ancestral".into());

@@ -165,6 +165,7 @@ impl Session {
 #[derive(Clone)]
 pub enum Action {
     Move(Vec2),
+    Stop,
     Cast(usize, Vec2),
     Enter(String, bool),
     Hub,

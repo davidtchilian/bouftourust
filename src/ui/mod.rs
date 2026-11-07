@@ -137,6 +137,18 @@ pub fn interface(
             }
         });
     }
+    if !ctx.input(|i| i.pointer.button_down(egui::PointerButton::Secondary)) {
+        state.movement_stopped = false;
+    }
+    if fresh_input
+        && !state.pauses_game()
+        && !ctx.wants_keyboard_input()
+        && windows.iter().any(|w| w.focused)
+        && ctx.input(|i| i.key_pressed(egui::Key::S))
+    {
+        state.movement_stopped = true;
+        actions.0.push(Action::Stop);
+    }
     egui::TopBottomPanel::bottom("hud")
         .exact_height(132.)
         .frame(
@@ -435,6 +447,7 @@ pub fn interface(
                 let focused = windows.iter().any(|w| w.focused);
                 if !state.inventory
                     && !state.dungeons
+                    && !state.movement_stopped
                     && focused
                     && ctx.input(|i| i.pointer.button_down(egui::PointerButton::Secondary))
                 {
@@ -497,11 +510,11 @@ pub fn interface(
         );
     }
     if state.dungeons {
-        dungeons(&ctx, &mut art, &mut state, &profile, &data, &mut actions);
+        dungeons(&ctx, &mut art, &mut state, &data, &mut actions);
     }
     if state.help {
         let mut open = true;
-        egui::Window::new("À vous de jouer").open(&mut open).collapsible(false).default_width(390.).anchor(egui::Align2::RIGHT_TOP,[-20.,20.]).show(&ctx,|ui|{ui.colored_label(color(),"BOUFTOURUSH · ÉDITION LOCALE");ui.label("Clic droit : déplacement. Maintenez pour suivre le curseur. Relâcher conserve la destination.");ui.label("A Z E R : lancez vos sorts vers le curseur.");ui.label("I : inventaire, équipements et panoplies. Échap : fermer les fenêtres.");ui.label("Choisissez un donjon. Trois vagues, puis le boss. Les gains restent acquis après une défaite.");ui.checkbox(&mut state.reduced_motion,"Réduire les animations des aperçus");if ui.button("Compris").clicked(){state.help=false;}});
+        egui::Window::new("À vous de jouer").open(&mut open).collapsible(false).default_width(390.).anchor(egui::Align2::RIGHT_TOP,[-20.,20.]).show(&ctx,|ui|{ui.colored_label(color(),"BOUFTOURUSH · ÉDITION LOCALE");ui.label("Clic droit : déplacement. Maintenez pour suivre le curseur. Relâcher conserve la destination.");ui.label("S : arrêt immédiat du déplacement.");ui.label("A Z E R : lancez vos sorts vers le curseur.");ui.label("I : inventaire, équipements et panoplies. Échap : fermer les fenêtres.");ui.label("Choisissez un donjon. Trois vagues, puis le boss. Les gains restent acquis après une défaite.");ui.checkbox(&mut state.reduced_motion,"Réduire les animations des aperçus");if ui.button("Compris").clicked(){state.help=false;}});
         state.help &= open;
     }
     if matches!(session.phase, Phase::Victory | Phase::Death) && !state.inventory {

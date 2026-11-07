@@ -14,6 +14,7 @@ pub struct UiState {
     pub fps: bool,
     pub manual_pause: bool,
     pub input_frame: Option<u64>,
+    pub movement_stopped: bool,
 }
 impl Default for UiState {
     fn default() -> Self {
@@ -30,6 +31,7 @@ impl Default for UiState {
             fps: false,
             manual_pause: false,
             input_frame: None,
+            movement_stopped: false,
         }
     }
 }

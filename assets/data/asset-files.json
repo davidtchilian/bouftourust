@@ -1130,11 +1130,6 @@
     "sha256": "af9841f6e8d7b5cc8dda90842aa138d41b80fdbabfcf0f68a4fdf9e195fd91cd"
   },
   {
-    "path": "atlases/sram/page-8.png",
-    "bytes": 1103885,
-    "sha256": "d2a3c0cc2630e6efb026a49951257d20e4f3aadfed0217b9637d0d2ce342c5a7"
-  },
-  {
     "path": "composition-masks/0012d511e939ffd832c0807c.png",
     "bytes": 6899,
     "sha256": "3bc478401445c94a039d04cac2c6e0736fc70391645031a28f09ae3294aca0e0"
@@ -8451,88 +8446,108 @@
   },
   {
     "path": "textures/ui-spell-chastisement/000.png",
-    "bytes": 11209,
-    "sha256": "886949417dbbcb316410fdd83f03a969c47521c7d692601d3ca194ad8a42d305"
+    "bytes": 17874,
+    "sha256": "210ed44f5a31c9f541fdcec93cf85dfffc07bcd7efb98f7ddb8f8e1873bba990"
   },
   {
     "path": "textures/ui-spell-cloudy/000.png",
-    "bytes": 5465,
-    "sha256": "5cfe836f4bbbd46b81c1577e764f40df22c82a3cd217fa4582e031e99e7df22a"
+    "bytes": 16649,
+    "sha256": "e1c468e500ff1e19855227e1a8eeac0b4edd31c08f8caba6ad0629de7a3d1721"
   },
   {
     "path": "textures/ui-spell-dissolution/000.png",
-    "bytes": 5844,
-    "sha256": "0b6b24cc5a8156077af838f331842bb91477504083e15efa30b0f7d418888f57"
+    "bytes": 19610,
+    "sha256": "f43cfeb8de9565e5a52f62db64108d339d2ed908406cb59f1f65c99d86ec2cbf"
   },
   {
     "path": "textures/ui-spell-explosive/000.png",
-    "bytes": 6127,
-    "sha256": "21e13b4c7ec49cf1cd2f26d17b4a86635ffc5ed50fe73786c2bf6be6a41acf6e"
+    "bytes": 15874,
+    "sha256": "9973ff097d67a969d137dc5ee8beddc87c889e52a21ca6b3410fd63d3282b94d"
   },
   {
     "path": "textures/ui-spell-flaming/000.png",
-    "bytes": 6298,
-    "sha256": "7af8fc4972cec571a51a9b3291d1feb689fd2004d1eb5c231a225da11a47e271"
+    "bytes": 17493,
+    "sha256": "22129b2e2ddb3c4c0dfd3cb429970c93f20788e0611fa2b7ca0cff4e7262ecf8"
   },
   {
     "path": "textures/ui-spell-glyph/000.png",
-    "bytes": 7430,
-    "sha256": "554c6a96ad55f7b8b0bded8af89cd5fc0117fd7b8b10a31d25f7ec96a7e5098b"
+    "bytes": 18408,
+    "sha256": "065c941eaaa16991b1618407af615449e174a018d75b44f9e74a4cf187862220"
   },
   {
     "path": "textures/ui-spell-intimidation/000.png",
-    "bytes": 5319,
-    "sha256": "b0adf4c0c655644e46edbe941b9e42b239111e147b1c31b107b61f19deb90947"
+    "bytes": 17358,
+    "sha256": "549d280637903095f75205cc5c07634a205858bc9b512b229736eaadb8d23425"
   },
   {
-    "path": "textures/ui-spell-iop-power/000.png",
-    "bytes": 3969,
-    "sha256": "eeddc8d667ae117dd7016cb34ed8f3e27c728257326a84cec49873d18368206a"
+    "path": "textures/ui-spell-invisibility/000.png",
+    "bytes": 14766,
+    "sha256": "fc7fb8fe40fc17f7955e9fa85b76c098f800db32724fdb348580808e827e41f5"
+  },
+  {
+    "path": "textures/ui-spell-iop_power/000.png",
+    "bytes": 16220,
+    "sha256": "8dfd6c0568fc13f09bec7826f78c85adb24c576d913c3fe92a6710587ca8a80c"
   },
   {
     "path": "textures/ui-spell-jump/000.png",
-    "bytes": 5657,
-    "sha256": "202eaa68315bb329d5a23c312245ea53957817f4271e09c42618559aef90ca1c"
+    "bytes": 15164,
+    "sha256": "325ef588835316facfef9bc96cda74bea6779c7652581051b09cf08bc996c363"
   },
   {
     "path": "textures/ui-spell-magic/000.png",
-    "bytes": 6563,
-    "sha256": "8f258725f8762f3a45742ffa458512384df497390cf4e5c432cf60ef00479b32"
+    "bytes": 17699,
+    "sha256": "58ee6cf68e504a470820ed110fb4dadb9caebd6ed9895901301058e9b0eee2fc"
+  },
+  {
+    "path": "textures/ui-spell-mass_trap/000.png",
+    "bytes": 16263,
+    "sha256": "9356fbf48757ef98be32cec5746dc74d03b0dd6eae9c949e8b922a3ac01b76ab"
+  },
+  {
+    "path": "textures/ui-spell-mortal_attack/000.png",
+    "bytes": 19731,
+    "sha256": "b8cf8aa31c5522e722be818e8180608d7fff4bcd2ecaa61329e444846bdedf8a"
   },
   {
     "path": "textures/ui-spell-power/000.png",
-    "bytes": 7077,
-    "sha256": "8a0f2b5d6f6d70e0836c22e2731c4adc6bc1ebaf76865e55228ea8fa9dfaa64c"
+    "bytes": 17671,
+    "sha256": "0fac79d14f1e23d368856e9fba04e5c6513b323c5e5d4e6b17bbb083bcd0925d"
   },
   {
     "path": "textures/ui-spell-punishment/000.png",
-    "bytes": 8989,
-    "sha256": "a919e9e3e23b3e61706b97f0b2041367aa3b229266b2703c84b89799f5f7a81b"
+    "bytes": 18625,
+    "sha256": "a3622144de4a551e7679ee379ed126c90fa99449da98d25c7eef09a3c2c72917"
+  },
+  {
+    "path": "textures/ui-spell-sournoiserie/000.png",
+    "bytes": 17437,
+    "sha256": "8780289cba8a3b48afc4345355f4ec0153ba2a61199935883b8ea6d941d21002"
   },
   {
     "path": "textures/ui-spell-sword/000.png",
-    "bytes": 5108,
-    "sha256": "ec68be120e430fae3b07c9594cbf460f14fb10e743350f1186998dae12d89fe8"
+    "bytes": 16916,
+    "sha256": "da8cb4b43bd00b088acff75e523d30e778895458d5a0358c378ff5616245d792"
   },
   {
     "path": "textures/ui-spell-teleport/000.png",
-    "bytes": 5020,
-    "sha256": "6de1845795044114c053a578dd43b04a988cacf29bc1231c08f328c616c21d82"
+    "bytes": 15885,
+    "sha256": "7e042e513260f0430ad9af16647575dbd8d5be28fc98f9875640ee2a462ba095"
   },
   {
     "path": "textures/ui-spell-transposition/000.png",
-    "bytes": 6005,
-    "sha256": "e65f74c27adbf666d574d2a0d7a6b8ecc0e6eaa7c1d564c7af592027ef47b2a7"
+    "bytes": 16149,
+    "sha256": "df886f5e0622be8b603e7d3fea90cb0a60f99c3d7dffb9e1d62508a3ae18f544"
   },
   {
     "path": "textures/ui-spell-truce/000.png",
-    "bytes": 3313,
-    "sha256": "d659a9dc2e0cdcd57be7677f237132f5444b5d1c4caab8ae84d9afbed5dbdbe5"
+    "bytes": 14936,
+    "sha256": "606f5a19e902ed6eab85c7893e33e5e0893cf1955ff8469e2d33a2b9ca015538"
   },
   {
     "path": "textures/ui-spell-wrath/000.png",
-    "bytes": 9763,
-    "sha256": "49cbae62708243f6f8c264b5338e41baedacccc76170dd569928cee49823e06b"
+    "bytes": 21958,
+    "sha256": "f539d2bf5a73f52401af1c3c397a306ab32a4890a225bc19ecac09d10bf42480"
   },
   {
     "path": "textures/ui-window/000.png",

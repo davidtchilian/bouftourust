@@ -1,6 +1,23 @@
-# Assets Remastered
+# Assets du jeu
 
-Les graphismes utilisés sont issus du client **Dofus Retro Remastered 1.40.13**. Ils restent la propriété de leurs ayants droit. Le projet est un fangame gratuit, non affilié à Ankama. Aucune autorisation de redistribution d'Ankama n'est établie ; le présent stockage Git répond à la demande du propriétaire du projet et ne constitue pas une telle autorisation.
+Les graphismes utilisés sont issus du client **Dofus Retro Remastered 1.40.13**, à l’exception des **icônes de sorts fournies par Xixou**. Ils restent la propriété de leurs ayants droit. Le projet est un fangame gratuit, non affilié à Ankama. Aucune autorisation de redistribution d'Ankama n'est établie ; le présent stockage Git répond à la demande du propriétaire du projet et ne constitue pas une telle autorisation.
+
+## Sorts : référence et icônes Xixou
+
+[Xixou — Sorts](https://xixou.io/sorts/) devient la référence pour tous les sorts du projet ; exemple : [Dissolution, n° 439](https://xixou.io/sorts/439-dissolution/). Le site annonce Dofus Rétro 1.49 : ces icônes ne sont donc pas étiquetées Remastered 1.40.13. Les animations de sorts restent issues du client Remastered.
+
+Les 21 sorts définis dans `assets/data/game.json` sont couverts, y compris Intimidation, encore défini mais absent des raccourcis actuels. `assets/data/xixou-spells.json` relie chaque identifiant interne à l’identifiant Xixou, son nom sur le site, sa page, l’URL du SVG et son empreinte SHA-256. Châtiment correspond à Châtiment Forcé (431).
+
+Les SVG officiels complets (`wp-content/uploads/xixou-sorts-icones/officiel/<id>.svg`) sont téléchargés sous `.local-assets/xixou-spells/`, puis convertis sans recadrage en PNG RGBA de 192 × 192 pixels. Le manifeste référence ces PNG versionnés sous `assets/textures/ui-spell-*/000.png`, utilisés dans la barre de sorts et les indicateurs de buffs. Aucun accès réseau n’est nécessaire en jeu. Les règles et valeurs de combat spécifiques au fangame restent dans `game.json`.
+
+Pour reproduire l’import (CairoSVG nécessaire uniquement à la préparation) :
+
+```sh
+.local-tools/python/bin/python scripts/import-spell-icons.py
+python3 scripts/import-assets.py --check
+```
+
+Lors de l’ajout d’un sort, compléter `SPELL_IDS` dans le script avec l’identifiant confirmé sur Xixou, puis relancer l’import. Les anciennes extractions SWF d’icônes décrites plus bas documentent la provenance historique ; elles sont remplacées par Xixou dans le lot actuel.
 
 ## Jouer après un clone
 
@@ -31,6 +48,7 @@ python3 -m venv .local-tools/python
 .local-tools/python/bin/pip install Pillow CairoSVG
 .local-tools/python/bin/python scripts/prepare-masks.py
 .local-tools/python/bin/python scripts/fix-iop-hair.py --ffdec ../bouftourush/.local-assets/tools/ffdec/ffdec.jar
+.local-tools/python/bin/python scripts/import-spell-icons.py
 python3 scripts/import-assets.py --check
 ```
 
@@ -38,7 +56,7 @@ python3 scripts/import-assets.py --check
 
 `prepare-masks.py` applique les masques de disparition dans le repère source à chaque pièce/accessoire compatible. Les images dérivées sont petites, transparentes et versionnées. Ce précalcul préserve les matrices GAC et évite une génération d'images pendant le jeu.
 
-Le script d'import refuse les chemins sortant du dossier et toute version autre que `1.40.13-remastered`. Il n'importe ni `.server-data/`, ni compte, ni sessions, ni mot de passe. Les fichiers PNG pointés par le manifeste sont copiés une seule fois même s'ils servent à plusieurs animations. Les atlas partagés peuvent contenir des régions non affichées ; conserver la page évite de dupliquer et réencoder les textures source.
+Le script d'import refuse les chemins sortant du dossier et toute version autre que `1.40.13-remastered`, avec une exception limitée aux icônes `ui.spell.*` de provenance `xixou-official` dont l’URL correspond au relevé Xixou. Il n'importe ni `.server-data/`, ni compte, ni sessions, ni mot de passe. Les fichiers PNG pointés par le manifeste sont copiés une seule fois même s'ils servent à plusieurs animations. Les atlas partagés peuvent contenir des régions non affichées ; conserver la page évite de dupliquer et réencoder les textures source.
 
 Si seul le ZIP client est disponible, utiliser la chaîne d'extraction SWF du projet BouftouRush décrite dans ASSETS-REFERENCE.md pour reconstituer les cartes et atlas, puis importer son dossier runtime. Le ZIP brut seul ne remplace pas un manifeste préparé : le jeu ne contient pas d'interpréteur Flash.
 

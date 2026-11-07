@@ -45,6 +45,7 @@ Le workflow [Windows natif](.github/workflows/windows.yml) compile, teste et pr�
 ## Jouer
 
 - **Clic droit** : rejoindre le point visé. Maintenir pour suivre la souris, relâcher pour conserver la destination.
+- **S** : s’arrêter immédiatement à la position actuelle. Relâcher puis refaire un clic droit pour repartir.
 - **A Z E R** : quatre sorts de la classe, dirigés vers le curseur. Crâ : Flèche explosive, enflammée, magique, Tir puissant.
 - **I** : inventaire, filtres de panoplie, aperçu équipé rotatif. Double-clic sur un objet pour l'équiper ; un clic sur un équipement porté affiche ses effets, un double-clic le retire.
 - **Échap** : fermer la fenêtre ouverte ; en combat sans fenêtre, mettre en pause ou reprendre. Le bouton « Reprendre » relance aussi le combat. Les menus donjons et inventaire mettent la simulation en pause.

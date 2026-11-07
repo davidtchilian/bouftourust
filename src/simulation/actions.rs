@@ -66,6 +66,14 @@ pub(super) fn process_actions(
                     world.get_mut::<Actor>(s.player).unwrap().route = route;
                 }
             }
+            Action::Stop => {
+                s.destination = None;
+                let mut actor = world.get_mut::<Actor>(s.player).unwrap();
+                actor.route.clear();
+                if actor.action == "run" {
+                    actor.action("idle");
+                }
+            }
             Action::Cast(index, target) => cast(world, s, p, d, m, index, target),
             Action::Hub => {
                 change_map(world, s, p, d, m, "hub");
