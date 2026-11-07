@@ -40,10 +40,9 @@ fn level_gains_apply_retroactively_and_combine_with_equipment() {
     p.give("2469");
     let uid = p.inventory.last().unwrap().uid.clone();
     assert!(p.equip(&uid, None, &d));
-    assert_eq!(
-        p.stats(&d).cooldown_reduction,
-        d.balance.max_cooldown_reduction
-    );
+    assert!((p.stats(&d).cooldown_reduction - 39.8).abs() < 0.0001);
+    p.level = 300;
+    assert_eq!(p.stats(&d).cooldown_reduction, 50.);
     let restored: Profile = serde_json::from_str(&serde_json::to_string(&p).unwrap()).unwrap();
     assert_eq!(restored.stats(&d).hp, p.stats(&d).hp);
     assert_eq!(restored.stats(&d).power, p.stats(&d).power);
@@ -128,10 +127,9 @@ fn gelano_is_setless_adds_ten_recovery_points_and_respects_the_cap() {
     p.give("2469");
     let uid = p.inventory.last().unwrap().uid.clone();
     assert!(p.equip(&uid, Some("ring2"), &d));
-    assert_eq!(
-        p.stats(&d).cooldown_reduction,
-        d.balance.max_cooldown_reduction
-    );
+    assert_eq!(p.stats(&d).cooldown_reduction, 31.);
+    p.level = 100;
+    assert_eq!(p.stats(&d).cooldown_reduction, 50.);
     p.validate(&d).unwrap();
     for monster in d.monsters.values() {
         let gelano = monster

@@ -491,7 +491,7 @@ pub(super) fn cast(
     for (e, n) in hits {
         hit(world, s, p, d, e, n);
     }
-    if spell.kind != "glyph" && !spell.effect.is_empty() {
+    if !matches!(spell.kind.as_str(), "glyph" | "truce") && !spell.effect.is_empty() {
         let pos = if spell.kind == "wrath" {
             target
         } else if spell.kind == "cone" {

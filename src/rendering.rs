@@ -563,12 +563,13 @@ pub fn world(
     for (_, a, e) in actors {
         if a.hp > 0.
             && s.phase == Phase::Combat
-            && e.as_ref().is_some_and(|enemy| {
-                d.monsters[&enemy.kind]
-                    .invulnerability
-                    .as_ref()
-                    .is_some_and(|shield| shield.active(s.time - enemy.spawned))
-            })
+            && (e.is_none() && s.time < s.truce_until
+                || e.as_ref().is_some_and(|enemy| {
+                    d.monsters[&enemy.kind]
+                        .invulnerability
+                        .as_ref()
+                        .is_some_and(|shield| shield.active(s.time - enemy.spawned))
+                }))
         {
             draws.push(Draw {
                 z: 2000. + s.navigation.depth(a.position) + 0.4,

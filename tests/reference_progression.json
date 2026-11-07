@@ -1279,7 +1279,7 @@
       "stats": {
         "hp": 1390,
         "power": 745,
-        "cooldownReduction": 30
+        "cooldownReduction": 37.8
       },
       "speed": 19.8,
       "sale": {
@@ -1662,7 +1662,7 @@
       "stats": {
         "hp": 1990,
         "power": 795,
-        "cooldownReduction": 30
+        "cooldownReduction": 33.8
       }
     }
   ],
